@@ -20,12 +20,16 @@ class _BottomBarState extends State<BottomBar> {
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
-      items: const <BottomNavigationBarItem>[
+      selectedLabelStyle: TextStyle(),
+      items: <BottomNavigationBarItem>[
         BottomNavigationBarItem(
-          icon: Icon(
-            Icons.list,
-            color: Color.fromRGBO(37, 59, 107, 1.0),
-            size: 28.0,
+          icon:Container(
+            decoration: const BoxDecoration(border: Border(bottom:BorderSide(color: Color.fromRGBO(37, 59, 107, 1.0)))),
+            child: const Icon(
+              Icons.list,
+              color: Color.fromRGBO(37, 59, 107, 1.0),
+              size: 28.0,
+            ),
           ),
           label: "",
         ),
@@ -60,7 +64,7 @@ class _BottomBarState extends State<BottomBar> {
       onTap: (index) => _onTap(context, index),
       iconSize: 40,
       elevation: 0,
-      selectedFontSize: 0,
+      selectedFontSize: 10,
     );
   }
 }

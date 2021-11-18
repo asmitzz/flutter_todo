@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_todo/utils/my_floating_action_button.dart';
 import 'package:flutter_todo/utils/my_appbar.dart';
-import 'package:flutter_todo/widgets/bottom_bar.dart';
+import 'package:flutter_todo/utils/my_bottom_bar.dart';
 import 'package:flutter_todo/widgets/home_template.dart';
 
 class Home extends StatefulWidget {
@@ -15,22 +16,18 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Container(
       color: const Color.fromRGBO(255, 230, 230, 1.0),
-      child: SafeArea(
+      child: const SafeArea(
         child: Scaffold(
-          appBar:const PreferredSize(
+          appBar: PreferredSize(
             preferredSize: Size.fromHeight(50),
-            child: MyAppBar(),
+            child: MyAppBar(search: true,),
           ),
-          drawer: const Drawer(),
-          body: const HomeTemplate(),
+          drawer:  Drawer(),
+          body:  HomeTemplate(),
           floatingActionButtonLocation:
               FloatingActionButtonLocation.centerDocked,
-          bottomNavigationBar: const BottomBar(currentIndex:0),
-          floatingActionButton: FloatingActionButton(
-            onPressed: () {},
-            backgroundColor: const Color.fromRGBO(37, 59, 107, 1.0),
-            child: const Icon(Icons.add),
-          ),
+          bottomNavigationBar:  BottomBar(currentIndex:0),
+          floatingActionButton: MyFloatingActionButton()
         ),
       ),
     );

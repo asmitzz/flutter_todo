@@ -58,12 +58,18 @@ class _SchedularTemplateState extends State<SchedularTemplate> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const SizedBox(height: 20,),
+                    const SizedBox(
+                      height: 20,
+                    ),
                     const Text(
                       "Tomorrow",
-                      style: TextStyle(color: Colors.grey,),
+                      style: TextStyle(
+                        color: Colors.blueGrey,
+                      ),
                     ),
-                    const SizedBox(height: 20,),
+                    const SizedBox(
+                      height: 20,
+                    ),
                     Row(
                       children: [
                         Transform.scale(
@@ -82,6 +88,7 @@ class _SchedularTemplateState extends State<SchedularTemplate> {
                         const Text(
                           "Read Type Guidelines",
                           style: TextStyle(
+                            fontWeight: FontWeight.w500,
                             color: Color.fromRGBO(37, 59, 107, 1.0),
                           ),
                         )
@@ -105,6 +112,7 @@ class _SchedularTemplateState extends State<SchedularTemplate> {
                         const Text(
                           "Complete responsive design",
                           style: TextStyle(
+                            fontWeight: FontWeight.w500,
                             color: Color.fromRGBO(37, 59, 107, 1.0),
                           ),
                         )
@@ -115,7 +123,8 @@ class _SchedularTemplateState extends State<SchedularTemplate> {
                         Transform.scale(
                           scale: 1.5,
                           child: Checkbox(
-                              checkColor: const Color.fromRGBO(37, 59, 107, 1.0),
+                              checkColor:
+                                  const Color.fromRGBO(37, 59, 107, 1.0),
                               activeColor: Colors.greenAccent,
                               side: const BorderSide(
                                   color: Colors.greenAccent, width: 1.5),
@@ -127,10 +136,10 @@ class _SchedularTemplateState extends State<SchedularTemplate> {
                         const SizedBox(
                           width: 10.0,
                         ),
-                        Text(
+                        const Text(
                           "Bring Groceries",
                           style: TextStyle(
-                            color: Colors.grey[500],
+                            color: Colors.blueGrey,
                           ),
                         )
                       ],
@@ -140,12 +149,18 @@ class _SchedularTemplateState extends State<SchedularTemplate> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const SizedBox(height: 20,),
+                    const SizedBox(
+                      height: 20,
+                    ),
                     const Text(
                       "Tomorrow",
-                      style: TextStyle(color: Colors.grey,),
+                      style: TextStyle(
+                        color: Colors.blueGrey,
+                      ),
                     ),
-                    const SizedBox(height: 20,),
+                    const SizedBox(
+                      height: 20,
+                    ),
                     Row(
                       children: [
                         Transform.scale(
@@ -164,6 +179,7 @@ class _SchedularTemplateState extends State<SchedularTemplate> {
                         const Text(
                           "Read Type Guidelines",
                           style: TextStyle(
+                            fontWeight: FontWeight.w500,
                             color: Color.fromRGBO(37, 59, 107, 1.0),
                           ),
                         )
@@ -187,6 +203,7 @@ class _SchedularTemplateState extends State<SchedularTemplate> {
                         const Text(
                           "Complete responsive design",
                           style: TextStyle(
+                            fontWeight: FontWeight.w500,
                             color: Color.fromRGBO(37, 59, 107, 1.0),
                           ),
                         )
@@ -197,7 +214,8 @@ class _SchedularTemplateState extends State<SchedularTemplate> {
                         Transform.scale(
                           scale: 1.5,
                           child: Checkbox(
-                              checkColor: const Color.fromRGBO(37, 59, 107, 1.0),
+                              checkColor:
+                                  const Color.fromRGBO(37, 59, 107, 1.0),
                               activeColor: Colors.greenAccent,
                               side: const BorderSide(
                                   color: Colors.greenAccent, width: 1.5),
@@ -209,10 +227,10 @@ class _SchedularTemplateState extends State<SchedularTemplate> {
                         const SizedBox(
                           width: 10.0,
                         ),
-                        Text(
+                        const Text(
                           "Bring Groceries",
                           style: TextStyle(
-                            color: Colors.grey[500],
+                            color: Colors.blueGrey,
                           ),
                         )
                       ],
@@ -222,13 +240,18 @@ class _SchedularTemplateState extends State<SchedularTemplate> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const SizedBox(height: 20,),
+                    const SizedBox(
+                      height: 20,
+                    ),
                     const Text(
                       "Sat, Nov 30, 2021",
-                      style: TextStyle(color: Colors.grey,),
+                      style: TextStyle(
+                        color: Colors.blueGrey,
+                      ),
                     ),
-                    const SizedBox(height: 20,),
-    
+                    const SizedBox(
+                      height: 20,
+                    ),
                     Row(
                       children: [
                         Transform.scale(
@@ -247,6 +270,7 @@ class _SchedularTemplateState extends State<SchedularTemplate> {
                         const Text(
                           "Read Type Guidelines",
                           style: TextStyle(
+                            fontWeight: FontWeight.w500,
                             color: Color.fromRGBO(37, 59, 107, 1.0),
                           ),
                         )
@@ -270,6 +294,7 @@ class _SchedularTemplateState extends State<SchedularTemplate> {
                         const Text(
                           "Complete responsive design",
                           style: TextStyle(
+                            fontWeight: FontWeight.w500,
                             color: Color.fromRGBO(37, 59, 107, 1.0),
                           ),
                         )
@@ -280,7 +305,8 @@ class _SchedularTemplateState extends State<SchedularTemplate> {
                         Transform.scale(
                           scale: 1.5,
                           child: Checkbox(
-                              checkColor: const Color.fromRGBO(37, 59, 107, 1.0),
+                              checkColor:
+                                  const Color.fromRGBO(37, 59, 107, 1.0),
                               activeColor: Colors.greenAccent,
                               side: const BorderSide(
                                   color: Colors.greenAccent, width: 1.5),
@@ -292,10 +318,10 @@ class _SchedularTemplateState extends State<SchedularTemplate> {
                         const SizedBox(
                           width: 10.0,
                         ),
-                        Text(
+                        const Text(
                           "Bring Groceries",
                           style: TextStyle(
-                            color: Colors.grey[500],
+                            color: Colors.blueGrey,
                           ),
                         )
                       ],

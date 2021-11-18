@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_todo/screens/edit_profile.dart';
 import 'package:flutter_todo/screens/home.dart';
+import 'package:flutter_todo/screens/new_task.dart';
 import 'package:flutter_todo/screens/notifications.dart';
 import 'package:flutter_todo/screens/profile.dart';
 import 'package:flutter_todo/screens/schedular.dart';
@@ -25,24 +27,45 @@ Widget slideTransistion(context, animation, secondaryAnimation, child) {
 PageRouteBuilder myRoutes({settings}) {
   switch (settings.name) {
     case "/":
-       return PageRouteBuilder(
-        pageBuilder: (context, animation, secondaryAnimation) => const Home(),
- transitionsBuilder:(context, animation, secondaryAnimation,child) =>  FadeTransition(opacity: animation,child:child));
-      case "/schedular":
-       return PageRouteBuilder(
-        pageBuilder: (context, animation, secondaryAnimation) => const Schedular(),
-        transitionsBuilder:(context, animation, secondaryAnimation,child) =>  FadeTransition(opacity: animation,child:child));
-      case "/notifications":
-       return PageRouteBuilder(
-        pageBuilder: (context, animation, secondaryAnimation) => const Notifications(),
-        transitionsBuilder: slideTransistion);
-      case "/profile":
-       return PageRouteBuilder(
-        pageBuilder: (context, animation, secondaryAnimation) => const Profile(),
-        transitionsBuilder: slideTransistion);
+      return PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) => const Home(),
+          transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+              FadeTransition(opacity: animation, child: child));
+    case "/schedular":
+      return PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) =>
+              const Schedular(),
+          transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+              FadeTransition(opacity: animation, child: child));
+    case "/notifications":
+      return PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) =>
+              const Notifications(),
+          transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+              FadeTransition(opacity: animation, child: child));
+    case "/profile":
+      return PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) =>
+              const Profile(),
+          transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+              FadeTransition(opacity: animation, child: child));
+    case "/editprofile":
+      return PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) =>
+              const EditProfile(),
+          transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+              FadeTransition(opacity: animation, child: child));
+    case "/new-task":
+      return PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) =>
+              const NewTask(),
+          transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+              FadeTransition(opacity: animation, child: child));
     default:
-     return PageRouteBuilder(
-        pageBuilder: (context, animation, secondaryAnimation) => const UnknownRoute(),
-        transitionsBuilder: slideTransistion);
+      return PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) =>
+              const UnknownRoute(),
+          transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+              FadeTransition(opacity: animation, child: child));
   }
 }

@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_todo/screens/edit_profile.dart';
 import 'package:flutter_todo/screens/home.dart';
+import 'package:flutter_todo/screens/landing.dart';
+import 'package:flutter_todo/screens/login.dart';
 import 'package:flutter_todo/screens/new_task.dart';
 import 'package:flutter_todo/screens/notifications.dart';
 import 'package:flutter_todo/screens/profile.dart';
+import 'package:flutter_todo/screens/register.dart';
 import 'package:flutter_todo/screens/schedular.dart';
 import 'package:flutter_todo/widgets/unknown_route.dart';
 
@@ -27,6 +30,11 @@ Widget slideTransistion(context, animation, secondaryAnimation, child) {
 PageRouteBuilder myRoutes({settings}) {
   switch (settings.name) {
     case "/":
+      return PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) => const Landing(),
+          transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+              FadeTransition(opacity: animation, child: child));
+              case "/home":
       return PageRouteBuilder(
           pageBuilder: (context, animation, secondaryAnimation) => const Home(),
           transitionsBuilder: (context, animation, secondaryAnimation, child) =>
@@ -59,6 +67,18 @@ PageRouteBuilder myRoutes({settings}) {
       return PageRouteBuilder(
           pageBuilder: (context, animation, secondaryAnimation) =>
               const NewTask(),
+          transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+              FadeTransition(opacity: animation, child: child));
+    case "/login":
+      return PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) =>
+              const Login(),
+          transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+              FadeTransition(opacity: animation, child: child));
+    case "/register":
+      return PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) =>
+              const Register(),
           transitionsBuilder: (context, animation, secondaryAnimation, child) =>
               FadeTransition(opacity: animation, child: child));
     default:

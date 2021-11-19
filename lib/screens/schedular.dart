@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_todo/utils/my_drawer.dart';
 import 'package:flutter_todo/utils/my_floating_action_button.dart';
 import 'package:flutter_todo/utils/my_appbar.dart';
 import 'package:flutter_todo/utils/my_bottom_bar.dart';
@@ -22,7 +23,7 @@ class _SchedularState extends State<Schedular> {
             preferredSize: Size.fromHeight(50),
             child: MyAppBar(search: true,title: "SCHEDULAR",),
           ),
-          drawer:  Drawer(),
+          drawer:  MyDrawer(),
           body:  SchedularTemplate(),
           floatingActionButtonLocation:
               FloatingActionButtonLocation.centerDocked,

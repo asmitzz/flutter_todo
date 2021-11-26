@@ -4,8 +4,16 @@ import 'package:flutter_todo/utils/constants/strings.dart';
 import 'package:flutter_todo/widgets/custom_form_field.dart';
 
 class LoginForm extends StatefulWidget {
-  const LoginForm({Key? key, required this.formKey}) : super(key: key);
+  const LoginForm(
+      {Key? key,
+      required this.formKey,
+      required this.emailController,
+      required this.passwordController})
+      : super(key: key);
   final GlobalKey<FormState> formKey;
+
+  final TextEditingController emailController;
+  final TextEditingController passwordController;
   @override
   _LoginFormState createState() => _LoginFormState();
 }
@@ -21,21 +29,25 @@ class _LoginFormState extends State<LoginForm> {
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           CustomFormField(
+              controller: widget.emailController,
+              onChange: (value) {},
               labelText: StringsConstants.loginForm["field_1_label_text"],
               hintText: StringsConstants.loginForm["field_1_hint_text"],
               prefixIcon: Icon(
-                Icons.person,
+                Icons.email,
                 color: ColorsConstants.blue,
               ),
               validator: (value) {
-                return ((value != null && value.length < 5)
+                return (value != null && value.length < 5)
                     ? StringsConstants.loginForm["field_1_error_text"]
-                    : null);
+                    : null;
               }),
           const SizedBox(
             height: 20.0,
           ),
           CustomFormField(
+              controller: widget.passwordController,
+              onChange: (value) {},
               labelText: StringsConstants.loginForm["field_2_label_text"],
               hintText: StringsConstants.loginForm["field_2_hint_text"],
               prefixIcon: Icon(

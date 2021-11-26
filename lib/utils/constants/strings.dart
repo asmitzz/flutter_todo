@@ -18,11 +18,11 @@ class StringsConstants {
 
   // login form
   static Map loginForm = {
-    "field_1_label_text": "Username",
-    "field_1_hint_text": "Enter Username",
-    "field_1_error_text": "Username should be atleast 5 char long",
+    "field_1_label_text": "Email or Username",
+    "field_1_hint_text": "Enter your email or username",
+    "field_1_error_text": "Invalid username or email",
     "field_2_label_text": "Password",
-    "field_2_hint_text": "Enter Password",
+    "field_2_hint_text": "Enter your password",
     "field_2_error_text": "Password should be atleast 8 char long",
   };
 
@@ -37,15 +37,18 @@ class StringsConstants {
   };
 
   static Map registerForm = {
-    "field_1_label_text": "Username",
-    "field_1_hint_text": "Enter Username",
-    "field_1_error_text": "Username should be atleast 5 char long",
-    "field_2_label_text": "Password",
-    "field_2_hint_text": "Enter Password",
-    "field_2_error_text": "Password should be atleast 8 char long",
-    "field_3_label_text": "Confirm Password",
-    "field_3_hint_text": "Enter Confirm Password",
-    "field_3_error_text": "Password not matching",
+    "field_1_label_text": "Name",
+    "field_1_hint_text": "Enter your name",
+    "field_1_error_text": "Name should be atleast 3 char long",
+    "field_2_label_text": "Email",
+    "field_2_hint_text": "Enter your email",
+    "field_2_error_text": "Invalid email",
+    "field_3_label_text": "Username",
+    "field_3_hint_text": "Enter username",
+    "field_3_error_text": "Username should be atleast 5 char long",
+    "field_4_label_text": "Password",
+    "field_4_hint_text": "Enter password",
+    "field_4_error_text": "Password should be atleast 8 char long",
   };
 
   // home screen

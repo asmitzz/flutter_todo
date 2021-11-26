@@ -8,4 +8,5 @@ class ColorsConstants {
   static Color green = Colors.greenAccent;
   static Color white = Colors.white;
   static Color lightGrey = Colors.grey.shade200;
+  static Color error = Colors.red;
 }

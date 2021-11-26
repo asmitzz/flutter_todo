@@ -10,82 +10,96 @@ import 'package:flutter_todo/screens/auth/register/register.dart';
 import 'package:flutter_todo/screens/schedular/schedular.dart';
 import 'package:flutter_todo/screens/unknown_route/unknown_route.dart';
 
-Widget slideTransistion(context, animation, secondaryAnimation, child) {
-  const begin = Offset(0.0, 1.0);
-  const end = Offset.zero;
-  const curve = Curves.ease;
+class MyRouter {
+  static Route<dynamic> generateRoutes(settings) {
+    switch (settings.name) {
+      case "/":
+        return PageRouteBuilder(
+            pageBuilder: (context, animation, secondaryAnimation) =>
+                const Landing(),
+            transitionsBuilder:
+                (context, animation, secondaryAnimation, child) =>
+                    FadeTransition(opacity: animation, child: child));
+      case "/home":
+        return PageRouteBuilder(
+            pageBuilder: (context, animation, secondaryAnimation) =>
+                const Home(),
+            transitionsBuilder:
+                (context, animation, secondaryAnimation, child) =>
+                    FadeTransition(opacity: animation, child: child));
+      case "/schedular":
+        return PageRouteBuilder(
+            pageBuilder: (context, animation, secondaryAnimation) =>
+                const Schedular(),
+            transitionsBuilder:
+                (context, animation, secondaryAnimation, child) =>
+                    FadeTransition(opacity: animation, child: child));
+      case "/notifications":
+        return PageRouteBuilder(
+            pageBuilder: (context, animation, secondaryAnimation) =>
+                const Notifications(),
+            transitionsBuilder:
+                (context, animation, secondaryAnimation, child) =>
+                    FadeTransition(opacity: animation, child: child));
+      case "/profile":
+        return PageRouteBuilder(
+            pageBuilder: (context, animation, secondaryAnimation) =>
+                const Profile(),
+            transitionsBuilder:
+                (context, animation, secondaryAnimation, child) =>
+                    FadeTransition(opacity: animation, child: child));
+      case "/editprofile":
+        return PageRouteBuilder(
+            pageBuilder: (context, animation, secondaryAnimation) =>
+                const EditProfile(),
+            transitionsBuilder:
+                (context, animation, secondaryAnimation, child) =>
+                    FadeTransition(opacity: animation, child: child));
+      case "/new-task":
+        return PageRouteBuilder(
+            pageBuilder: (context, animation, secondaryAnimation) =>
+                const NewTask(),
+            transitionsBuilder:
+                (context, animation, secondaryAnimation, child) =>
+                    FadeTransition(opacity: animation, child: child));
+      case "/login":
+        return PageRouteBuilder(
+            pageBuilder: (context, animation, secondaryAnimation) =>
+                const Login(),
+            transitionsBuilder:
+                (context, animation, secondaryAnimation, child) =>
+                    FadeTransition(opacity: animation, child: child));
+      case "/register":
+        return PageRouteBuilder(
+            pageBuilder: (context, animation, secondaryAnimation) =>
+                const Register(),
+            transitionsBuilder:
+                (context, animation, secondaryAnimation, child) =>
+                    FadeTransition(opacity: animation, child: child));
+      default:
+        return PageRouteBuilder(
+            pageBuilder: (context, animation, secondaryAnimation) =>
+                const UnknownRoute(),
+            transitionsBuilder:
+                (context, animation, secondaryAnimation, child) =>
+                    FadeTransition(opacity: animation, child: child));
+    }
+  }
 
-  final tween = Tween(begin: begin, end: end);
-  final curvedAnimation = CurvedAnimation(
-    parent: animation,
-    curve: curve,
-  );
+  Widget slideTransistion(context, animation, secondaryAnimation, child) {
+    const begin = Offset(0.0, 1.0);
+    const end = Offset.zero;
+    const curve = Curves.ease;
 
-  return SlideTransition(
-    position: tween.animate(curvedAnimation),
-    child: child,
-  );
-}
+    final tween = Tween(begin: begin, end: end);
+    final curvedAnimation = CurvedAnimation(
+      parent: animation,
+      curve: curve,
+    );
 
-PageRouteBuilder myRoutes({settings}) {
-  switch (settings.name) {
-    case "/":
-      return PageRouteBuilder(
-          pageBuilder: (context, animation, secondaryAnimation) => const Landing(),
-          transitionsBuilder: (context, animation, secondaryAnimation, child) =>
-              FadeTransition(opacity: animation, child: child));
-              case "/home":
-      return PageRouteBuilder(
-          pageBuilder: (context, animation, secondaryAnimation) => const Home(),
-          transitionsBuilder: (context, animation, secondaryAnimation, child) =>
-              FadeTransition(opacity: animation, child: child));
-    case "/schedular":
-      return PageRouteBuilder(
-          pageBuilder: (context, animation, secondaryAnimation) =>
-              const Schedular(),
-          transitionsBuilder: (context, animation, secondaryAnimation, child) =>
-              FadeTransition(opacity: animation, child: child));
-    case "/notifications":
-      return PageRouteBuilder(
-          pageBuilder: (context, animation, secondaryAnimation) =>
-              const Notifications(),
-          transitionsBuilder: (context, animation, secondaryAnimation, child) =>
-              FadeTransition(opacity: animation, child: child));
-    case "/profile":
-      return PageRouteBuilder(
-          pageBuilder: (context, animation, secondaryAnimation) =>
-              const Profile(),
-          transitionsBuilder: (context, animation, secondaryAnimation, child) =>
-              FadeTransition(opacity: animation, child: child));
-    case "/editprofile":
-      return PageRouteBuilder(
-          pageBuilder: (context, animation, secondaryAnimation) =>
-              const EditProfile(),
-          transitionsBuilder: (context, animation, secondaryAnimation, child) =>
-              FadeTransition(opacity: animation, child: child));
-    case "/new-task":
-      return PageRouteBuilder(
-          pageBuilder: (context, animation, secondaryAnimation) =>
-              const NewTask(),
-          transitionsBuilder: (context, animation, secondaryAnimation, child) =>
-              FadeTransition(opacity: animation, child: child));
-    case "/login":
-      return PageRouteBuilder(
-          pageBuilder: (context, animation, secondaryAnimation) =>
-              const Login(),
-          transitionsBuilder: (context, animation, secondaryAnimation, child) =>
-              FadeTransition(opacity: animation, child: child));
-    case "/register":
-      return PageRouteBuilder(
-          pageBuilder: (context, animation, secondaryAnimation) =>
-              const Register(),
-          transitionsBuilder: (context, animation, secondaryAnimation, child) =>
-              FadeTransition(opacity: animation, child: child));
-    default:
-      return PageRouteBuilder(
-          pageBuilder: (context, animation, secondaryAnimation) =>
-              const UnknownRoute(),
-          transitionsBuilder: (context, animation, secondaryAnimation, child) =>
-              FadeTransition(opacity: animation, child: child));
+    return SlideTransition(
+      position: tween.animate(curvedAnimation),
+      child: child,
+    );
   }
 }

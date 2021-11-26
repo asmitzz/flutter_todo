@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_todo/utils/constants/colors.dart';
 import 'package:flutter_todo/utils/constants/fonts.dart';
 import 'package:flutter_todo/utils/constants/strings.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Landing extends StatefulWidget {
   const Landing({Key? key}) : super(key: key);
@@ -15,10 +16,15 @@ class _LandingState extends State<Landing> with SingleTickerProviderStateMixin {
   late final Animation<double> _animation =
       CurvedAnimation(parent: _controller, curve: Curves.ease);
 
-  void startApp() {
-    Future.delayed(const Duration(seconds: 3), () {
-      // Navigator.pushReplacementNamed(context, "/home");
-    });
+  void startApp() async{
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      final token = prefs.getString("token");
+      if(token == null){
+         Navigator.pushReplacementNamed(context, "/login");
+      }
+      else{
+         Navigator.pushReplacementNamed(context, "/home");
+      }
   }
 
   @override
@@ -38,39 +44,42 @@ class _LandingState extends State<Landing> with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    
     return SafeArea(
       child: Scaffold(
         backgroundColor: ColorsConstants.rosyBrown,
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              RotationTransition(
-                turns: _animation,
-                child:  Text(
-                  StringsConstants.landing["icon"],
-                  style: TextStyle(
-                      fontSize: FontsConstants.xl_3, color: ColorsConstants.blue),
+        body: SingleChildScrollView(
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                RotationTransition(
+                  turns: _animation,
+                  child:  Text(
+                    StringsConstants.landing["icon"],
+                    style: TextStyle(
+                        fontSize: FontsConstants.xl_3, color: ColorsConstants.blue),
+                  ),
                 ),
-              ),
-               Text(
-                StringsConstants.landing["heading"],
-                style: TextStyle(
-                    color: ColorsConstants.blue,
-                    fontWeight: FontsConstants.bold,
-                    fontSize: FontsConstants.xl_1),
-              ),
-              const SizedBox(
-                height: 50.0,
-              ),
-               Text(
-                StringsConstants.landing["text"],
-                style:  TextStyle(
-                    fontWeight: FontsConstants.medium,
-                    color:  ColorsConstants.blue),
-              )
-            ],
+                 Text(
+                  StringsConstants.landing["heading"],
+                  style: TextStyle(
+                      color: ColorsConstants.blue,
+                      fontWeight: FontsConstants.bold,
+                      fontSize: FontsConstants.xl_1),
+                ),
+                const SizedBox(
+                  height: 50.0,
+                ),
+                 Text(
+                  StringsConstants.landing["text"],
+                  style:  TextStyle(
+                      fontWeight: FontsConstants.medium,
+                      color:  ColorsConstants.blue),
+                )
+              ],
+            ),
           ),
         ),
       ),

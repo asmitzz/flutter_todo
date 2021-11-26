@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_todo/providers/todos.provider.dart';
 import 'package:flutter_todo/utils/constants/colors.dart';
 import 'package:flutter_todo/utils/constants/fonts.dart';
 import 'package:flutter_todo/utils/constants/strings.dart';
 import 'package:flutter_todo/widgets/custom_switch.dart';
+import 'package:provider/provider.dart';
 
 class NewTaskBody extends StatefulWidget {
   const NewTaskBody({Key? key}) : super(key: key);
@@ -12,43 +14,53 @@ class NewTaskBody extends StatefulWidget {
 }
 
 class _NewTaskBodyState extends State<NewTaskBody> {
-  String task = "Write here...";
-  DateTime selectedDate = DateTime.now();
- 
- 
- _selectDate(BuildContext context) async {
+  _selectDate(BuildContext context, TodoProvider todosProvider) async {
     final DateTime? picked = await showDatePicker(
       context: context,
-      initialDate: selectedDate,
-      firstDate: DateTime(2000),
+      initialDate: todosProvider.completedBy,
+      firstDate: todosProvider.completedBy,
       lastDate: DateTime(2025),
     );
-    if (picked != null && picked != selectedDate) {
-      setState(() {
-        selectedDate = picked;
-      });
+    if (picked != null && picked != todosProvider.completedBy) {
+      todosProvider.updateCompletedBy(picked);
     }
   }
+
   @override
   Widget build(BuildContext context) {
+    final todosProvider = Provider.of<TodoProvider>(context);
     return Column(
       children: [
         Container(
           padding: const EdgeInsets.fromLTRB(30.0, 30.0, 30.0, 40.0),
           color: ColorsConstants.rosyBrown,
-          child: EditableText(
-            focusNode: FocusNode(),
-            style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: FontsConstants.xl,
-                color: ColorsConstants.blue),
-            cursorColor: ColorsConstants.blue,
-            backgroundCursorColor: ColorsConstants.blue,
-            controller: TextEditingController(text: task),
-            onChanged: (value) => setState(() {
-              task = value;
-            }),
-            maxLines: 2,
+          child: Form(
+            key: todosProvider.formKey,
+            child: TextFormField(
+              autofocus: false,
+              initialValue: todosProvider.title,
+              autovalidateMode: AutovalidateMode.onUserInteraction,
+              decoration: const InputDecoration(
+                  hintText: "Write Text here...",
+                  border: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.transparent),
+                    borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                  )),
+              style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: FontsConstants.xl,
+                  color: ColorsConstants.blue),
+              cursorColor: ColorsConstants.blue,
+              onChanged: (value) {
+                todosProvider.updateTitle(value);
+              },
+              maxLines: 2,
+              validator: (value) {
+                return (value != null && value.isEmpty
+                    ? "Please enter text"
+                    : null);
+              },
+            ),
           ),
         ),
         Padding(
@@ -66,13 +78,13 @@ class _NewTaskBodyState extends State<NewTaskBody> {
               Container(
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10.0),
-                    border: Border.all(width: 2, color: Colors.blueGrey)),
+                    border: Border.all(width: 2, color: ColorsConstants.blueGrey)),
                 alignment: Alignment.topLeft,
                 width: double.infinity,
                 child: TextButton(
-                    onPressed: () => _selectDate(context),
-                    child:Text(
-                      "${selectedDate.year.toString()}-${selectedDate.month.toString()}-${selectedDate.day.toString()}",
+                    onPressed: () => _selectDate(context, todosProvider),
+                    child: Text(
+                      "${todosProvider.completedBy.year.toString()}-${todosProvider.completedBy.month.toString()}-${todosProvider.completedBy.day.toString()}",
                       style: TextStyle(color: ColorsConstants.blue),
                     )),
               ),
@@ -84,11 +96,21 @@ class _NewTaskBodyState extends State<NewTaskBody> {
               const SizedBox(
                 height: 15.0,
               ),
-              CustomSwitch(text: StringsConstants.newTaskOptions["option_1"]),
+              CustomSwitch(
+                  value: todosProvider.saveAsAlarm,
+                  onChange: (value) {
+                    todosProvider.updateSaveAsAlarm(value);
+                  },
+                  text: StringsConstants.newTaskOptions["option_1"]),
               const SizedBox(
                 height: 15,
               ),
-              CustomSwitch(text: StringsConstants.newTaskOptions["option_2"])
+              CustomSwitch(
+                  value: todosProvider.saveAsNotifications,
+                  onChange: (value) {
+                    todosProvider.updateSaveAsNotifications(value);
+                  },
+                  text: StringsConstants.newTaskOptions["option_2"])
             ],
           ),
         )

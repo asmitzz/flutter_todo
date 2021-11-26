@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_todo/utils/constants/colors.dart';
 import 'package:flutter_todo/utils/constants/fonts.dart';
@@ -7,6 +9,8 @@ class CustomFormField extends StatefulWidget {
       {Key? key,
       required this.labelText,
       required this.hintText,
+      required this.onChange,
+      required this.controller,
       this.prefixIcon,
       this.initialValue = "",
       this.suffixIcon,
@@ -21,6 +25,8 @@ class CustomFormField extends StatefulWidget {
   final dynamic suffixIcon;
   final bool obscureText;
   final Function validator;
+  final Function onChange;
+  final TextEditingController controller;
 
   @override
   State<CustomFormField> createState() => _CustomFormFieldState();
@@ -30,10 +36,11 @@ class _CustomFormFieldState extends State<CustomFormField> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+        controller:widget.controller,
         autovalidateMode: AutovalidateMode.onUserInteraction,
         style: TextStyle(color: ColorsConstants.blue),
         obscureText: widget.obscureText,
-        initialValue: widget.initialValue ?? "",
+        onChanged: (value) => widget.onChange(value),
         decoration: InputDecoration(
             prefixIcon: widget.prefixIcon,
             suffixIcon: widget.suffixIcon,

@@ -14,7 +14,7 @@ class _ProfileContentState extends State<ProfileContent> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(30.0),
+      padding: const EdgeInsets.all(20.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -23,11 +23,11 @@ class _ProfileContentState extends State<ProfileContent> {
           const SizedBox(
             height: 15.0,
           ),
-          CustomSwitch(text: StringsConstants.profileOptions["option_1"]),
+          CustomSwitch(value:false,onChange: (value){print(value);},text: StringsConstants.profileOptions["option_1"]),
           const SizedBox(
             height: 15.0,
           ),
-          CustomSwitch(text: StringsConstants.profileOptions["option_2"]),
+          CustomSwitch(value:false,onChange: (value){print(value);},text: StringsConstants.profileOptions["option_2"]),
           const SizedBox(
             height: 15.0,
           ),
@@ -36,11 +36,11 @@ class _ProfileContentState extends State<ProfileContent> {
           const SizedBox(
             height: 15.0,
           ),
-          CustomSwitch(text: StringsConstants.profileOptions["option_3"]),
+          CustomSwitch(value:false,onChange: (value){print(value);},text: StringsConstants.profileOptions["option_3"]),
           const SizedBox(
             height: 15.0,
           ),
-          CustomSwitch(text: StringsConstants.profileOptions["option_4"]),
+          CustomSwitch(value:false,onChange: (value){print(value);},text: StringsConstants.profileOptions["option_4"]),
           const SizedBox(
             height: 15.0,
           ),

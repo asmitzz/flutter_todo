@@ -29,7 +29,7 @@ class _NotificationsState extends State<Notifications> {
             ),
           ),
           drawer: const MyDrawer(),
-          body: const NotificationsTemplate(),
+          body: const SingleChildScrollView(child: NotificationsTemplate()),
           floatingActionButtonLocation:
               FloatingActionButtonLocation.centerDocked,
           bottomNavigationBar: const BottomBar(currentIndex: 2),

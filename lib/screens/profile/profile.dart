@@ -29,7 +29,7 @@ class _ProfileState extends State<Profile> {
             ),
           ),
           drawer: const MyDrawer(),
-          body: const ProfileTemplate(),
+          body: const SingleChildScrollView(child: ProfileTemplate()),
           floatingActionButtonLocation:
               FloatingActionButtonLocation.centerDocked,
           bottomNavigationBar: const BottomBar(currentIndex: 3),

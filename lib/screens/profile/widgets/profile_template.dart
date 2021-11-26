@@ -12,11 +12,13 @@ class ProfileTemplate extends StatefulWidget {
 class _ProfileTemplateState extends State<ProfileTemplate> {
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: const [
-         ProfileHeader(),
-         ProfileContent()
-      ],
+    return SingleChildScrollView(
+      child: Column(
+        children: const [
+           ProfileHeader(),
+           ProfileContent()
+        ],
+      ),
     );
   }
 }

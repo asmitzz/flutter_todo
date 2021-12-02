@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_todo/utils/constants/colors.dart';
 import 'package:flutter_todo/utils/constants/strings.dart';
-import 'package:flutter_todo/utils/size_config.dart';
 import 'package:flutter_todo/widgets/my_drawer.dart';
 import 'package:flutter_todo/widgets/my_floating_action_button.dart';
 import 'package:flutter_todo/widgets/my_appbar.dart';

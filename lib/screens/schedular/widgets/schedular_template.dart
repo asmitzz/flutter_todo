@@ -1,7 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_todo/providers/todos.provider.dart';
 import 'package:flutter_todo/utils/constants/colors.dart';
 import 'package:flutter_todo/utils/constants/fonts.dart';
 import 'package:flutter_todo/utils/constants/strings.dart';
+import 'package:provider/provider.dart';
 
 class SchedularTemplate extends StatefulWidget {
   const SchedularTemplate({Key? key}) : super(key: key);
@@ -11,329 +14,178 @@ class SchedularTemplate extends StatefulWidget {
 }
 
 class _SchedularTemplateState extends State<SchedularTemplate> {
+  late ScrollController scrollController;
+
+  @override
+  void initState() {
+    scrollController = ScrollController();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    scrollController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
+      children: [schedularHeader(), todos()],
+    );
+  }
+
+  Consumer todos() {
+    return Consumer<TodoProvider>(builder: (_, todoProvider, __) {
+      return Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: StreamBuilder<QuerySnapshot>(
+            stream: todoProvider.fetchSchedulars(),
+            builder:
+                (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+              if (snapshot.hasError) {
+                return const Text("Something went wrong");
+              }
+
+              if (snapshot.connectionState == ConnectionState.active) {
+                List<dynamic> data = snapshot.data!.docs;
+                if (data.isEmpty) {
+                  return Text(
+                    "No todos found!!",
+                    style: TextStyle(
+                        color: ColorsConstants.blue,
+                        fontWeight: FontsConstants.bold),
+                  );
+                }
+
+                final int tomorrow = DateTime.now().day + 1;
+                Map<dynamic, dynamic> formattedData = {};
+
+                data.forEach((value) {
+                  String day =
+                      value["completedBy"].toDate().day.compareTo(tomorrow) == 0
+                          ? "Tomorrow"
+                          : value["completedBy"]
+                              .toDate()
+                              .toString()
+                              .substring(0, 10);
+                  if (formattedData.containsKey(day)) {
+                    formattedData[day] = [...formattedData[day], value];
+                  } else {
+                    formattedData[day] = [value];
+                  }
+                });
+
+                return ListView.builder(
+                  controller: scrollController,
+                  scrollDirection: Axis.vertical,
+                  shrinkWrap: true,
+                  itemCount: formattedData.keys.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return todoCard(formattedData,
+                        formattedData.keys.toList()[index], todoProvider);
+                  },
+                );
+              }
+              return const Text("loading");
+            }),
+      );
+    });
+  }
+
+  Column todoCard(
+      Map<dynamic, dynamic> data, String key, TodoProvider todoProvider) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Container(
-          constraints: const BoxConstraints(minWidth: double.infinity),
-          decoration: BoxDecoration(
-            color: ColorsConstants.lightRosyBrown,
-          ),
-          child: Padding(
-            padding: const EdgeInsets.all(30.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  StringsConstants.schedular["title_1"],
-                  style:  TextStyle(
-                      color:  ColorsConstants.blue,
-                      fontSize: FontsConstants.lg_1,
-                      fontWeight: FontsConstants.bold),
-                ),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Text(
-                      StringsConstants.schedular["title_2"],
-                      style:  TextStyle(
-                          color:  ColorsConstants.blue,
-                          fontSize: FontsConstants.lg_1,
-                          fontWeight: FontsConstants.bold),
-                    ),
-                    Container(
-                        margin: const EdgeInsets.only(top: 3.0),
-                        width: 25.0,
-                        height: 3.0,
-                        color:  ColorsConstants.blue)
-                  ],
-                )
-              ],
-            ),
+        const SizedBox(
+          height: 20,
+        ),
+        Text(
+          key,
+          style: TextStyle(
+            color: ColorsConstants.blueGrey,
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: Column(
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const SizedBox(
-                    height: 20,
+        const SizedBox(
+          height: 20,
+        ),
+        ListView.builder(
+          scrollDirection: Axis.vertical,
+          shrinkWrap: true,
+          itemCount: data[key].length,
+          itemBuilder: (BuildContext context, int index) {
+            return Row(
+              children: [
+                Transform.scale(
+                  scale: 1.5,
+                  child: Checkbox(
+                      side:
+                          BorderSide(color: ColorsConstants.green, width: 1.5),
+                      value: data[key][index]["isComplete"],
+                      onChanged: (bool? value) {
+                        todoProvider.completeTodo(
+                            docId: data[key][index].id, value: value);
+                      },
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(6.0))),
+                ),
+                const SizedBox(
+                  width: 10.0,
+                ),
+                Text(
+                  data[key][index]["title"],
+                  style: TextStyle(
+                    fontWeight: FontsConstants.medium,
+                    color: ColorsConstants.blue,
                   ),
-                  Text(
-                    "Tomorrow",
-                    style: TextStyle(
-                      color: ColorsConstants.blueGrey,
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  Row(
-                    children: [
-                      Transform.scale(
-                        scale: 1.5,
-                        child: Checkbox(
-                            side: BorderSide(
-                                color: ColorsConstants.green, width: 1.5),
-                            value: false,
-                            onChanged: (value) {},
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(6.0))),
-                      ),
-                      const SizedBox(
-                        width: 10.0,
-                      ),
-                       Text(
-                        "Read Type Guidelines",
-                        style: TextStyle(
-                          fontWeight: FontsConstants.medium,
-                          color: ColorsConstants.blue,
-                        ),
-                      )
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      Transform.scale(
-                        scale: 1.5,
-                        child: Checkbox(
-                            side: BorderSide(
-                                color: ColorsConstants.green, width: 1.5),
-                            value: false,
-                            onChanged: (value) {},
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(6.0))),
-                      ),
-                      const SizedBox(
-                        width: 10.0,
-                      ),
-                       Text(
-                        "Complete responsive design",
-                        style: TextStyle(
-                          fontWeight: FontsConstants.medium,
-                          color: ColorsConstants.blue,
-                        ),
-                      )
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      Transform.scale(
-                        scale: 1.5,
-                        child: Checkbox(
-                            checkColor:
-                                 ColorsConstants.blue,
-                            activeColor: ColorsConstants.green,
-                            side: BorderSide(
-                                color: ColorsConstants.green, width: 1.5),
-                            value: true,
-                            onChanged: (value) {},
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(6.0))),
-                      ),
-                      const SizedBox(
-                        width: 10.0,
-                      ),
-                      Text(
-                        "Bring Groceries",
-                        style: TextStyle(
-                          color: ColorsConstants.blueGrey,
-                        ),
-                      )
-                    ],
-                  ),
-                ],
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  Text(
-                    "Tomorrow",
-                    style: TextStyle(
-                      color: ColorsConstants.blueGrey,
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  Row(
-                    children: [
-                      Transform.scale(
-                        scale: 1.5,
-                        child: Checkbox(
-                            side: BorderSide(
-                                color: ColorsConstants.green, width: 1.5),
-                            value: false,
-                            onChanged: (value) {},
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(6.0))),
-                      ),
-                      const SizedBox(
-                        width: 10.0,
-                      ),
-                       Text(
-                        "Read Type Guidelines",
-                        style: TextStyle(
-                          fontWeight: FontsConstants.medium,
-                          color: ColorsConstants.blue,
-                        ),
-                      )
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      Transform.scale(
-                        scale: 1.5,
-                        child: Checkbox(
-                            side: BorderSide(
-                                color: ColorsConstants.green, width: 1.5),
-                            value: false,
-                            onChanged: (value) {},
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(6.0))),
-                      ),
-                      const SizedBox(
-                        width: 10.0,
-                      ),
-                       Text(
-                        "Complete responsive design",
-                        style: TextStyle(
-                          fontWeight: FontsConstants.medium,
-                          color: ColorsConstants.blue,
-                        ),
-                      )
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      Transform.scale(
-                        scale: 1.5,
-                        child: Checkbox(
-                            checkColor:
-                                 ColorsConstants.blue,
-                            activeColor: ColorsConstants.green,
-                            side: BorderSide(
-                                color: ColorsConstants.green, width: 1.5),
-                            value: true,
-                            onChanged: (value) {},
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(6.0))),
-                      ),
-                      const SizedBox(
-                        width: 10.0,
-                      ),
-                      Text(
-                        "Bring Groceries",
-                        style: TextStyle(
-                          color: ColorsConstants.blueGrey,
-                        ),
-                      )
-                    ],
-                  ),
-                ],
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  Text(
-                    "Sat, Nov 30, 2021",
-                    style: TextStyle(
-                      color: ColorsConstants.blueGrey,
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  Row(
-                    children: [
-                      Transform.scale(
-                        scale: 1.5,
-                        child: Checkbox(
-                            side: BorderSide(
-                                color: ColorsConstants.green, width: 1.5),
-                            value: false,
-                            onChanged: (value) {},
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(6.0))),
-                      ),
-                      const SizedBox(
-                        width: 10.0,
-                      ),
-                       Text(
-                        "Read Type Guidelines",
-                        style: TextStyle(
-                          fontWeight: FontsConstants.medium,
-                          color: ColorsConstants.blue,
-                        ),
-                      )
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      Transform.scale(
-                        scale: 1.5,
-                        child: Checkbox(
-                            side: BorderSide(
-                                color: ColorsConstants.green, width: 1.5),
-                            value: false,
-                            onChanged: (value) {},
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(6.0))),
-                      ),
-                      const SizedBox(
-                        width: 10.0,
-                      ),
-                       Text(
-                        "Complete responsive design",
-                        style: TextStyle(
-                          fontWeight: FontsConstants.medium,
-                          color: ColorsConstants.blue,
-                        ),
-                      )
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      Transform.scale(
-                        scale: 1.5,
-                        child: Checkbox(
-                            checkColor:
-                                 ColorsConstants.blue,
-                            activeColor: ColorsConstants.green,
-                            side: BorderSide(
-                                color: ColorsConstants.green, width: 1.5),
-                            value: true,
-                            onChanged: (value) {},
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(6.0))),
-                      ),
-                      const SizedBox(
-                        width: 10.0,
-                      ),
-                      Text(
-                        "Bring Groceries",
-                        style: TextStyle(
-                          color: ColorsConstants.blueGrey,
-                        ),
-                      )
-                    ],
-                  ),
-                ],
-              )
-            ],
-          ),
+                )
+              ],
+            );
+          },
         )
       ],
     );
   }
+}
+
+Container schedularHeader() {
+  return Container(
+    constraints: const BoxConstraints(minWidth: double.infinity),
+    decoration: BoxDecoration(
+      color: ColorsConstants.lightRosyBrown,
+    ),
+    child: Padding(
+      padding: const EdgeInsets.all(30.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            StringsConstants.schedular["title_1"],
+            style: TextStyle(
+                color: ColorsConstants.blue,
+                fontSize: FontsConstants.lg_1,
+                fontWeight: FontsConstants.bold),
+          ),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text(
+                StringsConstants.schedular["title_2"],
+                style: TextStyle(
+                    color: ColorsConstants.blue,
+                    fontSize: FontsConstants.lg_1,
+                    fontWeight: FontsConstants.bold),
+              ),
+              Container(
+                  margin: const EdgeInsets.only(top: 3.0),
+                  width: 25.0,
+                  height: 3.0,
+                  color: ColorsConstants.blue)
+            ],
+          )
+        ],
+      ),
+    ),
+  );
 }

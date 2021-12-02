@@ -4,7 +4,6 @@ import 'package:flutter_todo/widgets/toast.dart';
 import 'package:flutter_todo/main.dart';
 
 class AuthProvider with ChangeNotifier {
-
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
   getUser() {

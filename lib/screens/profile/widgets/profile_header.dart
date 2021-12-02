@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_todo/utils/constants/fonts.dart';
 import 'package:flutter_todo/utils/constants/strings.dart';
@@ -8,6 +9,10 @@ class ProfileHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final User? currentUser = FirebaseAuth.instance.currentUser;
+    final String name = currentUser!.displayName == null ? StringsConstants.profile["default_name"] : currentUser.displayName.toString();
+    final String email = currentUser.email == null ? StringsConstants.profile["email"] : currentUser.email.toString();
+
     return Container(
       color: ColorsConstants.lightRosyBrown,
       padding: const EdgeInsets.all(30.0),
@@ -27,7 +32,7 @@ class ProfileHeader extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  StringsConstants.profile["default_name"],
+                  name,
                   style: TextStyle(
                       fontWeight: FontsConstants.bold,
                       fontSize: 26.0,
@@ -37,7 +42,7 @@ class ProfileHeader extends StatelessWidget {
                   height: 4.0,
                 ),
                 Text(
-                  StringsConstants.profile["default_email"],
+                  email,
                   style: TextStyle(color: ColorsConstants.blue),
                 )
               ],

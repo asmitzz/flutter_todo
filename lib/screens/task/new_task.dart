@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_todo/providers/todos.provider.dart';
 import 'package:flutter_todo/screens/task/widgets/new_task_body.dart';
@@ -17,7 +16,7 @@ class NewTask extends StatefulWidget {
 class _NewTaskState extends State<NewTask> {
   @override
   Widget build(BuildContext context) {
-    final todosProvider = Provider.of<TodoProvider>(context);
+    final todosProvider = Provider.of<TodoProvider>(context, listen: false);
 
     return Scaffold(
       appBar: AppBar(
@@ -41,7 +40,6 @@ class _NewTaskState extends State<NewTask> {
         onPressed: () {
           if (todosProvider.formKey.currentState!.validate()) {
             todosProvider.addTodo();
-            Navigator.pop(context);
           }
         },
         child: Icon(

@@ -1,8 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_todo/modals/todos.modal.dart';
-import 'package:flutter_todo/providers/auth.provider.dart';
 import 'package:flutter_todo/providers/todos.provider.dart';
 import 'package:flutter_todo/utils/constants/colors.dart';
 import 'package:flutter_todo/utils/constants/fonts.dart';
@@ -17,84 +14,94 @@ class HomeTemplate extends StatefulWidget {
 }
 
 class _HomeTemplateState extends State<HomeTemplate> {
+  late ScrollController scrollController;
+
+  @override
+  void initState() {
+    scrollController = ScrollController();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    scrollController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Column(
         children: [
           homeHeader(),
-          Consumer<TodoProvider>(
-              builder: (_, todoProvider, __) => todos(todoProvider)),
+          todos(),
         ],
       ),
     );
   }
 
-  Padding todos(
-    TodoProvider todoProvider,
-  ) {
-    // List<TodosModal> todos = todoProvider.todos
+  Consumer todos() {
+    return Consumer<TodoProvider>(builder: (_, todoProvider, __) {
+      return Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: StreamBuilder<QuerySnapshot>(
+            stream: todoProvider.fetchTodos(),
+            builder:
+                (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+              if (snapshot.hasError) {
+                return const Text("Something went wrong");
+              }
 
-    return Padding(
-      padding: const EdgeInsets.all(20.0),
-      child: StreamBuilder<DocumentSnapshot>(
-          stream: todoProvider.fetchTodos(),
-          builder:
-              (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
-            if (snapshot.hasError) {
-              return const Text("Something went wrong");
-            }
-            if (snapshot.hasData && !snapshot.data!.exists) {
-              todoProvider.createTodos();
-              return const Text("Document does not exist");
-            }
-            if (snapshot.connectionState == ConnectionState.active) {
-              Map<String, dynamic> data =
-                  snapshot.data!.data() as Map<String, dynamic>;
-              if (data["todos"].length == 0) {
-                return Text(
-                  "No todos found!!",
-                  style: TextStyle(
-                      color: ColorsConstants.blue,
-                      fontWeight: FontsConstants.bold),
+              if (snapshot.connectionState == ConnectionState.active) {
+                List<dynamic> data = snapshot.data!.docs;
+                if (data.isEmpty) {
+                  return Text(
+                    "No todos found!!",
+                    style: TextStyle(
+                        color: ColorsConstants.blue,
+                        fontWeight: FontsConstants.bold),
+                  );
+                }
+
+                return ListView.builder(
+                  controller: scrollController,
+                  scrollDirection: Axis.vertical,
+                  shrinkWrap: true,
+                  itemCount: data.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return todoCard(data, index, todoProvider);
+                  },
                 );
               }
-              return ListView.builder(
-                scrollDirection: Axis.vertical,
-                shrinkWrap: true,
-                itemCount: data["todos"].length,
-                itemBuilder: (BuildContext context, int index) {
-                  return Row(
-                    children: [
-                      Transform.scale(
-                        scale: 1.5,
-                        child: Checkbox(
-                            side: BorderSide(
-                                color: ColorsConstants.green, width: 1.5),
-                            value: data["todos"][index]["isComplete"],
-                            onChanged: (value) {
-                              todoProvider.completeTodo(
-                                  value, data["todos"][index], index);
-                            },
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(6.0))),
-                      ),
-                      const SizedBox(
-                        width: 10.0,
-                      ),
-                      Text(
-                        data["todos"][index]["title"],
-                        style: TextStyle(
-                            color: ColorsConstants.blue,
-                            fontWeight: FontsConstants.medium),
-                      )
-                    ],
-                  );
-                },
-              );
-            }
-            return const Text("loading");
-          }),
+              return const Text("loading");
+            }),
+      );
+    });
+  }
+
+  Row todoCard(List<dynamic> data, int index, TodoProvider todoProvider) {
+    return Row(
+      children: [
+        Transform.scale(
+          scale: 1.5,
+          child: Checkbox(
+              side: BorderSide(color: ColorsConstants.green, width: 1.5),
+              value: data[index]["isComplete"],
+              onChanged: (bool? value) {
+                todoProvider.completeTodo(docId: data[index].id, value: value);
+              },
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(6.0))),
+        ),
+        const SizedBox(
+          width: 10.0,
+        ),
+        Text(
+          data[index]["title"],
+          style: TextStyle(
+              color: ColorsConstants.blue, fontWeight: FontsConstants.medium),
+        )
+      ],
     );
   }
 }

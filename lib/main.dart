@@ -6,7 +6,6 @@ import 'package:flutter_todo/providers/auth.provider.dart';
 import 'package:flutter_todo/providers/todos.provider.dart';
 import 'package:flutter_todo/screens/auth/login/login.dart';
 import 'package:flutter_todo/screens/home/home.dart';
-import 'package:flutter_todo/screens/landing/landing.dart';
 import 'package:flutter_todo/widgets/my_routes.dart';
 import 'package:device_preview/device_preview.dart';
 import 'package:provider/provider.dart';

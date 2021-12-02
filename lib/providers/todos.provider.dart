@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_todo/main.dart';
+import 'package:flutter_todo/widgets/toast.dart';
 
 class TodoProvider with ChangeNotifier {
   String title = "";
@@ -11,8 +13,8 @@ class TodoProvider with ChangeNotifier {
   bool saveAsNotifications = false;
 
   final GlobalKey<FormState> formKey = GlobalKey();
-  CollectionReference todosCollection =
-      FirebaseFirestore.instance.collection('todos');
+  CollectionReference userCollection =
+      FirebaseFirestore.instance.collection('users');
   String uid = FirebaseAuth.instance.currentUser!.uid;
 
   void updateTitle(String value) {
@@ -40,36 +42,69 @@ class TodoProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  Stream<DocumentSnapshot<Object?>> fetchTodos() {
-    return todosCollection.doc(uid).snapshots();
+  void resetFields() {
+    title = "";
+    completedBy = DateTime.now();
+
+    isComplete = false;
+    saveAsAlarm = false;
+    saveAsNotifications = false;
+    notifyListeners();
   }
 
-  Future<void> addTodo() {
-    return todosCollection.doc(uid).update({
-      "todos": FieldValue.arrayUnion([
-        {
-          "title": title,
-          "completedBy": completedBy,
-          "isComplete": isComplete,
-          "saveAsAlarm": saveAsAlarm,
-          "saveAsNotifications": saveAsNotifications,
-        }
-      ])
-    });
+  Stream<QuerySnapshot<Map<String, dynamic>>> fetchTodos() {
+    final DateTime currentTime = DateTime.now();
+    final DateTime startTime =
+        DateTime(currentTime.year, currentTime.month, currentTime.day);
+    final DateTime endTime = startTime.add(const Duration(hours: 24));
+
+    return userCollection
+        .doc(uid)
+        .collection("todos")
+        .where(
+          "completedBy",
+          isGreaterThanOrEqualTo: Timestamp.fromDate(startTime),
+          isLessThan: Timestamp.fromDate(endTime),
+        )
+        .snapshots();
   }
 
-  createTodos() {
-    return todosCollection.doc(uid).set({"todos":[]});
+  Stream<QuerySnapshot<Map<String, dynamic>>> fetchSchedulars() {
+    final DateTime currentTime = DateTime.now();
+    final DateTime startTime =
+        DateTime(currentTime.year, currentTime.month, currentTime.day);
+    final DateTime endTime = startTime.add(const Duration(hours: 24));
+
+    return userCollection
+        .doc(uid)
+        .collection("todos")
+        .where(
+          "completedBy",
+          isGreaterThanOrEqualTo: Timestamp.fromDate(endTime),
+        )
+        .snapshots();
   }
 
-  completeTodo(bool? value, item, index) {
-    item["isComplete"] = value;
-    todosCollection.doc(uid).get().then((DocumentSnapshot documentSnapshot) {
-      List<dynamic> getTodos = documentSnapshot.get("todos");
-      getTodos = getTodos.asMap().entries.map((entry) {
-        return entry.key == index ? item : entry.value;
-      }).toList();
-      todosCollection.doc(uid).update({"todos": getTodos});
+   addTodo() async {
+    try {
+      await userCollection.doc(uid).collection("todos").add({
+        "title": title,
+        "completedBy": completedBy,
+        "isComplete": isComplete,
+        "saveAsAlarm": saveAsAlarm,
+        "saveAsNotifications": saveAsNotifications,
+      });
+      resetFields();
+      navigatorKey.currentState!.pop();
+      return MyToast().successToast("Todo added");
+    } catch (e) {
+      return MyToast().errorToast(e.toString());
+    }
+  }
+
+  Future<void> completeTodo({docId, bool? value}) async{
+    await userCollection.doc(uid).collection("todos").doc(docId).update({
+      "isComplete": value,
     });
   }
 }

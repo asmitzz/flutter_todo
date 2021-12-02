@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_todo/providers/auth.provider.dart';
 import 'package:flutter_todo/utils/constants/colors.dart';
@@ -14,6 +15,9 @@ class MyDrawer extends StatefulWidget {
 class _MyDrawerState extends State<MyDrawer> {
   @override
   Widget build(BuildContext context) {
+    final User? currentUser = FirebaseAuth.instance.currentUser;
+    final String email = currentUser!.email == null ? "" : currentUser.email.toString();
+    final String name = currentUser.displayName == null ? "" : currentUser.displayName.toString();
     return Drawer(
         elevation: 0,
         child: SingleChildScrollView(
@@ -33,13 +37,13 @@ class _MyDrawerState extends State<MyDrawer> {
                         child: UserAccountsDrawerHeader(
                             decoration:
                                 BoxDecoration(color: ColorsConstants.white),
-                            accountName: Text("Asmit Shrivastava",
+                            accountName: Text(name,
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     fontSize: 20.0,
                                     color: ColorsConstants.blue)),
                             accountEmail: Text(
-                              "example@gmail.com",
+                              email,
                               style: TextStyle(
                                   fontWeight: FontWeight.w500,
                                   color: ColorsConstants.blue),
@@ -75,26 +79,27 @@ class _MyDrawerState extends State<MyDrawer> {
                           ),
                         ),
                         ListTile(
-                          onTap: () =>
-                              Navigator.pushReplacementNamed(context, "/profile"),
+                          onTap: () => Navigator.pushReplacementNamed(
+                              context, "/profile"),
                           title: Text(
                             StringsConstants.drawerOptions["option_4"],
                             style: TextStyle(color: ColorsConstants.blue),
                           ),
                         ),
                         Consumer<AuthProvider>(
-                          builder:(_,authProvider,__) => ListTile(
-                          onTap: () => authProvider.signOut(),
-                          title:  Text(
-                            StringsConstants.drawerOptions["option_5"],
-                            style: TextStyle(color: ColorsConstants.blueGrey),
-                          ),
-                        ))
+                            builder: (_, authProvider, __) => ListTile(
+                                  onTap: () => authProvider.signOut(),
+                                  title: Text(
+                                    StringsConstants.drawerOptions["option_5"],
+                                    style: TextStyle(
+                                        color: ColorsConstants.blueGrey),
+                                  ),
+                                ))
                       ],
                     ),
                   ],
                 ),
-                 ListTile(
+                ListTile(
                   title: Text(
                     "© 2021 candy",
                     style: TextStyle(color: ColorsConstants.blueGrey),

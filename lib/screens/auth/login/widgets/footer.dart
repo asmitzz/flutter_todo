@@ -3,6 +3,7 @@ import 'package:flutter_todo/providers/auth.provider.dart';
 import 'package:flutter_todo/utils/constants/colors.dart';
 import 'package:flutter_todo/utils/constants/fonts.dart';
 import 'package:flutter_todo/utils/constants/strings.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 
 class LoginFooter extends StatelessWidget {
@@ -17,9 +18,9 @@ class LoginFooter extends StatelessWidget {
   final TextEditingController emailController;
   final TextEditingController passwordController;
 
-  void handleSignIn(BuildContext context,AuthProvider authProvider) async {
+  Future<void> handleSignIn(BuildContext context,AuthProvider authProvider) async {
     if (formKey.currentState!.validate()) {
-      await authProvider.signInWithEmailAndPassword(emailController:emailController,passwordController:passwordController,context:context);
+      await authProvider.signInWithEmailAndPassword(email:emailController.text,password:passwordController.text);
     }
   }
 

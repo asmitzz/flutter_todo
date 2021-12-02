@@ -1,97 +1,51 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_todo/helpers/http_service.dart';
-import 'package:flutter_todo/utils/constants/colors.dart';
-import 'package:flutter_todo/utils/snackbar.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_todo/widgets/toast.dart';
+import 'package:flutter_todo/main.dart';
 
 class AuthProvider with ChangeNotifier {
-  bool isAuth = false;
-  String baseUri = "https://insta-clone-10062000.herokuapp.com";
 
-  signUpWithEmailAndPassword(
-      {TextEditingController? emailController,
-      TextEditingController? passwordController,
-      TextEditingController? nameController,
-      TextEditingController? usernameController,
-      BuildContext? context
-      }) async {
+  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
-    Map<String, dynamic> res = await HttpService()
-        .httpRequests(Uri.parse("$baseUri/signup"), "POST", body: {
-      "email": emailController?.text,
-      "username": usernameController?.text,
-      "fullname": nameController?.text,
-      "password": passwordController?.text,
-    });
-
-    if (res["statusCode"] >= 400) {
-      mySnackBar(
-            context: context,
-            content: res["message"],
-            backgroundColor: ColorsConstants.error
-      );
-    } else if (res["statusCode"] >= 200 && res["statusCode"] < 300) {
-      emailController?.clear();
-      passwordController?.clear();
-      nameController?.clear();
-      usernameController?.clear();
-      mySnackBar(
-            context: context,
-            content: "Account created succesfully!!",
-            backgroundColor: ColorsConstants.green
-      );
-    } else {
-      mySnackBar(
-            context: context,
-            content: "Please check your internet connection.",
-            backgroundColor: ColorsConstants.error
-      );
-    }
-    notifyListeners();
+  getUser() {
+    return FirebaseAuth.instance.currentUser;
   }
 
-  signInWithEmailAndPassword(
-      {TextEditingController? emailController,
-      TextEditingController? passwordController,
-      BuildContext? context}) async {
-
-    Map<String, dynamic> res = await HttpService()
-        .httpRequests(Uri.parse("$baseUri/signin"), "POST", body: {
-      "emailOrUsername": emailController?.text,
-      "password": passwordController?.text,
-    });
-
-    if (res["statusCode"] >= 400) {
-      mySnackBar(
-            context: context,
-            content: res["message"],
-            backgroundColor: ColorsConstants.error
-      );
-    } else if (res["statusCode"] >= 200 && res["statusCode"] < 300) {
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      prefs.setString("token", res["data"]["token"]);
-      prefs.setString("uid", res["data"]["user"]["_id"]);
-      emailController?.clear();
-      passwordController?.clear();
-      if (context != null) {
-        Navigator.pushReplacementNamed(context, "/home");
+  Future<bool?> signInWithEmailAndPassword(
+      {String email = "", String password = ""}) async {
+    try {
+      await FirebaseAuth.instance
+          .signInWithEmailAndPassword(email: email, password: password);
+      navigatorKey.currentState!.pushNamed("/home");
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'user-not-found') {
+        return MyToast().errorToast("No user found for that email.");
+      } else if (e.code == 'wrong-password') {
+        return MyToast().errorToast("Wrong password provided for that user.");
       }
-    } else {
-      if (context != null) {
-        mySnackBar(
-            context: context,
-            content: "Please check your internet connection.",
-            backgroundColor: ColorsConstants.error
-        );
-       }
+      return MyToast().errorToast(e.toString());
     }
-    notifyListeners();
   }
 
-  signOut(BuildContext context) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.remove("token");
-    prefs.remove("uid");
-    Navigator.pushReplacementNamed(context, "/login");
+  Future<bool?> signUpWithEmailAndPassword(
+      {String email = "", String password = ""}) async {
+    try {
+      await FirebaseAuth.instance
+          .createUserWithEmailAndPassword(email: email, password: password);
+      return MyToast().successToast("User registered successfully");
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'weak-password') {
+        return MyToast().errorToast("The password provided is too weak.");
+      } else if (e.code == 'email-already-in-use') {
+        return MyToast()
+            .errorToast("The account already exists for that email.");
+      }
+    } catch (e) {
+      return MyToast().errorToast(e.toString());
+    }
+  }
+
+  Future<void> signOut() async {
+    await _firebaseAuth.signOut();
   }
 }

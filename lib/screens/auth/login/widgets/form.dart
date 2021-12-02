@@ -30,7 +30,6 @@ class _LoginFormState extends State<LoginForm> {
         children: [
           CustomFormField(
               controller: widget.emailController,
-              onChange: (value) {},
               labelText: StringsConstants.loginForm["field_1_label_text"],
               hintText: StringsConstants.loginForm["field_1_hint_text"],
               prefixIcon: Icon(
@@ -47,7 +46,6 @@ class _LoginFormState extends State<LoginForm> {
           ),
           CustomFormField(
               controller: widget.passwordController,
-              onChange: (value) {},
               labelText: StringsConstants.loginForm["field_2_label_text"],
               hintText: StringsConstants.loginForm["field_2_hint_text"],
               prefixIcon: Icon(

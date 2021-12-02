@@ -1,5 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_todo/modals/todos.modal.dart';
+import 'package:flutter_todo/providers/auth.provider.dart';
 import 'package:flutter_todo/providers/todos.provider.dart';
 import 'package:flutter_todo/utils/constants/colors.dart';
 import 'package:flutter_todo/utils/constants/fonts.dart';
@@ -21,51 +24,77 @@ class _HomeTemplateState extends State<HomeTemplate> {
         children: [
           homeHeader(),
           Consumer<TodoProvider>(
-              builder: (_, todoProvider, __) => todos(todoProvider))
+              builder: (_, todoProvider, __) => todos(todoProvider)),
         ],
       ),
     );
   }
 
-  Padding todos(TodoProvider todoProvider) {
-    List<TodosModal> todos = todoProvider.todos
-        .where((element) =>
-            element.completedBy.day.compareTo(DateTime.now().day) == 0)
-        .toList();
+  Padding todos(
+    TodoProvider todoProvider,
+  ) {
+    // List<TodosModal> todos = todoProvider.todos
+
     return Padding(
       padding: const EdgeInsets.all(20.0),
-      child: ListView.builder(
-        scrollDirection: Axis.vertical,
-        shrinkWrap: true,
-        itemCount: todos.length,
-        itemBuilder: (BuildContext context, int index) {
-          return Row(
-            children: [
-              Transform.scale(
-                scale: 1.5,
-                child: Checkbox(
-                    side: BorderSide(color: ColorsConstants.green, width: 1.5),
-                    value: todos[index].isComplete,
-                    onChanged: (value) {
-                      todoProvider.completeTodo(
-                          value, todoProvider.todos.indexOf(todos[index]));
-                    },
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(6.0))),
-              ),
-              const SizedBox(
-                width: 10.0,
-              ),
-              Text(
-                todos[index].title,
-                style: TextStyle(
-                    color: ColorsConstants.blue,
-                    fontWeight: FontsConstants.medium),
-              )
-            ],
-          );
-        },
-      ),
+      child: StreamBuilder<DocumentSnapshot>(
+          stream: todoProvider.fetchTodos(),
+          builder:
+              (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+            if (snapshot.hasError) {
+              return const Text("Something went wrong");
+            }
+            if (snapshot.hasData && !snapshot.data!.exists) {
+              todoProvider.createTodos();
+              return const Text("Document does not exist");
+            }
+            if (snapshot.connectionState == ConnectionState.active) {
+              Map<String, dynamic> data =
+                  snapshot.data!.data() as Map<String, dynamic>;
+              if (data["todos"].length == 0) {
+                return Text(
+                  "No todos found!!",
+                  style: TextStyle(
+                      color: ColorsConstants.blue,
+                      fontWeight: FontsConstants.bold),
+                );
+              }
+              return ListView.builder(
+                scrollDirection: Axis.vertical,
+                shrinkWrap: true,
+                itemCount: data["todos"].length,
+                itemBuilder: (BuildContext context, int index) {
+                  return Row(
+                    children: [
+                      Transform.scale(
+                        scale: 1.5,
+                        child: Checkbox(
+                            side: BorderSide(
+                                color: ColorsConstants.green, width: 1.5),
+                            value: data["todos"][index]["isComplete"],
+                            onChanged: (value) {
+                              todoProvider.completeTodo(
+                                  value, data["todos"][index], index);
+                            },
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(6.0))),
+                      ),
+                      const SizedBox(
+                        width: 10.0,
+                      ),
+                      Text(
+                        data["todos"][index]["title"],
+                        style: TextStyle(
+                            color: ColorsConstants.blue,
+                            fontWeight: FontsConstants.medium),
+                      )
+                    ],
+                  );
+                },
+              );
+            }
+            return const Text("loading");
+          }),
     );
   }
 }

@@ -8,15 +8,11 @@ class RegisterForm extends StatefulWidget {
       {Key? key,
       required this.formKey,
       required this.emailController,
-      required this.usernameController,
-      required this.nameController,
       required this.passwordController})
       : super(key: key);
   final GlobalKey<FormState> formKey;
 
   final TextEditingController emailController;
-  final TextEditingController usernameController;
-  final TextEditingController nameController;
   final TextEditingController passwordController;
   @override
   _RegisterFormState createState() => _RegisterFormState();
@@ -33,25 +29,7 @@ class _RegisterFormState extends State<RegisterForm> {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             CustomFormField(
-                controller: widget.nameController,
-                onChange: () {},
-                labelText: StringsConstants.registerForm["field_1_label_text"],
-                hintText: StringsConstants.registerForm["field_1_hint_text"],
-                prefixIcon: Icon(
-                  Icons.person,
-                  color: ColorsConstants.blue,
-                ),
-                validator: (value) {
-                  return ((value != null && value.length < 5)
-                      ? StringsConstants.registerForm["field_1_error_text"]
-                      : null);
-                }),
-            const SizedBox(
-              height: 20.0,
-            ),
-            CustomFormField(
                 controller: widget.emailController,
-                onChange: () {},
                 labelText: StringsConstants.registerForm["field_2_label_text"],
                 hintText: StringsConstants.registerForm["field_2_hint_text"],
                 prefixIcon: Icon(
@@ -69,25 +47,7 @@ class _RegisterFormState extends State<RegisterForm> {
               height: 20.0,
             ),
             CustomFormField(
-                controller: widget.usernameController,
-                onChange: () {},
-                labelText: StringsConstants.registerForm["field_3_label_text"],
-                hintText: StringsConstants.registerForm["field_3_hint_text"],
-                prefixIcon: Icon(
-                  Icons.email,
-                  color: ColorsConstants.blue,
-                ),
-                validator: (value) {
-                  return (value != null && value.length < 5)
-                      ? StringsConstants.registerForm["field_3_error_text"]
-                      : null;
-                }),
-            const SizedBox(
-              height: 20.0,
-            ),
-            CustomFormField(
                 controller: widget.passwordController,
-                onChange: () {},
                 labelText: StringsConstants.registerForm["field_4_label_text"],
                 hintText: StringsConstants.registerForm["field_4_hint_text"],
                 prefixIcon: Icon(

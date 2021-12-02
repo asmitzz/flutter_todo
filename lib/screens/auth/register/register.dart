@@ -15,8 +15,6 @@ class Register extends StatefulWidget {
 class _RegisterState extends State<Register> {
   final _formKey = GlobalKey<FormState>();
   TextEditingController emailController = TextEditingController(text: "");
-  TextEditingController usernameController = TextEditingController(text: "");
-  TextEditingController nameController = TextEditingController(text: "");
   TextEditingController passwordController = TextEditingController(text: "");
 
   @override
@@ -40,14 +38,10 @@ class _RegisterState extends State<Register> {
                 RegisterForm(
                     formKey: _formKey,
                     emailController: emailController,
-                    usernameController: usernameController,
-                    nameController: nameController,
                     passwordController: passwordController),
                 RegisterFooter(
                     formKey: _formKey,
                     emailController: emailController,
-                    usernameController: usernameController,
-                    nameController: nameController,
                     passwordController: passwordController)
                   ],
                 ),

@@ -1,8 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_todo/modals/todos.modal.dart';
 
 class TodoProvider with ChangeNotifier {
-  List<TodosModal> todos = [];
   String title = "";
   DateTime completedBy = DateTime.now();
 
@@ -11,6 +11,9 @@ class TodoProvider with ChangeNotifier {
   bool saveAsNotifications = false;
 
   final GlobalKey<FormState> formKey = GlobalKey();
+  CollectionReference todosCollection =
+      FirebaseFirestore.instance.collection('todos');
+  String uid = FirebaseAuth.instance.currentUser!.uid;
 
   void updateTitle(String value) {
     title = value;
@@ -37,25 +40,36 @@ class TodoProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  void addTodo() {
-    TodosModal todo = TodosModal(
-        title: title,
-        completedBy: completedBy,
-        isComplete: isComplete,
-        saveAsAlarm: saveAsAlarm,
-        saveAsNotifications: saveAsNotifications);
-    todos.add(todo);
-    notifyListeners();
-    title = "";
-    completedBy = DateTime.now();
-    isComplete = false;
-    saveAsAlarm = false;
-    saveAsNotifications = false;
+  Stream<DocumentSnapshot<Object?>> fetchTodos() {
+    return todosCollection.doc(uid).snapshots();
   }
 
-  void completeTodo(value, index) {
-    TodosModal todo = todos.elementAt(index);
-    todo.isComplete = value;
-    notifyListeners();
+  Future<void> addTodo() {
+    return todosCollection.doc(uid).update({
+      "todos": FieldValue.arrayUnion([
+        {
+          "title": title,
+          "completedBy": completedBy,
+          "isComplete": isComplete,
+          "saveAsAlarm": saveAsAlarm,
+          "saveAsNotifications": saveAsNotifications,
+        }
+      ])
+    });
+  }
+
+  createTodos() {
+    return todosCollection.doc(uid).set({"todos":[]});
+  }
+
+  completeTodo(bool? value, item, index) {
+    item["isComplete"] = value;
+    todosCollection.doc(uid).get().then((DocumentSnapshot documentSnapshot) {
+      List<dynamic> getTodos = documentSnapshot.get("todos");
+      getTodos = getTodos.asMap().entries.map((entry) {
+        return entry.key == index ? item : entry.value;
+      }).toList();
+      todosCollection.doc(uid).update({"todos": getTodos});
+    });
   }
 }

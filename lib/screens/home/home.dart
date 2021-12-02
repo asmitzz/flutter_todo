@@ -10,7 +10,7 @@ import 'package:flutter_todo/screens/home/widgets/home_template.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
-
+  
   @override
   _HomeState createState() => _HomeState();
 }

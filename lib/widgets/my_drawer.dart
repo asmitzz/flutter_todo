@@ -84,7 +84,7 @@ class _MyDrawerState extends State<MyDrawer> {
                         ),
                         Consumer<AuthProvider>(
                           builder:(_,authProvider,__) => ListTile(
-                          onTap: () => authProvider.signOut(context),
+                          onTap: () => authProvider.signOut(),
                           title:  Text(
                             StringsConstants.drawerOptions["option_5"],
                             style: TextStyle(color: ColorsConstants.blueGrey),

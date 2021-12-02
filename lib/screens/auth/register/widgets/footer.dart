@@ -10,26 +10,19 @@ class RegisterFooter extends StatelessWidget {
       {Key? key,
       required this.formKey,
       required this.emailController,
-      required this.usernameController,
-      required this.nameController,
       required this.passwordController})
       : super(key: key);
   final GlobalKey<FormState> formKey;
 
   final TextEditingController emailController;
-  final TextEditingController usernameController;
-  final TextEditingController nameController;
   final TextEditingController passwordController;
 
-  void handleSignUp(BuildContext context,AuthProvider authProvider) async {
+  void handleSignUp(BuildContext context, AuthProvider authProvider) async {
     if (formKey.currentState!.validate()) {
       await authProvider.signUpWithEmailAndPassword(
-          emailController: emailController,
-          usernameController: usernameController,
-          nameController: nameController,
-          passwordController: passwordController,
-          context:context
-          );
+        email: emailController.text,
+        password: passwordController.text,
+      );
     }
   }
 
@@ -62,7 +55,7 @@ class RegisterFooter extends StatelessWidget {
           widthFactor: 1.0,
           child: Consumer<AuthProvider>(
             builder: (_, authProvider, __) => TextButton(
-              onPressed: () => handleSignUp(context,authProvider),
+              onPressed: () => handleSignUp(context, authProvider),
               child: Padding(
                 padding: const EdgeInsets.fromLTRB(16.0, 8.0, 16.0, 8.0),
                 child: Text(

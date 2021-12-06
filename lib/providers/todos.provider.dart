@@ -12,6 +12,8 @@ class TodoProvider with ChangeNotifier {
   bool saveAsAlarm = false;
   bool saveAsNotifications = false;
 
+  String editId = "";
+
   final GlobalKey<FormState> formKey = GlobalKey();
   CollectionReference userCollection =
       FirebaseFirestore.instance.collection('users');
@@ -19,6 +21,11 @@ class TodoProvider with ChangeNotifier {
 
   void updateTitle(String value) {
     title = value;
+    notifyListeners();
+  }
+
+  void updateEditId({required String docId}) {
+    editId = docId;
     notifyListeners();
   }
 
@@ -49,6 +56,21 @@ class TodoProvider with ChangeNotifier {
     isComplete = false;
     saveAsAlarm = false;
     saveAsNotifications = false;
+    notifyListeners();
+  }
+
+  void setFields(
+      {required String setTitle,
+      required DateTime setCompletedBy,
+      required bool setIsComplete,
+      required bool setSaveAsAlarm,
+      required bool setSaveAsNotifications}) {
+    title = setTitle;
+    completedBy = setCompletedBy;
+
+    isComplete = setIsComplete;
+    saveAsAlarm = setSaveAsAlarm;
+    saveAsNotifications = setSaveAsNotifications;
     notifyListeners();
   }
 
@@ -85,7 +107,7 @@ class TodoProvider with ChangeNotifier {
         .snapshots();
   }
 
-   addTodo() async {
+  addTodo() async {
     try {
       await userCollection.doc(uid).collection("todos").add({
         "title": title,
@@ -102,9 +124,40 @@ class TodoProvider with ChangeNotifier {
     }
   }
 
-  Future<void> completeTodo({docId, bool? value}) async{
-    await userCollection.doc(uid).collection("todos").doc(docId).update({
-      "isComplete": value,
-    });
+  deleteTodo({required docId}) async {
+    try {
+      await userCollection.doc(uid).collection("todos").doc(docId).delete();
+      return MyToast().errorToast("Todo Deleted");
+    } catch (e) {
+      return MyToast().errorToast(e.toString());
+    }
+  }
+
+  updateTodo() async {
+    try {
+      await userCollection.doc(uid).collection("todos").doc(editId).update({
+        "title": title,
+        "completedBy": completedBy,
+        "isComplete": isComplete,
+        "saveAsAlarm": saveAsAlarm,
+        "saveAsNotifications": saveAsNotifications,
+      });
+      resetFields();
+      updateEditId(docId:"");
+      navigatorKey.currentState!.pop();
+      return MyToast().successToast("Todo Updated");
+    } catch (e) {
+      return MyToast().errorToast(e.toString());
+    }
+  }
+
+  Future<void> completeTodo({required docId, bool? value}) async {
+    try {
+      await userCollection.doc(uid).collection("todos").doc(docId).update({
+        "isComplete": value,
+      });
+    } catch (e) {
+      return MyToast().errorToast(e.toString());
+    }
   }
 }

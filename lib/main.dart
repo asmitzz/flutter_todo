@@ -6,6 +6,7 @@ import 'package:flutter_todo/providers/auth.provider.dart';
 import 'package:flutter_todo/providers/todos.provider.dart';
 import 'package:flutter_todo/screens/auth/login/login.dart';
 import 'package:flutter_todo/screens/home/home.dart';
+import 'package:flutter_todo/screens/landing/landing.dart';
 import 'package:flutter_todo/widgets/my_routes.dart';
 import 'package:device_preview/device_preview.dart';
 import 'package:provider/provider.dart';
@@ -13,10 +14,7 @@ import 'package:provider/provider.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp(DevicePreview(
-          enabled: !kReleaseMode,
-          builder: (context) => const MyApp()) // Wrap your app
-      );
+  runApp(const MyApp()); // Wrap your app
 }
 
 GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
@@ -40,18 +38,12 @@ class _MyAppState extends State<MyApp> {
           create: (_) => AuthProvider(),
         )
       ],
-      child: MaterialApp(
-        navigatorKey: navigatorKey,
-        useInheritedMediaQuery: true,
-        locale: DevicePreview.locale(context),
-        home: StreamBuilder(
-          stream: FirebaseAuth.instance.authStateChanges(),
-          builder: (context, snapshot) {
-            return snapshot.hasData ? const Home() : const Login();
-          },
-        ),
-        onGenerateRoute: MyRouter.generateRoutes,
-      ),
-    );
+      child:  MaterialApp(
+              navigatorKey: navigatorKey,
+              useInheritedMediaQuery: true,
+              locale: DevicePreview.locale(context),
+              home: const Landing(),
+              onGenerateRoute: MyRouter.generateRoutes,
+    ));
   }
 }

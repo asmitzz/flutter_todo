@@ -94,7 +94,7 @@ class StringsConstants {
   };
 
   // new-task screen
-  static Map newTask = {"title": "NEW TASK", "select_date": "Complete by"};
+  static Map newTask = {"title1": "NEW TASK","title2":"EDIT TASK", "select_date": "Complete by"};
 
   static Map newTaskOptions = {
     "option_1": "Save as alarms",

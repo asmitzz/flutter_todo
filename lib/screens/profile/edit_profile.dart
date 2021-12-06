@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_todo/main.dart';
 import 'package:flutter_todo/screens/profile/widgets/edit_profile_template.dart';
+import 'package:flutter_todo/services/permission_service.dart';
 import 'package:flutter_todo/utils/constants/colors.dart';
 import 'package:flutter_todo/utils/constants/fonts.dart';
 import 'package:flutter_todo/utils/constants/strings.dart';
@@ -23,22 +24,24 @@ class _EditProfileState extends State<EditProfile> {
   TextEditingController emailController = TextEditingController(text: "");
 
   late File imageFile;
+  bool isLoading = false;
 
   getFromGallery() async {
-    try {
-      XFile? pickedFile = await ImagePicker().pickImage(
-        source: ImageSource.gallery,
-        maxWidth: 1800,
-        maxHeight: 1800,
-      );
-      if (pickedFile != null) {
-        setState(() {
-          imageFile = File(pickedFile.path);
-        });
-      }
-    } catch (e) {
-      print("error ${e.toString()}");
-    }
+    await PermissionsService().requestGalleryPermission();
+    // try {
+    //   XFile? pickedFile = await ImagePicker().pickImage(
+    //     source: ImageSource.gallery,
+    //     maxWidth: 1800,
+    //     maxHeight: 1800,
+    //   );
+    //   if (pickedFile != null) {
+    //     setState(() {
+    //       imageFile = File(pickedFile.path);
+    //     });
+    //   }
+    // } catch (e) {
+    //   print("error ${e.toString()}");
+    // }
   }
 
   @override
@@ -70,18 +73,32 @@ class _EditProfileState extends State<EditProfile> {
         backgroundColor: ColorsConstants.blue,
         onPressed: () async {
           if (formKey.currentState!.validate()) {
+            setState(() {
+              isLoading = true;
+            });
             await FirebaseAuth.instance.currentUser!
                 .updateDisplayName(nameController.text);
             await FirebaseAuth.instance.currentUser!
                 .updateEmail(emailController.text);
+            setState(() {
+              isLoading = false;
+            });
             navigatorKey.currentState!.pushNamed("/profile");
             return MyToast().successToast("Profile updated!!");
           }
         },
-        child: Icon(
-          Icons.check,
-          color: ColorsConstants.white,
-        ),
+        child: (isLoading)
+            ? const SizedBox(
+                width: 16,
+                height: 16,
+                child: CircularProgressIndicator(
+                  color: Colors.white,
+                  strokeWidth: 1.5,
+                ))
+            : Icon(
+                Icons.check,
+                color: ColorsConstants.white,
+              ),
       ),
     );
   }

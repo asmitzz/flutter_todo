@@ -63,8 +63,8 @@ class _MyDrawerState extends State<MyDrawer> {
                         Column(
                           children: [
                             ListTile(
-                              onTap: () =>
-                                  Navigator.pushReplacementNamed(context, "/"),
+                              onTap: () => Navigator.pushReplacementNamed(
+                                  context, "/home"),
                               title: Text(
                                 StringsConstants.drawerOptions["option_1"],
                                 style: TextStyle(color: ColorsConstants.blue),
@@ -96,7 +96,9 @@ class _MyDrawerState extends State<MyDrawer> {
                             ),
                             Consumer<AuthProvider>(
                                 builder: (_, authProvider, __) => ListTile(
-                                      onTap: () => authProvider.signOut(),
+                                      onTap: () async {
+                                        await authProvider.signOut();
+                                      },
                                       title: Text(
                                         StringsConstants
                                             .drawerOptions["option_5"],

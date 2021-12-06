@@ -1,9 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_todo/helpers/todo_dismissable_handler.dart';
+import 'package:flutter_todo/main.dart';
 import 'package:flutter_todo/providers/todos.provider.dart';
 import 'package:flutter_todo/utils/constants/colors.dart';
 import 'package:flutter_todo/utils/constants/fonts.dart';
 import 'package:flutter_todo/utils/constants/strings.dart';
+import 'package:flutter_todo/widgets/dismissibale_backgrounds.dart';
+import 'package:flutter_todo/widgets/skeleton_loading.dart';
 import 'package:provider/provider.dart';
 
 class SchedularTemplate extends StatefulWidget {
@@ -87,7 +91,7 @@ class _SchedularTemplateState extends State<SchedularTemplate> {
                   },
                 );
               }
-              return const Text("loading");
+              return const SkelotonLoading();
             }),
       );
     });
@@ -115,32 +119,40 @@ class _SchedularTemplateState extends State<SchedularTemplate> {
           shrinkWrap: true,
           itemCount: data[key].length,
           itemBuilder: (BuildContext context, int index) {
-            return Row(
-              children: [
-                Transform.scale(
-                  scale: 1.5,
-                  child: Checkbox(
-                      side:
-                          BorderSide(color: ColorsConstants.green, width: 1.5),
-                      value: data[key][index]["isComplete"],
-                      onChanged: (bool? value) {
-                        todoProvider.completeTodo(
-                            docId: data[key][index].id, value: value);
-                      },
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(6.0))),
-                ),
-                const SizedBox(
-                  width: 10.0,
-                ),
-                Text(
-                  data[key][index]["title"],
-                  style: TextStyle(
-                    fontWeight: FontsConstants.medium,
-                    color: ColorsConstants.blue,
+            return Dismissible(
+              key: UniqueKey(),
+              background: DismissibleBackgrounds().slideRightBackground(),
+              secondaryBackground:
+                  DismissibleBackgrounds().slideLeftBackground(),
+              confirmDismiss: (direction) =>
+                  dismissableTodohandler(context,direction, data[key][index], todoProvider),
+              child: Row(
+                children: [
+                  Transform.scale(
+                    scale: 1.5,
+                    child: Checkbox(
+                        side: BorderSide(
+                            color: ColorsConstants.green, width: 1.5),
+                        value: data[key][index]["isComplete"],
+                        onChanged: (bool? value) {
+                          todoProvider.completeTodo(
+                              docId: data[key][index].id, value: value);
+                        },
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(6.0))),
                   ),
-                )
-              ],
+                  const SizedBox(
+                    width: 10.0,
+                  ),
+                  Text(
+                    data[key][index]["title"],
+                    style: TextStyle(
+                      fontWeight: FontsConstants.medium,
+                      color: ColorsConstants.blue,
+                    ),
+                  )
+                ],
+              ),
             );
           },
         )

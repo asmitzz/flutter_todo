@@ -3,10 +3,9 @@ import 'package:flutter_todo/providers/auth.provider.dart';
 import 'package:flutter_todo/utils/constants/colors.dart';
 import 'package:flutter_todo/utils/constants/fonts.dart';
 import 'package:flutter_todo/utils/constants/strings.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 
-class LoginFooter extends StatelessWidget {
+class LoginFooter extends StatefulWidget {
   const LoginFooter(
       {Key? key,
       required this.formKey,
@@ -18,12 +17,27 @@ class LoginFooter extends StatelessWidget {
   final TextEditingController emailController;
   final TextEditingController passwordController;
 
-  Future<void> handleSignIn(BuildContext context,AuthProvider authProvider) async {
-    if (formKey.currentState!.validate()) {
-      await authProvider.signInWithEmailAndPassword(email:emailController.text,password:passwordController.text);
+  @override
+  State<LoginFooter> createState() => _LoginFooterState();
+}
+
+class _LoginFooterState extends State<LoginFooter> {
+  Future<void> handleSignIn(
+      BuildContext context, AuthProvider authProvider) async {
+    if (widget.formKey.currentState!.validate()) {
+      setState(() {
+        isLoading = true;
+      });
+      await authProvider.signInWithEmailAndPassword(
+          email: widget.emailController.text,
+          password: widget.passwordController.text);
+      setState(() {
+        isLoading = false;
+      });
     }
   }
 
+  bool isLoading = false;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -53,16 +67,24 @@ class LoginFooter extends StatelessWidget {
           widthFactor: 1.0,
           child: Consumer<AuthProvider>(
             builder: (_, authProvider, __) => TextButton(
-              onPressed: () => handleSignIn(context,authProvider),
+              onPressed: () => handleSignIn(context, authProvider),
               child: Padding(
                 padding: const EdgeInsets.fromLTRB(16.0, 8.0, 16.0, 8.0),
-                child: Text(
-                  StringsConstants.login["sign_in_btn"],
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: FontsConstants.md_1,
-                      fontWeight: FontWeight.bold),
-                ),
+                child: (isLoading)
+                    ? const SizedBox(
+                        width: 16,
+                        height: 16,
+                        child: CircularProgressIndicator(
+                          color: Colors.white,
+                          strokeWidth: 1.5,
+                        ))
+                    : Text(
+                        StringsConstants.login["sign_in_btn"],
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: FontsConstants.md_1,
+                            fontWeight: FontWeight.bold),
+                      ),
               ),
               style: ButtonStyle(
                 backgroundColor:

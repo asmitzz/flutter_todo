@@ -15,7 +15,7 @@ class AuthProvider with ChangeNotifier {
     try {
       await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: password);
-      navigatorKey.currentState!.pushNamed("/home");
+      navigatorKey.currentState!.pushReplacementNamed("/home");
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         return MyToast().errorToast("No user found for that email.");
@@ -31,7 +31,7 @@ class AuthProvider with ChangeNotifier {
     try {
       await FirebaseAuth.instance
           .createUserWithEmailAndPassword(email: email, password: password);
-      return MyToast().successToast("User registered successfully");
+      await signInWithEmailAndPassword(email: email, password: password);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         return MyToast().errorToast("The password provided is too weak.");
@@ -46,5 +46,6 @@ class AuthProvider with ChangeNotifier {
 
   Future<void> signOut() async {
     await _firebaseAuth.signOut();
+    navigatorKey.currentState!.pushReplacementNamed("/login");
   }
 }

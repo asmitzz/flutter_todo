@@ -1,9 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_todo/helpers/todo_dismissable_handler.dart';
 import 'package:flutter_todo/providers/todos.provider.dart';
 import 'package:flutter_todo/utils/constants/colors.dart';
 import 'package:flutter_todo/utils/constants/fonts.dart';
 import 'package:flutter_todo/utils/constants/strings.dart';
+import 'package:flutter_todo/widgets/dismissibale_backgrounds.dart';
+import 'package:flutter_todo/widgets/skeleton_loading.dart';
 import 'package:provider/provider.dart';
 
 class HomeTemplate extends StatefulWidget {
@@ -73,35 +76,44 @@ class _HomeTemplateState extends State<HomeTemplate> {
                   },
                 );
               }
-              return const Text("loading");
+              return const SkelotonLoading();
             }),
       );
     });
   }
 
-  Row todoCard(List<dynamic> data, int index, TodoProvider todoProvider) {
-    return Row(
-      children: [
-        Transform.scale(
-          scale: 1.5,
-          child: Checkbox(
-              side: BorderSide(color: ColorsConstants.green, width: 1.5),
-              value: data[index]["isComplete"],
-              onChanged: (bool? value) {
-                todoProvider.completeTodo(docId: data[index].id, value: value);
-              },
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(6.0))),
-        ),
-        const SizedBox(
-          width: 10.0,
-        ),
-        Text(
-          data[index]["title"],
-          style: TextStyle(
-              color: ColorsConstants.blue, fontWeight: FontsConstants.medium),
-        )
-      ],
+  Dismissible todoCard(
+      List<dynamic> data, int index, TodoProvider todoProvider) {
+    return Dismissible(
+      key: UniqueKey(),
+      background: DismissibleBackgrounds().slideRightBackground(),
+      secondaryBackground: DismissibleBackgrounds().slideLeftBackground(),
+      confirmDismiss: (direction) =>
+          dismissableTodohandler(context,direction, data[index], todoProvider),
+      child: Row(
+        children: [
+          Transform.scale(
+            scale: 1.5,
+            child: Checkbox(
+                side: BorderSide(color: ColorsConstants.green, width: 1.5),
+                value: data[index]["isComplete"],
+                onChanged: (bool? value) {
+                  todoProvider.completeTodo(
+                      docId: data[index].id, value: value);
+                },
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(6.0))),
+          ),
+          const SizedBox(
+            width: 10.0,
+          ),
+          Text(
+            data[index]["title"],
+            style: TextStyle(
+                color: ColorsConstants.blue, fontWeight: FontsConstants.medium),
+          )
+        ],
+      ),
     );
   }
 }

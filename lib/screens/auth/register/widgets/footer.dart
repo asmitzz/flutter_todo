@@ -5,7 +5,7 @@ import 'package:flutter_todo/utils/constants/fonts.dart';
 import 'package:flutter_todo/utils/constants/strings.dart';
 import 'package:provider/provider.dart';
 
-class RegisterFooter extends StatelessWidget {
+class RegisterFooter extends StatefulWidget {
   const RegisterFooter(
       {Key? key,
       required this.formKey,
@@ -17,12 +17,27 @@ class RegisterFooter extends StatelessWidget {
   final TextEditingController emailController;
   final TextEditingController passwordController;
 
+  @override
+  State<RegisterFooter> createState() => _RegisterFooterState();
+}
+
+class _RegisterFooterState extends State<RegisterFooter> {
+  bool isLoading = false;
+
   void handleSignUp(BuildContext context, AuthProvider authProvider) async {
-    if (formKey.currentState!.validate()) {
+    if (widget.formKey.currentState!.validate()) {
+      setState(() {
+        isLoading = true;
+      });
       await authProvider.signUpWithEmailAndPassword(
-        email: emailController.text,
-        password: passwordController.text,
+        email: widget.emailController.text,
+        password: widget.passwordController.text,
       );
+    
+      setState(() {
+        isLoading = false;
+      });
+      
     }
   }
 
@@ -58,13 +73,21 @@ class RegisterFooter extends StatelessWidget {
               onPressed: () => handleSignUp(context, authProvider),
               child: Padding(
                 padding: const EdgeInsets.fromLTRB(16.0, 8.0, 16.0, 8.0),
-                child: Text(
-                  StringsConstants.register["sign_up_btn"],
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: FontsConstants.md_1,
-                      fontWeight: FontWeight.bold),
-                ),
+                child: (isLoading)
+                    ? const SizedBox(
+                        width: 16,
+                        height: 16,
+                        child: CircularProgressIndicator(
+                          color: Colors.white,
+                          strokeWidth: 1.5,
+                        ))
+                    : Text(
+                        StringsConstants.register["sign_up_btn"],
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: FontsConstants.md_1,
+                            fontWeight: FontWeight.bold),
+                      ),
               ),
               style: ButtonStyle(
                 backgroundColor:

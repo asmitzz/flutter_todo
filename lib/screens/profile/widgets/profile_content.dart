@@ -11,6 +11,11 @@ class ProfileContent extends StatefulWidget {
 }
 
 class _ProfileContentState extends State<ProfileContent> {
+  bool emailNotification = false;
+  bool vibrateOnAlert = false;
+  bool shareProfile = false;
+  bool showTask = false;
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -23,11 +28,23 @@ class _ProfileContentState extends State<ProfileContent> {
           const SizedBox(
             height: 15.0,
           ),
-          CustomSwitch(value:false,onChange: (value){print(value);},text: StringsConstants.profileOptions["option_1"]),
+          CustomSwitch(
+              value: emailNotification,
+              onChange: (value){
+                 setState(() {
+                  emailNotification = value;
+                });
+              },
+              text: StringsConstants.profileOptions["option_1"]),
           const SizedBox(
             height: 15.0,
           ),
-          CustomSwitch(value:false,onChange: (value){print(value);},text: StringsConstants.profileOptions["option_2"]),
+          CustomSwitch(
+              value: vibrateOnAlert,
+              onChange: (value) { setState(() {
+                  vibrateOnAlert = value;
+                });},
+              text: StringsConstants.profileOptions["option_2"]),
           const SizedBox(
             height: 15.0,
           ),
@@ -36,11 +53,25 @@ class _ProfileContentState extends State<ProfileContent> {
           const SizedBox(
             height: 15.0,
           ),
-          CustomSwitch(value:false,onChange: (value){print(value);},text: StringsConstants.profileOptions["option_3"]),
+          CustomSwitch(
+              value: shareProfile,
+              onChange: (value){
+                 setState(() {
+                  shareProfile = value;
+                });
+              },
+              text: StringsConstants.profileOptions["option_3"]),
           const SizedBox(
             height: 15.0,
           ),
-          CustomSwitch(value:false,onChange: (value){print(value);},text: StringsConstants.profileOptions["option_4"]),
+          CustomSwitch(
+              value: showTask,
+              onChange: (value) {
+                setState(() {
+                  showTask = value;
+                });
+              },
+              text: StringsConstants.profileOptions["option_4"]),
           const SizedBox(
             height: 15.0,
           ),

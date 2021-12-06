@@ -7,6 +7,7 @@ import 'package:flutter_todo/utils/constants/fonts.dart';
 class EditProfileTemplate extends StatefulWidget {
   const EditProfileTemplate(
       {Key? key,
+      required this.getFromGallery,
       required this.formKey,
       required this.emailController,
       required this.nameController})
@@ -14,6 +15,7 @@ class EditProfileTemplate extends StatefulWidget {
   final GlobalKey<FormState> formKey;
   final TextEditingController emailController;
   final TextEditingController nameController;
+  final Function getFromGallery;
   @override
   _EditProfileTemplateState createState() => _EditProfileTemplateState();
 }
@@ -71,6 +73,12 @@ class _EditProfileTemplateState extends State<EditProfileTemplate> {
                 )
               ],
             ),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              widget.getFromGallery();
+            },
+            child: const Text("UPLOAD PROFILE PIC"),
           )
         ],
       ),

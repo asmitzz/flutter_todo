@@ -1,25 +1,22 @@
 buildscript {
-  repositories {
-    // Check that you have the following line (if not, add it):
-    google()  // Google's Maven repository
+    ext.kotlin_version = '1.3.50'
+    repositories {
+        google()
+        mavenCentral()
+    }
 
-  }
-  dependencies {
-    ...
-    // Add this line
-    classpath 'com.google.gms:google-services:4.3.10'
-
-  }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:4.1.0'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath 'com.google.gms:google-services:4.3.8'
+    }
 }
 
 allprojects {
-  ...
-  repositories {
-    // Check that you have the following line (if not, add it):
-    google()  // Google's Maven repository
-
-    ...
-  }
+    repositories {
+        google()
+        mavenCentral()
+    }
 }
 
 rootProject.buildDir = '../build'

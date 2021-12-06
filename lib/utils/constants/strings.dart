@@ -18,9 +18,9 @@ class StringsConstants {
 
   // login form
   static Map loginForm = {
-    "field_1_label_text": "Email or Username",
-    "field_1_hint_text": "Enter your email or username",
-    "field_1_error_text": "Invalid username or email",
+    "field_1_label_text": "Email",
+    "field_1_hint_text": "Enter your email",
+    "field_1_error_text": "Invalid email",
     "field_2_label_text": "Password",
     "field_2_hint_text": "Enter your password",
     "field_2_error_text": "Password should be atleast 8 char long",

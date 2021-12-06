@@ -4,15 +4,20 @@ import 'package:flutter_todo/utils/constants/fonts.dart';
 import 'package:flutter_todo/utils/constants/strings.dart';
 import 'package:flutter_todo/utils/constants/colors.dart';
 
-class ProfileHeader extends StatelessWidget {
+class ProfileHeader extends StatefulWidget {
   const ProfileHeader({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    final User? currentUser = FirebaseAuth.instance.currentUser;
-    final String name = currentUser!.displayName == null ? StringsConstants.profile["default_name"] : currentUser.displayName.toString();
-    final String email = currentUser.email == null ? StringsConstants.profile["email"] : currentUser.email.toString();
+  State<ProfileHeader> createState() => _ProfileHeaderState();
+}
 
+class _ProfileHeaderState extends State<ProfileHeader> {
+  @override
+  Widget build(BuildContext context) {
+
+    final User? currentUser = FirebaseAuth.instance.currentUser;
+    final String email = currentUser!.email == null ? "" : currentUser.email.toString();
+    final String name = currentUser.displayName == null ? "" : currentUser.displayName.toString();
     return Container(
       color: ColorsConstants.lightRosyBrown,
       padding: const EdgeInsets.all(30.0),

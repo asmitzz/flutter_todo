@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_todo/main.dart';
 import 'package:flutter_todo/utils/constants/colors.dart';
 import 'package:flutter_todo/utils/constants/fonts.dart';
 
@@ -20,7 +21,7 @@ class MyAppBar extends StatefulWidget {
 
 class _MyAppBarState extends State<MyAppBar> {
   void editProfile() async {
-    await Navigator.pushNamed(context, "/editprofile");
+    navigatorKey.currentState!.pushNamed("/editprofile");
   }
 
   @override
@@ -31,7 +32,7 @@ class _MyAppBarState extends State<MyAppBar> {
       backgroundColor: ColorsConstants.rosyBrown,
       title: Text(
         widget.title,
-        style:  TextStyle(
+        style: TextStyle(
             letterSpacing: 2.0,
             fontSize: FontsConstants.base,
             fontWeight: FontsConstants.bold,
@@ -42,21 +43,18 @@ class _MyAppBarState extends State<MyAppBar> {
           visible: widget.search,
           child: TextButton.icon(
               onPressed: () {},
-              icon: Icon(Icons.search,
-                  color: ColorsConstants.blue),
+              icon: Icon(Icons.search, color: ColorsConstants.blue),
               label: const Text("")),
         ),
         Visibility(
           visible: widget.editProfile,
           child: TextButton.icon(
               onPressed: editProfile,
-              icon: Icon(Icons.edit,
-                  color: ColorsConstants.blue),
+              icon: Icon(Icons.edit, color: ColorsConstants.blue),
               label: const Text("")),
         )
       ],
-      iconTheme: IconThemeData(
-          color: ColorsConstants.blue, size: 28.0),
+      iconTheme: IconThemeData(color: ColorsConstants.blue, size: 28.0),
     );
   }
 }

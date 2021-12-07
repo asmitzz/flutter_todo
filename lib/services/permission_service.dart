@@ -1,15 +1,13 @@
+import 'package:flutter_todo/widgets/toast.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 class PermissionsService {
-   requestGalleryPermission() async {
+  Future<bool> requestGalleryPermission() async {
     try {
-      var status = await Permission.photos.request().isGranted;
-      if (status) {
-        print("permission granted");
-      }
+      bool status = await Permission.photos.request().isGranted;
       return status;
     } catch (e) {
-      print(e.toString());
+      return MyToast().errorToast(e.toString());
     }
   }
 }

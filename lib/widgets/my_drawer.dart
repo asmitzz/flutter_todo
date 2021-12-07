@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_todo/providers/auth.provider.dart';
+import 'package:flutter_todo/services/profile_services.dart';
 import 'package:flutter_todo/utils/constants/colors.dart';
 import 'package:flutter_todo/utils/constants/strings.dart';
 import 'package:provider/provider.dart';
@@ -13,14 +14,25 @@ class MyDrawer extends StatefulWidget {
 }
 
 class _MyDrawerState extends State<MyDrawer> {
+  String email = "";
+  String displayName = "";
+  String imageUrl = "";
+
+  @override
+  void initState() {
+    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) async {
+      final User? currentUser = FirebaseAuth.instance.currentUser;
+      email = currentUser!.email ?? "";
+      displayName = currentUser.displayName ?? "";
+      imageUrl = await ProfileServices().getProfilePicUrl();
+      setState(() {});
+    });
+
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    final User? currentUser = FirebaseAuth.instance.currentUser;
-    final String email =
-        currentUser!.email == null ? "" : currentUser.email.toString();
-    final String name = currentUser.displayName == null
-        ? ""
-        : currentUser.displayName.toString();
     return Drawer(
         elevation: 0,
         child: LayoutBuilder(builder: (context, viewportConstraints) {
@@ -45,7 +57,7 @@ class _MyDrawerState extends State<MyDrawer> {
                             child: UserAccountsDrawerHeader(
                                 decoration:
                                     BoxDecoration(color: ColorsConstants.white),
-                                accountName: Text(name,
+                                accountName: Text(displayName,
                                     style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 20.0,
@@ -57,8 +69,9 @@ class _MyDrawerState extends State<MyDrawer> {
                                       color: ColorsConstants.blue),
                                 ),
                                 currentAccountPicture: CircleAvatar(
-                                  backgroundImage: NetworkImage(StringsConstants
-                                      .drawer["default_avatar"]),
+                                  backgroundImage: imageUrl != ""
+                                      ? NetworkImage(imageUrl)
+                                      : null,
                                 ))),
                         Column(
                           children: [

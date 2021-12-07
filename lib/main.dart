@@ -1,11 +1,8 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_todo/providers/auth.provider.dart';
 import 'package:flutter_todo/providers/todos.provider.dart';
-import 'package:flutter_todo/screens/auth/login/login.dart';
-import 'package:flutter_todo/screens/home/home.dart';
 import 'package:flutter_todo/screens/landing/landing.dart';
 import 'package:flutter_todo/widgets/my_routes.dart';
 import 'package:device_preview/device_preview.dart';
@@ -29,14 +26,15 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
+    
     return MultiProvider(
       providers: [
+        ChangeNotifierProvider<AuthProvider>(
+          create: (_) => AuthProvider(),
+        ),
         ChangeNotifierProvider<TodoProvider>(
           create: (_) => TodoProvider(),
         ),
-        ChangeNotifierProvider<AuthProvider>(
-          create: (_) => AuthProvider(),
-        )
       ],
       child:  MaterialApp(
               navigatorKey: navigatorKey,

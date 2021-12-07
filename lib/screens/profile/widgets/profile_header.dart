@@ -1,5 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_todo/services/profile_services.dart';
 import 'package:flutter_todo/utils/constants/fonts.dart';
 import 'package:flutter_todo/utils/constants/strings.dart';
 import 'package:flutter_todo/utils/constants/colors.dart';
@@ -12,12 +14,28 @@ class ProfileHeader extends StatefulWidget {
 }
 
 class _ProfileHeaderState extends State<ProfileHeader> {
+    String imageUrl = "";
+  
+  @override
+  void initState() {
+    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) async {
+      imageUrl = await ProfileServices().getProfilePicUrl();
+      setState(() {
+        
+      });
+    });
+
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-
     final User? currentUser = FirebaseAuth.instance.currentUser;
-    final String email = currentUser!.email == null ? "" : currentUser.email.toString();
-    final String name = currentUser.displayName == null ? "" : currentUser.displayName.toString();
+    final String email =
+        currentUser!.email == null ? "" : currentUser.email.toString();
+    final String name = currentUser.displayName == null
+        ? ""
+        : currentUser.displayName.toString();
     return Container(
       color: ColorsConstants.lightRosyBrown,
       padding: const EdgeInsets.all(30.0),
@@ -25,8 +43,7 @@ class _ProfileHeaderState extends State<ProfileHeader> {
         children: [
           CircleAvatar(
             backgroundColor: ColorsConstants.blue,
-            backgroundImage:
-                NetworkImage(StringsConstants.profile["default_pic"]),
+            backgroundImage:imageUrl != "" ? NetworkImage(imageUrl) : null,
             radius: 35.0,
           ),
           const SizedBox(

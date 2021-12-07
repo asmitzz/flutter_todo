@@ -362,6 +362,9 @@ PODS:
   - Firebase/Messaging (8.9.0):
     - Firebase/CoreOnly
     - FirebaseMessaging (~> 8.9.0)
+  - Firebase/Storage (8.9.0):
+    - Firebase/CoreOnly
+    - FirebaseStorage (~> 8.9.0)
   - firebase_auth (3.2.0):
     - Firebase/Auth (= 8.9.0)
     - firebase_core
@@ -375,6 +378,10 @@ PODS:
     - Flutter
   - firebase_messaging (11.2.0):
     - Firebase/Messaging (= 8.9.0)
+    - firebase_core
+    - Flutter
+  - firebase_storage (10.2.0):
+    - Firebase/Storage (= 8.9.0)
     - firebase_core
     - Flutter
   - FirebaseAuth (8.9.0):
@@ -421,6 +428,9 @@ PODS:
     - GoogleUtilities/Reachability (~> 7.6)
     - GoogleUtilities/UserDefaults (~> 7.6)
     - nanopb (~> 2.30908.0)
+  - FirebaseStorage (8.9.0):
+    - FirebaseCore (~> 8.0)
+    - GTMSessionFetcher/Core (~> 1.5)
   - Flutter (1.0.0)
   - fluttertoast (0.0.2):
     - Flutter
@@ -494,6 +504,7 @@ DEPENDENCIES:
   - firebase_core (from `.symlinks/plugins/firebase_core/ios`)
   - firebase_database (from `.symlinks/plugins/firebase_database/ios`)
   - firebase_messaging (from `.symlinks/plugins/firebase_messaging/ios`)
+  - firebase_storage (from `.symlinks/plugins/firebase_storage/ios`)
   - Flutter (from `Flutter`)
   - fluttertoast (from `.symlinks/plugins/fluttertoast/ios`)
   - image_picker (from `.symlinks/plugins/image_picker/ios`)
@@ -513,6 +524,7 @@ SPEC REPOS:
     - FirebaseFirestore
     - FirebaseInstallations
     - FirebaseMessaging
+    - FirebaseStorage
     - GoogleDataTransport
     - GoogleUtilities
     - "gRPC-C++"
@@ -534,6 +546,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/firebase_database/ios"
   firebase_messaging:
     :path: ".symlinks/plugins/firebase_messaging/ios"
+  firebase_storage:
+    :path: ".symlinks/plugins/firebase_storage/ios"
   Flutter:
     :path: Flutter
   fluttertoast:
@@ -556,6 +570,7 @@ SPEC CHECKSUMS:
   firebase_core: f770e033e790657b3505f04be4cb24c482912f11
   firebase_database: 9d21bb9c9b1037eb33e7b99bc7a34927dcd8cc71
   firebase_messaging: 4f7eab3f100c30d0544f5a6f6ca549f7f8c12705
+  firebase_storage: 61f69613ac9897d37baa6690500f309a15454c14
   FirebaseAuth: 2b78b2a32c07b3ecfa4970bdf1d3632b8304099b
   FirebaseCore: 599ee609343eaf4941bd188f85e3aa077ffe325b
   FirebaseCoreDiagnostics: 5daa63f1c1409d981a2d5007daa100b36eac6a34
@@ -563,6 +578,7 @@ SPEC CHECKSUMS:
   FirebaseFirestore: 15ae9648476436efed698a909e44c4737498f9b4
   FirebaseInstallations: caa7c8e0d3e2345b8829d2fa9ca1b4dfbf2fcc85
   FirebaseMessaging: 82c4a48638f53f7b184f3cc9f6cd2cbe533ab316
+  FirebaseStorage: 452c98c31ccb40b819764bf3039426c4388d9939
   Flutter: 50d75fe2f02b26cc09d224853bb45737f8b3214a
   fluttertoast: 6122fa75143e992b1d3470f61000f591a798cc58
   GoogleDataTransport: 629c20a4d363167143f30ea78320d5a7eb8bd940
@@ -579,6 +595,6 @@ SPEC CHECKSUMS:
   shared_preferences_ios: aef470a42dc4675a1cdd50e3158b42e3d1232b32
   Toast: 91b396c56ee72a5790816f40d3a94dd357abc196
 
-PODFILE CHECKSUM: fe0e1ee7f3d1f7d00b11b474b62dd62134535aea
+PODFILE CHECKSUM: e419f4ff16cb1006934906b6a632d09484675b5c
 
 COCOAPODS: 1.11.2

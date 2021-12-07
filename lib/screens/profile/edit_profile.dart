@@ -1,15 +1,12 @@
-import 'dart:io';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_todo/main.dart';
 import 'package:flutter_todo/screens/profile/widgets/edit_profile_template.dart';
-import 'package:flutter_todo/services/permission_service.dart';
+import 'package:flutter_todo/services/profile_services.dart';
 import 'package:flutter_todo/utils/constants/colors.dart';
 import 'package:flutter_todo/utils/constants/fonts.dart';
 import 'package:flutter_todo/utils/constants/strings.dart';
 import 'package:flutter_todo/widgets/toast.dart';
-import 'package:image_picker/image_picker.dart';
 
 class EditProfile extends StatefulWidget {
   const EditProfile({Key? key}) : super(key: key);
@@ -23,26 +20,7 @@ class _EditProfileState extends State<EditProfile> {
   TextEditingController nameController = TextEditingController(text: "");
   TextEditingController emailController = TextEditingController(text: "");
 
-  late File imageFile;
   bool isLoading = false;
-
-  getFromGallery() async {
-    await PermissionsService().requestGalleryPermission();
-    // try {
-    //   XFile? pickedFile = await ImagePicker().pickImage(
-    //     source: ImageSource.gallery,
-    //     maxWidth: 1800,
-    //     maxHeight: 1800,
-    //   );
-    //   if (pickedFile != null) {
-    //     setState(() {
-    //       imageFile = File(pickedFile.path);
-    //     });
-    //   }
-    // } catch (e) {
-    //   print("error ${e.toString()}");
-    // }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -66,7 +44,6 @@ class _EditProfileState extends State<EditProfile> {
         formKey: formKey,
         nameController: nameController,
         emailController: emailController,
-        getFromGallery: getFromGallery,
       )),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
@@ -76,14 +53,12 @@ class _EditProfileState extends State<EditProfile> {
             setState(() {
               isLoading = true;
             });
-            await FirebaseAuth.instance.currentUser!
-                .updateDisplayName(nameController.text);
-            await FirebaseAuth.instance.currentUser!
-                .updateEmail(emailController.text);
+            await ProfileServices().saveProfile(
+                email: emailController.text, name: nameController.text);
             setState(() {
               isLoading = false;
             });
-            navigatorKey.currentState!.pushNamed("/profile");
+            navigatorKey.currentState!.pushReplacementNamed("/profile");
             return MyToast().successToast("Profile updated!!");
           }
         },

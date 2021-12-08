@@ -49,7 +49,7 @@ class _RegisterFooterState extends State<RegisterFooter> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              StringsConstants.register["footer_title"],
+              StringsConstants.registerFooterTitle,
               style: TextStyle(
                   color: ColorsConstants.blue,
                   fontWeight: FontsConstants.medium,
@@ -59,7 +59,7 @@ class _RegisterFooterState extends State<RegisterFooter> {
                 onPressed: () {
                   Navigator.pushNamed(context, "/login");
                 },
-                child: Text(StringsConstants.register["login_btn"],
+                child: Text(StringsConstants.registerBtn1,
                     style: TextStyle(
                         color: ColorsConstants.blue,
                         fontWeight: FontWeight.bold,
@@ -82,7 +82,7 @@ class _RegisterFooterState extends State<RegisterFooter> {
                           strokeWidth: 1.5,
                         ))
                     : Text(
-                        StringsConstants.register["sign_up_btn"],
+                        StringsConstants.registerBtn2,
                         style: TextStyle(
                             color: Colors.white,
                             fontSize: FontsConstants.md_1,

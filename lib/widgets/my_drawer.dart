@@ -1,9 +1,12 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_todo/main.dart';
 import 'package:flutter_todo/providers/auth.provider.dart';
-import 'package:flutter_todo/services/profile_services.dart';
+import 'package:flutter_todo/providers/profile.provider.dart';
 import 'package:flutter_todo/utils/constants/colors.dart';
+import 'package:flutter_todo/utils/constants/fonts.dart';
+import 'package:flutter_todo/utils/constants/routes.dart';
 import 'package:flutter_todo/utils/constants/strings.dart';
+import 'package:flutter_todo/utils/size_config.dart';
 import 'package:provider/provider.dart';
 
 class MyDrawer extends StatefulWidget {
@@ -16,20 +19,6 @@ class MyDrawer extends StatefulWidget {
 class _MyDrawerState extends State<MyDrawer> {
   String email = "";
   String displayName = "";
-  String imageUrl = "";
-
-  @override
-  void initState() {
-    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) async {
-      final User? currentUser = FirebaseAuth.instance.currentUser;
-      email = currentUser!.email ?? "";
-      displayName = currentUser.displayName ?? "";
-      imageUrl = await ProfileServices().getProfilePicUrl();
-      setState(() {});
-    });
-
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,99 +30,115 @@ class _MyDrawerState extends State<MyDrawer> {
               constraints: BoxConstraints(
                 minHeight: viewportConstraints.maxHeight,
               ),
-              child: Container(
-                padding: const EdgeInsets.all(30.0),
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    border: Border.all(color: ColorsConstants.rosyBrown)),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Column(
-                      children: [
-                        DrawerHeader(
-                            padding: const EdgeInsets.all(0.0),
-                            child: UserAccountsDrawerHeader(
-                                decoration:
-                                    BoxDecoration(color: ColorsConstants.white),
-                                accountName: Text(displayName,
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 20.0,
-                                        color: ColorsConstants.blue)),
-                                accountEmail: Text(
-                                  email,
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.w500,
-                                      color: ColorsConstants.blue),
-                                ),
-                                currentAccountPicture: CircleAvatar(
-                                  backgroundImage: imageUrl != ""
-                                      ? NetworkImage(imageUrl)
-                                      : null,
-                                ))),
-                        Column(
-                          children: [
-                            ListTile(
-                              onTap: () => Navigator.pushReplacementNamed(
-                                  context, "/home"),
-                              title: Text(
-                                StringsConstants.drawerOptions["option_1"],
-                                style: TextStyle(color: ColorsConstants.blue),
-                              ),
-                            ),
-                            ListTile(
-                              onTap: () => Navigator.pushReplacementNamed(
-                                  context, "/schedular"),
-                              title: Text(
-                                StringsConstants.drawerOptions["option_2"],
-                                style: TextStyle(color: ColorsConstants.blue),
-                              ),
-                            ),
-                            ListTile(
-                              onTap: () => Navigator.pushReplacementNamed(
-                                  context, "/notifications"),
-                              title: Text(
-                                StringsConstants.drawerOptions["option_3"],
-                                style: TextStyle(color: ColorsConstants.blue),
-                              ),
-                            ),
-                            ListTile(
-                              onTap: () => Navigator.pushReplacementNamed(
-                                  context, "/profile"),
-                              title: Text(
-                                StringsConstants.drawerOptions["option_4"],
-                                style: TextStyle(color: ColorsConstants.blue),
-                              ),
-                            ),
-                            Consumer<AuthProvider>(
-                                builder: (_, authProvider, __) => ListTile(
-                                      onTap: () async {
-                                        await authProvider.signOut();
-                                      },
-                                      title: Text(
-                                        StringsConstants
-                                            .drawerOptions["option_5"],
-                                        style: TextStyle(
-                                            color: ColorsConstants.blueGrey),
-                                      ),
-                                    ))
-                          ],
-                        ),
-                      ],
-                    ),
-                    ListTile(
-                      title: Text(
-                        "© 2021 candy",
-                        style: TextStyle(color: ColorsConstants.blueGrey),
-                      ),
-                    )
-                  ],
-                ),
-              ),
+              child: drawerTemplate(),
             ),
           );
         }));
   }
+
+  // Drawer Template
+  Container drawerTemplate() {
+    return Container(
+      padding: EdgeInsets.symmetric(
+          horizontal: SizeConfig.blockSizeHorizontal * 5,
+          vertical: SizeConfig.blockSizeVertical * 5),
+      decoration: BoxDecoration(
+          color: ColorsConstants.white,
+          border: Border.all(color: ColorsConstants.rosyBrown)),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Column(
+            children: [
+              drawerHeader(),
+              drawerBody(),
+            ],
+          ),
+          drawerFooter()
+        ],
+      ),
+    );
+  }
+
+  // Drawer Header
+  Consumer drawerHeader() {
+    return Consumer<ProfileProvider>(
+      builder:(_,profileProvider,__) => DrawerHeader(
+          padding: const EdgeInsets.all(0.0),
+          child: UserAccountsDrawerHeader(
+              decoration: BoxDecoration(color: ColorsConstants.white),
+              accountName: Text(profileProvider.name,
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: FontsConstants.md_2,
+                      color: ColorsConstants.blue)),
+              accountEmail: Text(
+                profileProvider.email,
+                style: TextStyle(
+                    fontWeight: FontsConstants.medium,
+                    color: ColorsConstants.blue),
+              ),
+              currentAccountPicture: CircleAvatar(
+                backgroundImage: profileProvider.photoUrl != "" ? NetworkImage(profileProvider.photoUrl) : null,
+              ))),
+    );
+  }
+}
+
+// Drawer Body
+Column drawerBody() {
+  return Column(
+    children: [
+      navigateTo(
+          route: RoutesConstants.home,
+          routeName: StringsConstants.drawerOption1),
+      navigateTo(
+          route: RoutesConstants.schedular,
+          routeName: StringsConstants.drawerOption2),
+      navigateTo(
+          route: RoutesConstants.notifications,
+          routeName: StringsConstants.drawerOption3),
+      navigateTo(
+          route: RoutesConstants.profile,
+          routeName: StringsConstants.drawerOption4),
+      logOut()
+    ],
+  );
+}
+
+// Logout Widget
+Consumer<AuthProvider> logOut() {
+  logOut(AuthProvider authProvider) async {
+    await authProvider.signOut();
+  }
+
+  return Consumer<AuthProvider>(
+      builder: (_, authProvider, __) => ListTile(
+            onTap: () => logOut(authProvider),
+            title: Text(
+              StringsConstants.drawerOption5,
+              style: TextStyle(color: ColorsConstants.blueGrey),
+            ),
+          ));
+}
+
+ListTile navigateTo({required String route, required String routeName}) {
+  return ListTile(
+    onTap: () => navigatorKey.currentState!.pushReplacementNamed(route),
+    title: Text(
+      routeName,
+      style: TextStyle(color: ColorsConstants.blue),
+    ),
+  );
+}
+
+// Drawer Footer
+ListTile drawerFooter() {
+  return ListTile(
+    title: Text(
+      StringsConstants.drawerFooter,
+      style: TextStyle(color: ColorsConstants.blueGrey),
+    ),
+  );
 }

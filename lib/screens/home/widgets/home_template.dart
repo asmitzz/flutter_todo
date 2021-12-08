@@ -5,6 +5,7 @@ import 'package:flutter_todo/providers/todos.provider.dart';
 import 'package:flutter_todo/utils/constants/colors.dart';
 import 'package:flutter_todo/utils/constants/fonts.dart';
 import 'package:flutter_todo/utils/constants/strings.dart';
+import 'package:flutter_todo/utils/size_config.dart';
 import 'package:flutter_todo/widgets/dismissibale_backgrounds.dart';
 import 'package:flutter_todo/widgets/skeleton_loading.dart';
 import 'package:provider/provider.dart';
@@ -33,51 +34,54 @@ class _HomeTemplateState extends State<HomeTemplate> {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          homeHeader(),
-          todos(),
-        ],
-      ),
+    return Column(
+      children: [
+        homeHeader(),
+        todos(),
+      ],
     );
   }
 
   Consumer todos() {
     return Consumer<TodoProvider>(builder: (_, todoProvider, __) {
-      return Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: StreamBuilder<QuerySnapshot>(
-            stream: todoProvider.fetchTodos(),
-            builder:
-                (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-              if (snapshot.hasError) {
-                return const Text("Something went wrong");
-              }
-
-              if (snapshot.connectionState == ConnectionState.active) {
-                List<dynamic> data = snapshot.data!.docs;
-                if (data.isEmpty) {
-                  return Text(
-                    "No todos found!!",
-                    style: TextStyle(
-                        color: ColorsConstants.blue,
-                        fontWeight: FontsConstants.bold),
-                  );
+      return Container(
+        height: SizeConfig.safeBlockVertical * 55,
+        padding: EdgeInsets.symmetric(
+            horizontal: SizeConfig.blockSizeHorizontal * 4,
+            vertical: SizeConfig.blockSizeVertical * 4),
+        child: SingleChildScrollView(
+          child: StreamBuilder<QuerySnapshot>(
+              stream: todoProvider.fetchTodos(),
+              builder: (BuildContext context,
+                  AsyncSnapshot<QuerySnapshot> snapshot) {
+                if (snapshot.hasError) {
+                  return const Text("Something went wrong");
                 }
 
-                return ListView.builder(
-                  controller: scrollController,
-                  scrollDirection: Axis.vertical,
-                  shrinkWrap: true,
-                  itemCount: data.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return todoCard(data, index, todoProvider);
-                  },
-                );
-              }
-              return const SkelotonLoading();
-            }),
+                if (snapshot.connectionState == ConnectionState.active) {
+                  List<dynamic> data = snapshot.data!.docs;
+                  if (data.isEmpty) {
+                    return Text(
+                      "No todos found!!",
+                      style: TextStyle(
+                          color: ColorsConstants.blue,
+                          fontWeight: FontsConstants.bold),
+                    );
+                  }
+
+                  return ListView.builder(
+                    controller: scrollController,
+                    scrollDirection: Axis.vertical,
+                    shrinkWrap: true,
+                    itemCount: data.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return todoCard(data, index, todoProvider);
+                    },
+                  );
+                }
+                return const SkelotonLoading();
+              }),
+        ),
       );
     });
   }
@@ -89,7 +93,7 @@ class _HomeTemplateState extends State<HomeTemplate> {
       background: DismissibleBackgrounds().slideRightBackground(),
       secondaryBackground: DismissibleBackgrounds().slideLeftBackground(),
       confirmDismiss: (direction) =>
-          dismissableTodohandler(context,direction, data[index], todoProvider),
+          dismissableTodohandler(context, direction, data[index], todoProvider),
       child: Row(
         children: [
           Transform.scale(
@@ -120,41 +124,42 @@ class _HomeTemplateState extends State<HomeTemplate> {
 
 Container homeHeader() {
   return Container(
+    height: SizeConfig.safeBlockVertical * 25,
     constraints: const BoxConstraints(minWidth: double.infinity),
     decoration: BoxDecoration(
       color: ColorsConstants.lightRosyBrown,
     ),
-    child: Padding(
-      padding: const EdgeInsets.all(30.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            StringsConstants.home["title_1"],
-            style: TextStyle(
-                color: ColorsConstants.blue,
-                fontSize: FontsConstants.lg_1,
-                fontWeight: FontWeight.bold),
-          ),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Text(
-                StringsConstants.home["title_2"],
-                style: TextStyle(
-                    color: ColorsConstants.blue,
-                    fontSize: FontsConstants.lg_1,
-                    fontWeight: FontWeight.bold),
-              ),
-              Container(
-                  margin: const EdgeInsets.only(top: 3.0),
-                  width: 25.0,
-                  height: 3.0,
-                  color: ColorsConstants.blue)
-            ],
-          )
-        ],
-      ),
+    padding: EdgeInsets.symmetric(
+            horizontal: SizeConfig.blockSizeHorizontal * 6,
+            vertical: SizeConfig.blockSizeVertical * 6),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          StringsConstants.home["title_1"],
+          style: TextStyle(
+              color: ColorsConstants.blue,
+              fontSize: FontsConstants.lg_1,
+              fontWeight: FontWeight.bold),
+        ),
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Text(
+              StringsConstants.home["title_2"],
+              style: TextStyle(
+                  color: ColorsConstants.blue,
+                  fontSize: FontsConstants.lg_1,
+                  fontWeight: FontWeight.bold),
+            ),
+            Container(
+                margin: const EdgeInsets.only(top: 3.0),
+                width: 25.0,
+                height: 3.0,
+                color: ColorsConstants.blue)
+          ],
+        )
+      ],
     ),
   );
 }

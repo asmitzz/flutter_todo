@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_todo/utils/constants/colors.dart';
 import 'package:flutter_todo/utils/constants/strings.dart';
+import 'package:flutter_todo/utils/size_config.dart';
 import 'package:flutter_todo/widgets/my_drawer.dart';
 import 'package:flutter_todo/widgets/my_floating_action_button.dart';
 import 'package:flutter_todo/widgets/my_appbar.dart';
@@ -19,10 +20,10 @@ class _ProfileState extends State<Profile> {
   Widget build(BuildContext context) {
     return Container(
       color: ColorsConstants.rosyBrown,
-      child:  SafeArea(
+      child: SafeArea(
         child: Scaffold(
           appBar: PreferredSize(
-            preferredSize: const Size.fromHeight(50),
+            preferredSize: Size.fromHeight(SizeConfig.safeBlockVertical * 10),
             child: MyAppBar(
               editProfile: true,
               title: StringsConstants.profile["title"],

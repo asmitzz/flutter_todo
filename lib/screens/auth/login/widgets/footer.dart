@@ -22,8 +22,8 @@ class LoginFooter extends StatefulWidget {
 }
 
 class _LoginFooterState extends State<LoginFooter> {
-  Future<void> handleSignIn(
-      BuildContext context, AuthProvider authProvider) async {
+  Future<void> handleSignIn() async {
+    final AuthProvider authProvider = Provider.of<AuthProvider>(context,listen: false);
     if (widget.formKey.currentState!.validate()) {
       setState(() {
         isLoading = true;
@@ -46,7 +46,7 @@ class _LoginFooterState extends State<LoginFooter> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              StringsConstants.login["footer_title"],
+              StringsConstants.loginFooterTitle,
               style: TextStyle(
                   color: ColorsConstants.blue,
                   fontWeight: FontsConstants.medium,
@@ -56,7 +56,7 @@ class _LoginFooterState extends State<LoginFooter> {
                 onPressed: () {
                   Navigator.pushNamed(context, "/register");
                 },
-                child: Text(StringsConstants.login["register_btn"],
+                child: Text(StringsConstants.loginBtn1,
                     style: TextStyle(
                         color: ColorsConstants.blue,
                         fontWeight: FontWeight.bold,
@@ -67,7 +67,7 @@ class _LoginFooterState extends State<LoginFooter> {
           widthFactor: 1.0,
           child: Consumer<AuthProvider>(
             builder: (_, authProvider, __) => TextButton(
-              onPressed: () => handleSignIn(context, authProvider),
+              onPressed: handleSignIn,
               child: Padding(
                 padding: const EdgeInsets.fromLTRB(16.0, 8.0, 16.0, 8.0),
                 child: (isLoading)
@@ -79,7 +79,7 @@ class _LoginFooterState extends State<LoginFooter> {
                           strokeWidth: 1.5,
                         ))
                     : Text(
-                        StringsConstants.login["sign_in_btn"],
+                        StringsConstants.loginBtn2,
                         style: TextStyle(
                             color: Colors.white,
                             fontSize: FontsConstants.md_1,

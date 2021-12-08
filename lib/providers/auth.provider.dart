@@ -1,51 +1,38 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_todo/services/firebase_services.dart';
 import 'package:flutter_todo/widgets/toast.dart';
-import 'package:flutter_todo/main.dart';
 
 class AuthProvider with ChangeNotifier {
-  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
-
-  getUser() {
+  User? getUser() {
     return FirebaseAuth.instance.currentUser;
   }
 
   Future<bool?> signInWithEmailAndPassword(
-      {String email = "", String password = ""}) async {
+      {required String email, required String password}) async {
     try {
-      await FirebaseAuth.instance
+      await FirebaseServices()
           .signInWithEmailAndPassword(email: email, password: password);
-      navigatorKey.currentState!.pushReplacementNamed("/home");
-    } on FirebaseAuthException catch (e) {
-      if (e.code == 'user-not-found') {
-        return MyToast().errorToast("No user found for that email.");
-      } else if (e.code == 'wrong-password') {
-        return MyToast().errorToast("Wrong password provided for that user.");
-      }
-      return MyToast().errorToast(e.toString());
+    } catch (e) {
+      MyToast().errorToast(e.toString());
     }
   }
 
   Future<bool?> signUpWithEmailAndPassword(
       {String email = "", String password = ""}) async {
     try {
-      await FirebaseAuth.instance
-          .createUserWithEmailAndPassword(email: email, password: password);
-      await signInWithEmailAndPassword(email: email, password: password);
-    } on FirebaseAuthException catch (e) {
-      if (e.code == 'weak-password') {
-        return MyToast().errorToast("The password provided is too weak.");
-      } else if (e.code == 'email-already-in-use') {
-        return MyToast()
-            .errorToast("The account already exists for that email.");
-      }
+      await FirebaseServices()
+          .signUpWithEmailAndPassword(email: email, password: password);
     } catch (e) {
-      return MyToast().errorToast(e.toString());
+      MyToast().errorToast(e.toString());
     }
   }
 
   Future<void> signOut() async {
-    await _firebaseAuth.signOut();
-    navigatorKey.currentState!.pushReplacementNamed("/login");
+    try {
+      await FirebaseServices().signOut();
+    } catch (e) {
+      MyToast().errorToast(e.toString());
+    }
   }
 }

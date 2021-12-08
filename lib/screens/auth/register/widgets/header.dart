@@ -20,7 +20,7 @@ class RegisterHeader extends StatelessWidget {
           height: 20.0,
         ),
         Text(
-          StringsConstants.register["heading_1"],
+          StringsConstants.registerHeading1,
           style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: FontsConstants.xl,
@@ -30,7 +30,7 @@ class RegisterHeader extends StatelessWidget {
           height: 10.0,
         ),
         Text(
-          StringsConstants.register["heading_2"],
+          StringsConstants.registerHeading2,
           style: TextStyle(
               fontSize: FontsConstants.lg,
               fontWeight: FontsConstants.medium,
@@ -40,7 +40,7 @@ class RegisterHeader extends StatelessWidget {
           height: 10.0,
         ),
         Text(
-          StringsConstants.register["heading_3"],
+          StringsConstants.registerHeading3,
           style: TextStyle(
               fontSize: FontsConstants.lg,
               fontWeight: FontsConstants.medium,

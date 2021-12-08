@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_todo/utils/constants/colors.dart';
+import 'package:flutter_todo/utils/size_config.dart';
 
 class BottomBar extends StatefulWidget {
   final dynamic currentIndex;
@@ -20,93 +21,96 @@ class _BottomBarState extends State<BottomBar> {
 
   @override
   Widget build(BuildContext context) {
-    return BottomNavigationBar(
-      
-      items: <BottomNavigationBarItem>[
-        BottomNavigationBarItem(
-          icon: Column(
-            children: [
-               Icon(
-                Icons.list,
-                color: ColorsConstants.blue,
-                size: 28.0,
-              ),
-              Container(
-                  margin: const EdgeInsets.only(top: 5.0),
-                  width: 40.0,
-                  height: 3.0,
-                  color: widget.currentIndex == 0
-                      ?  ColorsConstants.blue
-                      :  ColorsConstants.rosyBrown)
-            ],
+    return Container(
+      height: SizeConfig.safeBlockVertical * 10,
+      child: BottomNavigationBar(
+        
+        items: <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Column(
+              children: [
+                 Icon(
+                  Icons.list,
+                  color: ColorsConstants.blue,
+                  size: 28.0,
+                ),
+                Container(
+                    margin: const EdgeInsets.only(top: 5.0),
+                    width: 40.0,
+                    height: 3.0,
+                    color: widget.currentIndex == 0
+                        ?  ColorsConstants.blue
+                        :  ColorsConstants.rosyBrown)
+              ],
+            ),
+            label: "",
           ),
-          label: "",
-        ),
-        BottomNavigationBarItem(
-          icon: Column(
-            children: [
-               Icon(
-                Icons.schedule,
-                color: ColorsConstants.blue,
-                size: 28.0,
-              ),
-              Container(
-                  margin: const EdgeInsets.only(top: 5.0),
-                  width: 40.0,
-                  height: 3.0,
-                  color: widget.currentIndex == 1
-                      ?  ColorsConstants.blue
-                      :  ColorsConstants.rosyBrown)
-            ],
+          BottomNavigationBarItem(
+            icon: Column(
+              children: [
+                 Icon(
+                  Icons.schedule,
+                  color: ColorsConstants.blue,
+                  size: 28.0,
+                ),
+                Container(
+                    margin: const EdgeInsets.only(top: 5.0),
+                    width: 40.0,
+                    height: 3.0,
+                    color: widget.currentIndex == 1
+                        ?  ColorsConstants.blue
+                        :  ColorsConstants.rosyBrown)
+              ],
+            ),
+            label: "",
           ),
-          label: "",
-        ),
-        BottomNavigationBarItem(
-          icon: Column(
-            children: [
-               Icon(
-                Icons.notifications_outlined,
-                color: ColorsConstants.blue,
-                size: 28.0,
-              ),
-              Container(
-                  margin: const EdgeInsets.only(top: 5.0),
-                  width: 40.0,
-                  height: 3.0,
-                  color: widget.currentIndex == 2
-                      ?  ColorsConstants.blue
-                      :  ColorsConstants.rosyBrown)
-            ],
+          BottomNavigationBarItem(
+            icon: Column(
+              children: [
+                 Icon(
+                  Icons.notifications_outlined,
+                  color: ColorsConstants.blue,
+                  size: 28.0,
+                ),
+                Container(
+                    margin: const EdgeInsets.only(top: 5.0),
+                    width: 40.0,
+                    height: 3.0,
+                    color: widget.currentIndex == 2
+                        ?  ColorsConstants.blue
+                        :  ColorsConstants.rosyBrown)
+              ],
+            ),
+            label: "",
           ),
-          label: "",
-        ),
-        BottomNavigationBarItem(
-          icon: Column(
-            children: [
-               Icon(
-                Icons.person_outline,
-                color: ColorsConstants.blue,
-                size: 28.0,
-              ),
-              Container(
-                  margin: const EdgeInsets.only(top: 5.0),
-                  width: 40.0,
-                  height: 3.0,
-                  color: widget.currentIndex == 3
-                      ?  ColorsConstants.blue
-                      :  ColorsConstants.rosyBrown)
-            ],
+          BottomNavigationBarItem(
+            icon: Column(
+              children: [
+                 Icon(
+                  Icons.person_outline,
+                  color: ColorsConstants.blue,
+                  size: 28.0,
+                ),
+                Container(
+                    margin: const EdgeInsets.only(top: 5.0),
+                    width: 40.0,
+                    height: 3.0,
+                    color: widget.currentIndex == 3
+                        ?  ColorsConstants.blue
+                        :  ColorsConstants.rosyBrown)
+              ],
+            ),
+            label: "",
           ),
-          label: "",
-        ),
-      ],
-      backgroundColor: ColorsConstants.lightRosyBrown,
-      type: BottomNavigationBarType.fixed,
-      currentIndex: 0,
-      onTap: (index) => _onTap(context, index),
-      iconSize: 40,
-      elevation: 0,
-      selectedFontSize: 0,
+        ],
+        backgroundColor: ColorsConstants.lightRosyBrown,
+        type: BottomNavigationBarType.fixed,
+        currentIndex: 0,
+        onTap: (index) => _onTap(context, index),
+        iconSize: 40,
+        elevation: 0,
+        selectedFontSize: 0,
+      ),
     );
   }
 }

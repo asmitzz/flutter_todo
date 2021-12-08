@@ -2,7 +2,7 @@ import 'package:flutter_todo/services/permission_service.dart';
 import 'package:flutter_todo/widgets/toast.dart';
 import 'package:image_picker/image_picker.dart';
 
-class ImagePickerServices{
+class ImagePickerServices {
   getFromGallery(Function cb) async {
     if (await PermissionsService().requestGalleryPermission()) {
       try {
@@ -17,6 +17,6 @@ class ImagePickerServices{
       } catch (e) {
         return MyToast().errorToast(e.toString());
       }
-    }
+    } 
   }
 }

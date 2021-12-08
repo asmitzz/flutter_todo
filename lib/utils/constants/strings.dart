@@ -1,55 +1,40 @@
 class StringsConstants {
+  // default avatar
+  static String defaultAvatar =
+      "https://images.unsplash.com/photo-1634926878768-2a5b3c42f139?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTh8fGF2YXRhcnxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60";
+
   // landing
-  static Map landing = {
-    "icon": "🍭",
-    "heading": "Candy",
-    "text": "Simple task manager"
-  };
+  static String logo = "🍭";
+  static String landingPageHeading = "Candy";
+  static String landingPageTitle = "Simple task manager";
 
   // login screen
-  static Map login = {
-    "heading_1": "Let's sign you in.",
-    "heading_2": "Welcome back.",
-    "heading_3": "You've been misssed!",
-    "footer_title": "Don't have an account?",
-    "register_btn": "Register",
-    "sign_in_btn": "Sign In"
-  };
+  static String loginHeading1 = "Let's sign you in.";
+  static String loginHeading2 = "Welcome back.";
+  static String loginHeading3 = "You've been misssed!";
+  static String loginFooterTitle = "Don't have an account?";
+  static String loginBtn1 = "Register";
+  static String loginBtn2 = "Sign In";
+  static String loginFormField1Label = "Email";
+  static String loginFormField1Hint = "Enter your email";
+  static String loginFormField1Error = "Invalid email";
+  static String loginFormField2Label = "Password";
+  static String loginFormField2Hint = "Enter your password";
+  static String loginFormField2Error = "Password should be atleast 8 char long";
 
-  // login form
-  static Map loginForm = {
-    "field_1_label_text": "Email",
-    "field_1_hint_text": "Enter your email",
-    "field_1_error_text": "Invalid email",
-    "field_2_label_text": "Password",
-    "field_2_hint_text": "Enter your password",
-    "field_2_error_text": "Password should be atleast 8 char long",
-  };
-
-  // register screen
-  static Map register = {
-    "heading_1": "Hi!",
-    "heading_2": "Create account.",
-    "heading_3": "Sign up to get started!",
-    "footer_title": "Already have an account?",
-    "login_btn": "Login",
-    "sign_up_btn": "Sign Up"
-  };
-
-  static Map registerForm = {
-    "field_1_label_text": "Name",
-    "field_1_hint_text": "Enter your name",
-    "field_1_error_text": "Name should be atleast 3 char long",
-    "field_2_label_text": "Email",
-    "field_2_hint_text": "Enter your email",
-    "field_2_error_text": "Invalid email",
-    "field_3_label_text": "Username",
-    "field_3_hint_text": "Enter username",
-    "field_3_error_text": "Username should be atleast 5 char long",
-    "field_4_label_text": "Password",
-    "field_4_hint_text": "Enter password",
-    "field_4_error_text": "Password should be atleast 8 char long",
-  };
+// register screen
+  static String registerHeading1 = "Hi!";
+  static String registerHeading2 = "Create account.";
+  static String registerHeading3 = "Sign up to get started!";
+  static String registerFooterTitle = "Already have an account?";
+  static String registerBtn1 = "Login";
+  static String registerBtn2 = "Sign Up";
+  static String registerFormField1Label = "Email";
+  static String registerFormField1Hint = "Enter your email";
+  static String registerFormField1Error = "Invalid email";
+  static String registerFormField2Label = "Password";
+  static String registerFormField2Hint = "Enter your password";
+  static String registerFormField2Error = "Password should be atleast 8 char long";
 
   // home screen
   static Map home = {
@@ -94,7 +79,11 @@ class StringsConstants {
   };
 
   // new-task screen
-  static Map newTask = {"title1": "NEW TASK","title2":"EDIT TASK", "select_date": "Complete by"};
+  static Map newTask = {
+    "title1": "NEW TASK",
+    "title2": "EDIT TASK",
+    "select_date": "Complete by"
+  };
 
   static Map newTaskOptions = {
     "option_1": "Save as alarms",
@@ -102,16 +91,10 @@ class StringsConstants {
   };
 
   // drawer
-  static Map drawer = {
-    "default_avatar":
-        "https://images.unsplash.com/photo-1634926878768-2a5b3c42f139?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTh8fGF2YXRhcnxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60",
-  };
-
-  static Map drawerOptions = {
-    "option_1": "Todo",
-    "option_2": "Schedular",
-    "option_3": "Notifications",
-    "option_4": "Profile",
-    "option_5": "Logout"
-  };
+  static String drawerOption1 = "Todo";
+  static String drawerOption2 = "Schedular";
+  static String drawerOption3 = "Notifications";
+  static String drawerOption4 = "Profile";
+  static String drawerOption5 = "Logout";
+  static String drawerFooter = "© 2021 candy";
 }

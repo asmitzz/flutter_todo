@@ -1,12 +1,12 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_todo/main.dart';
+import 'package:flutter_todo/providers/profile.provider.dart';
 import 'package:flutter_todo/screens/profile/widgets/edit_profile_template.dart';
-import 'package:flutter_todo/services/profile_services.dart';
 import 'package:flutter_todo/utils/constants/colors.dart';
 import 'package:flutter_todo/utils/constants/fonts.dart';
 import 'package:flutter_todo/utils/constants/strings.dart';
 import 'package:flutter_todo/widgets/toast.dart';
+import 'package:provider/provider.dart';
 
 class EditProfile extends StatefulWidget {
   const EditProfile({Key? key}) : super(key: key);
@@ -17,8 +17,6 @@ class EditProfile extends StatefulWidget {
 
 class _EditProfileState extends State<EditProfile> {
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  TextEditingController nameController = TextEditingController(text: "");
-  TextEditingController emailController = TextEditingController(text: "");
 
   bool isLoading = false;
 
@@ -42,19 +40,19 @@ class _EditProfileState extends State<EditProfile> {
       body: SingleChildScrollView(
           child: EditProfileTemplate(
         formKey: formKey,
-        nameController: nameController,
-        emailController: emailController,
       )),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
         backgroundColor: ColorsConstants.blue,
         onPressed: () async {
+          ProfileProvider profileProvider =
+              Provider.of<ProfileProvider>(context, listen: false);
+
           if (formKey.currentState!.validate()) {
             setState(() {
               isLoading = true;
             });
-            await ProfileServices().saveProfile(
-                email: emailController.text, name: nameController.text);
+            await profileProvider.saveProfile();
             setState(() {
               isLoading = false;
             });

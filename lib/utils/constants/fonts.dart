@@ -8,6 +8,7 @@ class FontsConstants {
   static double base = 14.0;
   static double md = 16.0;
   static double md_1 = 18.0;
+  static double md_2 = 20.0;
   static double lg = 24.0;
   static double lg_1 = 26.0;
   static double xl = 30.0;

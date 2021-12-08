@@ -30,8 +30,8 @@ class _RegisterFormState extends State<RegisterForm> {
           children: [
             CustomFormField(
                 controller: widget.emailController,
-                labelText: StringsConstants.registerForm["field_2_label_text"],
-                hintText: StringsConstants.registerForm["field_2_hint_text"],
+                labelText: StringsConstants.registerFormField1Label,
+                hintText: StringsConstants.registerFormField1Hint,
                 prefixIcon: Icon(
                   Icons.email,
                   color: ColorsConstants.blue,
@@ -40,7 +40,7 @@ class _RegisterFormState extends State<RegisterForm> {
                   return (!(RegExp(
                               r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
                           .hasMatch(value))
-                      ? StringsConstants.registerForm["field_2_error_text"]
+                      ? StringsConstants.registerFormField1Error
                       : null);
                 }),
             const SizedBox(
@@ -48,8 +48,8 @@ class _RegisterFormState extends State<RegisterForm> {
             ),
             CustomFormField(
                 controller: widget.passwordController,
-                labelText: StringsConstants.registerForm["field_4_label_text"],
-                hintText: StringsConstants.registerForm["field_4_hint_text"],
+                labelText: StringsConstants.registerFormField2Label,
+                hintText: StringsConstants.registerFormField2Hint,
                 prefixIcon: Icon(
                   Icons.lock,
                   color: ColorsConstants.blue,
@@ -66,7 +66,7 @@ class _RegisterFormState extends State<RegisterForm> {
                 obscureText: showPassword,
                 validator: (value) {
                   return ((value != null && value.length < 8)
-                      ? StringsConstants.registerForm["field_4_error_text"]
+                      ? StringsConstants.registerFormField2Error
                       : null);
                 }),
           ],

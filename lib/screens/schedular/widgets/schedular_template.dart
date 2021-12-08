@@ -6,6 +6,7 @@ import 'package:flutter_todo/providers/todos.provider.dart';
 import 'package:flutter_todo/utils/constants/colors.dart';
 import 'package:flutter_todo/utils/constants/fonts.dart';
 import 'package:flutter_todo/utils/constants/strings.dart';
+import 'package:flutter_todo/utils/size_config.dart';
 import 'package:flutter_todo/widgets/dismissibale_backgrounds.dart';
 import 'package:flutter_todo/widgets/skeleton_loading.dart';
 import 'package:provider/provider.dart';
@@ -41,58 +42,63 @@ class _SchedularTemplateState extends State<SchedularTemplate> {
 
   Consumer todos() {
     return Consumer<TodoProvider>(builder: (_, todoProvider, __) {
-      return Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: StreamBuilder<QuerySnapshot>(
-            stream: todoProvider.fetchSchedulars(),
-            builder:
-                (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-              if (snapshot.hasError) {
-                return const Text("Something went wrong");
-              }
-
-              if (snapshot.connectionState == ConnectionState.active) {
-                List<dynamic> data = snapshot.data!.docs;
-                if (data.isEmpty) {
-                  return Text(
-                    "No todos found!!",
-                    style: TextStyle(
-                        color: ColorsConstants.blue,
-                        fontWeight: FontsConstants.bold),
+      return Container(
+        height: SizeConfig.safeBlockVertical * 55,
+        padding: EdgeInsets.symmetric(
+            horizontal: SizeConfig.blockSizeHorizontal * 4,
+            vertical: SizeConfig.blockSizeVertical * 4),
+        child: SingleChildScrollView(
+          child: StreamBuilder<QuerySnapshot>(
+              stream: todoProvider.fetchSchedulars(),
+              builder:
+                  (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                if (snapshot.hasError) {
+                  return const Text("Something went wrong");
+                }
+        
+                if (snapshot.connectionState == ConnectionState.active) {
+                  List<dynamic> data = snapshot.data!.docs;
+                  if (data.isEmpty) {
+                    return Text(
+                      "No todos found!!",
+                      style: TextStyle(
+                          color: ColorsConstants.blue,
+                          fontWeight: FontsConstants.bold),
+                    );
+                  }
+        
+                  final int tomorrow = DateTime.now().day + 1;
+                  Map<dynamic, dynamic> formattedData = {};
+        
+                  data.forEach((value) {
+                    String day =
+                        value["completedBy"].toDate().day.compareTo(tomorrow) == 0
+                            ? "Tomorrow"
+                            : value["completedBy"]
+                                .toDate()
+                                .toString()
+                                .substring(0, 10);
+                    if (formattedData.containsKey(day)) {
+                      formattedData[day] = [...formattedData[day], value];
+                    } else {
+                      formattedData[day] = [value];
+                    }
+                  });
+        
+                  return ListView.builder(
+                    controller: scrollController,
+                    scrollDirection: Axis.vertical,
+                    shrinkWrap: true,
+                    itemCount: formattedData.keys.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return todoCard(formattedData,
+                          formattedData.keys.toList()[index], todoProvider);
+                    },
                   );
                 }
-
-                final int tomorrow = DateTime.now().day + 1;
-                Map<dynamic, dynamic> formattedData = {};
-
-                data.forEach((value) {
-                  String day =
-                      value["completedBy"].toDate().day.compareTo(tomorrow) == 0
-                          ? "Tomorrow"
-                          : value["completedBy"]
-                              .toDate()
-                              .toString()
-                              .substring(0, 10);
-                  if (formattedData.containsKey(day)) {
-                    formattedData[day] = [...formattedData[day], value];
-                  } else {
-                    formattedData[day] = [value];
-                  }
-                });
-
-                return ListView.builder(
-                  controller: scrollController,
-                  scrollDirection: Axis.vertical,
-                  shrinkWrap: true,
-                  itemCount: formattedData.keys.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return todoCard(formattedData,
-                        formattedData.keys.toList()[index], todoProvider);
-                  },
-                );
-              }
-              return const SkelotonLoading();
-            }),
+                return const SkelotonLoading();
+              }),
+        ),
       );
     });
   }
@@ -163,41 +169,42 @@ class _SchedularTemplateState extends State<SchedularTemplate> {
 
 Container schedularHeader() {
   return Container(
+    height: SizeConfig.safeBlockVertical * 25,
     constraints: const BoxConstraints(minWidth: double.infinity),
+    padding: EdgeInsets.symmetric(
+            horizontal: SizeConfig.blockSizeHorizontal * 6,
+            vertical: SizeConfig.blockSizeVertical * 6),
     decoration: BoxDecoration(
       color: ColorsConstants.lightRosyBrown,
     ),
-    child: Padding(
-      padding: const EdgeInsets.all(30.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            StringsConstants.schedular["title_1"],
-            style: TextStyle(
-                color: ColorsConstants.blue,
-                fontSize: FontsConstants.lg_1,
-                fontWeight: FontsConstants.bold),
-          ),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Text(
-                StringsConstants.schedular["title_2"],
-                style: TextStyle(
-                    color: ColorsConstants.blue,
-                    fontSize: FontsConstants.lg_1,
-                    fontWeight: FontsConstants.bold),
-              ),
-              Container(
-                  margin: const EdgeInsets.only(top: 3.0),
-                  width: 25.0,
-                  height: 3.0,
-                  color: ColorsConstants.blue)
-            ],
-          )
-        ],
-      ),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          StringsConstants.schedular["title_1"],
+          style: TextStyle(
+              color: ColorsConstants.blue,
+              fontSize: FontsConstants.lg_1,
+              fontWeight: FontsConstants.bold),
+        ),
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Text(
+              StringsConstants.schedular["title_2"],
+              style: TextStyle(
+                  color: ColorsConstants.blue,
+                  fontSize: FontsConstants.lg_1,
+                  fontWeight: FontsConstants.bold),
+            ),
+            Container(
+                margin: const EdgeInsets.only(top: 3.0),
+                width: 25.0,
+                height: 3.0,
+                color: ColorsConstants.blue)
+          ],
+        )
+      ],
     ),
   );
 }

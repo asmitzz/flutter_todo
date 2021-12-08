@@ -30,15 +30,15 @@ class _LoginFormState extends State<LoginForm> {
         children: [
           CustomFormField(
               controller: widget.emailController,
-              labelText: StringsConstants.loginForm["field_1_label_text"],
-              hintText: StringsConstants.loginForm["field_1_hint_text"],
+              labelText: StringsConstants.loginFormField1Label,
+              hintText: StringsConstants.loginFormField1Hint,
               prefixIcon: Icon(
                 Icons.email,
                 color: ColorsConstants.blue,
               ),
               validator: (value) {
                 return (value != null && value.length < 5)
-                    ? StringsConstants.loginForm["field_1_error_text"]
+                    ? StringsConstants.loginFormField1Error
                     : null;
               }),
           const SizedBox(
@@ -46,8 +46,8 @@ class _LoginFormState extends State<LoginForm> {
           ),
           CustomFormField(
               controller: widget.passwordController,
-              labelText: StringsConstants.loginForm["field_2_label_text"],
-              hintText: StringsConstants.loginForm["field_2_hint_text"],
+              labelText: StringsConstants.loginFormField2Label,
+              hintText: StringsConstants.loginFormField2Hint,
               prefixIcon: Icon(
                 Icons.lock,
                 color: ColorsConstants.blue,
@@ -64,7 +64,7 @@ class _LoginFormState extends State<LoginForm> {
               obscureText: showPassword,
               validator: (value) {
                 return ((value != null && value.length < 8)
-                    ? StringsConstants.loginForm["field_2_error_text"]
+                    ? StringsConstants.loginFormField2Error
                     : null);
               }),
         ],

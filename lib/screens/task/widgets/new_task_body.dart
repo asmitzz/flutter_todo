@@ -37,7 +37,7 @@ class _NewTaskBodyState extends State<NewTaskBody> {
           child: Form(
             key: todosProvider.formKey,
             child: TextFormField(
-              autofocus: false,
+              autofocus: true,
               initialValue: todosProvider.title,
               autovalidateMode: AutovalidateMode.onUserInteraction,
               decoration: const InputDecoration(

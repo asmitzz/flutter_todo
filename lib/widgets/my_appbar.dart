@@ -27,6 +27,7 @@ class _MyAppBarState extends State<MyAppBar> {
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      elevation: 2,
       centerTitle: true,
       shadowColor: ColorsConstants.rosyBrown,
       backgroundColor: ColorsConstants.rosyBrown,

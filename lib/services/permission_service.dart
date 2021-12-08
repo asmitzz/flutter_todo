@@ -4,8 +4,8 @@ import 'package:permission_handler/permission_handler.dart';
 class PermissionsService {
   Future<bool> requestGalleryPermission() async {
     try {
-      bool status = await Permission.photos.request().isGranted;
-      return status;
+      PermissionStatus status = await Permission.photos.request();
+      return status.isGranted;
     } catch (e) {
       return MyToast().errorToast(e.toString());
     }

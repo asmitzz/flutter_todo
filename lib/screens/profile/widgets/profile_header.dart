@@ -1,10 +1,10 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_todo/services/profile_services.dart';
+import 'package:flutter_todo/providers/profile.provider.dart';
 import 'package:flutter_todo/utils/constants/fonts.dart';
-import 'package:flutter_todo/utils/constants/strings.dart';
 import 'package:flutter_todo/utils/constants/colors.dart';
+import 'package:flutter_todo/utils/size_config.dart';
+import 'package:provider/provider.dart';
 
 class ProfileHeader extends StatefulWidget {
   const ProfileHeader({Key? key}) : super(key: key);
@@ -14,36 +14,22 @@ class ProfileHeader extends StatefulWidget {
 }
 
 class _ProfileHeaderState extends State<ProfileHeader> {
-    String imageUrl = "";
-  
-  @override
-  void initState() {
-    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) async {
-      imageUrl = await ProfileServices().getProfilePicUrl();
-      setState(() {
-        
-      });
-    });
-
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
-    final User? currentUser = FirebaseAuth.instance.currentUser;
-    final String email =
-        currentUser!.email == null ? "" : currentUser.email.toString();
-    final String name = currentUser.displayName == null
-        ? ""
-        : currentUser.displayName.toString();
+    ProfileProvider profileProvider = Provider.of<ProfileProvider>(context);
+    
     return Container(
+      height: SizeConfig.safeBlockVertical * 25,
       color: ColorsConstants.lightRosyBrown,
-      padding: const EdgeInsets.all(30.0),
+      padding: EdgeInsets.symmetric(
+            horizontal: SizeConfig.blockSizeHorizontal * 6,
+            vertical: SizeConfig.blockSizeVertical * 6),
       child: Row(
         children: [
           CircleAvatar(
             backgroundColor: ColorsConstants.blue,
-            backgroundImage:imageUrl != "" ? NetworkImage(imageUrl) : null,
+            backgroundImage: profileProvider.photoUrl != "" ? NetworkImage(profileProvider.photoUrl) : null,
             radius: 35.0,
           ),
           const SizedBox(
@@ -54,7 +40,7 @@ class _ProfileHeaderState extends State<ProfileHeader> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  name,
+                  profileProvider.name,
                   style: TextStyle(
                       fontWeight: FontsConstants.bold,
                       fontSize: 26.0,
@@ -64,7 +50,7 @@ class _ProfileHeaderState extends State<ProfileHeader> {
                   height: 4.0,
                 ),
                 Text(
-                  email,
+                  profileProvider.email,
                   style: TextStyle(color: ColorsConstants.blue),
                 )
               ],

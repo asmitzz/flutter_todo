@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 
@@ -17,7 +18,7 @@ class ProfileServices {
       String imageUrl = await reference.getDownloadURL();
       return imageUrl;
     } catch (e) {
-      return e.toString();
+      throw ErrorDescription("No profile pic found");
     }
   }
 
@@ -33,7 +34,7 @@ class ProfileServices {
       imageUrl = await uploadTask.ref.getDownloadURL();
       return imageUrl;
     } catch (e) {
-      return e.toString();
+      throw ErrorDescription(e.toString());
     }
   }
 
@@ -43,7 +44,7 @@ class ProfileServices {
           storage.ref().child("profile/" + uid);
       await reference.delete();
     } catch (e) {
-      return e.toString();
+      throw ErrorDescription(e.toString());
     }
   }
 
@@ -53,7 +54,7 @@ class ProfileServices {
       await FirebaseAuth.instance.currentUser!.updateDisplayName(name);
       await FirebaseAuth.instance.currentUser!.updateEmail(email);
     } catch (e) {
-      return e.toString();
+      throw ErrorDescription(e.toString());
     }
   }
 }

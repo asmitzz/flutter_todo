@@ -10,29 +10,30 @@ import 'package:flutter_todo/screens/home/widgets/home_template.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
-  
+
   @override
   _HomeState createState() => _HomeState();
 }
 
 class _HomeState extends State<Home> {
+
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
 
     return Container(
       color: ColorsConstants.rosyBrown,
-      child:  SafeArea(
+      child: SafeArea(
         child: Scaffold(
             appBar: PreferredSize(
-              preferredSize: const Size.fromHeight(50),
+              preferredSize: Size.fromHeight(SizeConfig.safeBlockVertical * 10),
               child: MyAppBar(
                 title: StringsConstants.home["title"],
                 search: true,
               ),
             ),
             drawer: const MyDrawer(),
-            body: const SingleChildScrollView(child: HomeTemplate()),
+            body: const HomeTemplate(),
             floatingActionButtonLocation:
                 FloatingActionButtonLocation.centerDocked,
             bottomNavigationBar: const BottomBar(currentIndex: 0),

@@ -1,9 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_todo/main.dart';
+import 'package:flutter_todo/providers/profile.provider.dart';
 import 'package:flutter_todo/utils/constants/colors.dart';
 import 'package:flutter_todo/utils/constants/fonts.dart';
 import 'package:flutter_todo/utils/constants/strings.dart';
+import 'package:flutter_todo/utils/size_config.dart';
+import 'package:provider/provider.dart';
 
 class Landing extends StatefulWidget {
   const Landing({Key? key}) : super(key: key);
@@ -17,11 +20,17 @@ class _LandingState extends State<Landing> with SingleTickerProviderStateMixin {
   late final Animation<double> _animation =
       CurvedAnimation(parent: _controller, curve: Curves.ease);
 
-  void startApp() {
+  void startApp() async {
     User? user = FirebaseAuth.instance.currentUser;
     if (user == null) {
       navigatorKey.currentState!.pushReplacementNamed("/login");
     } else {
+      if (FirebaseAuth.instance.currentUser != null) {
+        ProfileProvider profileProvider =
+            Provider.of<ProfileProvider>(context, listen: false);
+        await profileProvider.getPhotoUrl();
+      }
+
       navigatorKey.currentState!.pushReplacementNamed("/home");
     }
   }
@@ -32,7 +41,9 @@ class _LandingState extends State<Landing> with SingleTickerProviderStateMixin {
         AnimationController(vsync: this, duration: const Duration(seconds: 1))
           ..repeat();
     WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
-      startApp();
+      if (mounted) {
+        startApp();
+      }
     });
     super.initState();
   }
@@ -45,7 +56,7 @@ class _LandingState extends State<Landing> with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-
+    SizeConfig().init(context);
     return SafeArea(
       child: Scaffold(
         backgroundColor: ColorsConstants.rosyBrown,
@@ -63,24 +74,24 @@ class _LandingState extends State<Landing> with SingleTickerProviderStateMixin {
                     RotationTransition(
                       turns: _animation,
                       child: Text(
-                        StringsConstants.landing["icon"],
+                        StringsConstants.logo,
                         style: TextStyle(
                             fontSize: FontsConstants.xl_3,
                             color: ColorsConstants.blue),
                       ),
                     ),
                     Text(
-                      StringsConstants.landing["heading"],
+                      StringsConstants.landingPageHeading,
                       style: TextStyle(
                           color: ColorsConstants.blue,
                           fontWeight: FontsConstants.bold,
                           fontSize: FontsConstants.xl_1),
                     ),
-                    const SizedBox(
-                      height: 50.0,
+                    SizedBox(
+                      height: SizeConfig.blockSizeVertical * 6,
                     ),
                     Text(
-                      StringsConstants.landing["text"],
+                      StringsConstants.landingPageTitle,
                       style: TextStyle(
                           fontWeight: FontsConstants.medium,
                           color: ColorsConstants.blue),

@@ -20,7 +20,7 @@ class LoginHeader extends StatelessWidget {
           height: 20.0,
         ),
         Text(
-          StringsConstants.login["heading_1"],
+          StringsConstants.loginHeading1,
           style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: FontsConstants.xl,
@@ -30,7 +30,7 @@ class LoginHeader extends StatelessWidget {
           height: 10.0,
         ),
         Text(
-          StringsConstants.login["heading_2"],
+          StringsConstants.loginHeading2,
           style: TextStyle(
               fontSize: FontsConstants.lg,
               fontWeight: FontsConstants.medium,
@@ -40,7 +40,7 @@ class LoginHeader extends StatelessWidget {
           height: 10.0,
         ),
         Text(
-          StringsConstants.login["heading_3"],
+          StringsConstants.loginHeading3,
           style: TextStyle(
               fontSize: FontsConstants.lg,
               fontWeight: FontsConstants.medium,

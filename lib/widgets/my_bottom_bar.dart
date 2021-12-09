@@ -22,7 +22,7 @@ class _BottomBarState extends State<BottomBar> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: SizeConfig.safeBlockVertical * 10,
+      height: SizeConfig.safeBlockVertical * 12,
       child: BottomNavigationBar(
         
         items: <BottomNavigationBarItem>[
@@ -40,7 +40,7 @@ class _BottomBarState extends State<BottomBar> {
                     height: 3.0,
                     color: widget.currentIndex == 0
                         ?  ColorsConstants.blue
-                        :  ColorsConstants.rosyBrown)
+                        :  ColorsConstants.lightRosyBrown)
               ],
             ),
             label: "",
@@ -59,7 +59,7 @@ class _BottomBarState extends State<BottomBar> {
                     height: 3.0,
                     color: widget.currentIndex == 1
                         ?  ColorsConstants.blue
-                        :  ColorsConstants.rosyBrown)
+                        :  ColorsConstants.lightRosyBrown)
               ],
             ),
             label: "",
@@ -78,7 +78,7 @@ class _BottomBarState extends State<BottomBar> {
                     height: 3.0,
                     color: widget.currentIndex == 2
                         ?  ColorsConstants.blue
-                        :  ColorsConstants.rosyBrown)
+                        :  ColorsConstants.lightRosyBrown)
               ],
             ),
             label: "",
@@ -97,7 +97,7 @@ class _BottomBarState extends State<BottomBar> {
                     height: 3.0,
                     color: widget.currentIndex == 3
                         ?  ColorsConstants.blue
-                        :  ColorsConstants.rosyBrown)
+                        :  ColorsConstants.lightRosyBrown)
               ],
             ),
             label: "",

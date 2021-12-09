@@ -35,8 +35,8 @@ class _NotificationsState extends State<Notifications> {
               FloatingActionButtonLocation.centerDocked,
           bottomNavigationBar: const BottomBar(currentIndex: 2),
           floatingActionButton: SizedBox(
-              height: SizeConfig.safeBlockVertical * 10,
-              width: SizeConfig.safeBlockHorizontal * 10,
+              height: SizeConfig.safeBlockVertical * 14,
+              width: SizeConfig.safeBlockHorizontal * 14,
               child: const FittedBox(child: MyFloatingActionButton()),
             )),
         ),

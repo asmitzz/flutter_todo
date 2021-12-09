@@ -13,7 +13,7 @@ class MyFloatingActionButton extends StatelessWidget {
     },
     backgroundColor: ColorsConstants.blue,
     child:  Icon(Icons.add,
-    size: SizeConfig.blockSizeVertical * 6,),
+    size: SizeConfig.blockSizeVertical * 4,)
   );
   }
 }

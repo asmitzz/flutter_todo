@@ -131,7 +131,7 @@ class _HomeTemplateState extends State<HomeTemplate> {
 
 Container homeHeader() {
   return Container(
-    height: SizeConfig.safeBlockVertical * 25,
+    height: SizeConfig.safeBlockVertical * 24,
     constraints: const BoxConstraints(minWidth: double.infinity),
     decoration: BoxDecoration(
       color: ColorsConstants.lightRosyBrown,

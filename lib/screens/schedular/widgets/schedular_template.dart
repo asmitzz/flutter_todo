@@ -43,7 +43,7 @@ class _SchedularTemplateState extends State<SchedularTemplate> {
   Consumer todos() {
     return Consumer<TodoProvider>(builder: (_, todoProvider, __) {
       return Container(
-        height: SizeConfig.safeBlockVertical * 55,
+        height: SizeConfig.safeBlockVertical * 52,
         padding: EdgeInsets.symmetric(
             horizontal: SizeConfig.blockSizeHorizontal * 6,
             vertical: SizeConfig.blockSizeVertical * 4),
@@ -178,7 +178,7 @@ class _SchedularTemplateState extends State<SchedularTemplate> {
 
 Container schedularHeader() {
   return Container(
-    height: SizeConfig.safeBlockVertical * 25,
+    height: SizeConfig.safeBlockVertical * 24,
     constraints: const BoxConstraints(minWidth: double.infinity),
     padding: EdgeInsets.symmetric(
         horizontal: SizeConfig.blockSizeHorizontal * 6,

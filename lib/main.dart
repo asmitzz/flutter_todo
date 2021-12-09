@@ -12,9 +12,7 @@ import 'package:provider/provider.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp(DevicePreview(
-          enabled: !kReleaseMode,
-          builder: (context) => const MyApp()) // Wrap your app
+  runApp(const MyApp() // Wrap your app
       ); // Wrap your app
 }
 

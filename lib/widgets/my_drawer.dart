@@ -25,11 +25,13 @@ class _MyDrawerState extends State<MyDrawer> {
     return Drawer(
         elevation: 0,
         child: LayoutBuilder(builder: (context, viewportConstraints) {
-          return ConstrainedBox(
-            constraints: BoxConstraints(
-              minHeight: viewportConstraints.maxHeight,
+          return SingleChildScrollView(
+            child: ConstrainedBox(
+              constraints: BoxConstraints(
+                minHeight: viewportConstraints.maxHeight,
+              ),
+              child: drawerTemplate(),
             ),
-            child: drawerTemplate(),
           );
         }));
   }

@@ -88,8 +88,8 @@ class _NewTaskState extends State<NewTask> {
         body: const SingleChildScrollView(child: NewTaskBody()),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         floatingActionButton: SizedBox(
-          height: SizeConfig.safeBlockVertical * 10,
-          width: SizeConfig.safeBlockHorizontal * 10,
+          height: SizeConfig.safeBlockVertical * 14,
+              width: SizeConfig.safeBlockHorizontal * 14,
           child: FloatingActionButton(
             backgroundColor: ColorsConstants.blue,
             onPressed: _onPressed,

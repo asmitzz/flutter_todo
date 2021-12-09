@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_todo/main.dart';
 import 'package:flutter_todo/providers/profile.provider.dart';
+import 'package:flutter_todo/screens/profile/widgets/edit_profile_header.dart';
 import 'package:flutter_todo/services/image_picker_services.dart';
 import 'package:flutter_todo/utils/constants/strings.dart';
 import 'package:flutter_todo/utils/size_config.dart';
+import 'package:flutter_todo/widgets/button_loader.dart';
+import 'package:flutter_todo/widgets/buttons.dart';
 import 'package:flutter_todo/widgets/custom_form_field.dart';
 import 'package:flutter_todo/utils/constants/colors.dart';
 import 'package:flutter_todo/utils/constants/fonts.dart';
@@ -85,146 +88,17 @@ class _EditProfileTemplateState extends State<EditProfileTemplate> {
       child: Form(
         key: widget.formKey,
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(
-                height: SizeConfig.safeBlockVertical * 25,
-                padding: EdgeInsets.symmetric(
-                    horizontal: SizeConfig.blockSizeHorizontal * 6,
-                    vertical: SizeConfig.blockSizeVertical * 6),
-                color: ColorsConstants.lightRosyBrown,
-                child: CustomFormField(
-                  fontSize: FontsConstants.xl,
-                  fontWeight: FontsConstants.bold,
-                  borderSide: BorderSide.none,
-                  enableBorderSide: BorderSide.none,
-                  focusedBorderSide: BorderSide.none,
-                  initialValue: profileProvider.name,
-                  onChanged: (value) {
-                    profileProvider.updateName(value);
-                  },
-                  labelText: "",
-                  hintText: "Enter you name",
-                  validator: (String value) {
-                    if (value.length < 3) {
-                      return "Invalid name";
-                    }
-                    return null;
-                  },
-                )),
+            editProfileHeader(profileProvider),
             Padding(
-              padding: const EdgeInsets.all(30.0),
+              padding: EdgeInsets.symmetric(
+                  horizontal: SizeConfig.blockSizeHorizontal * 6,
+                  vertical: SizeConfig.blockSizeVertical * 4),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Row(
-                    children: [
-                      CircleAvatar(
-                        backgroundColor: ColorsConstants.blue,
-                        backgroundImage: profileProvider.photoUrl != ""
-                            ? NetworkImage(profileProvider.photoUrl)
-                            : null,
-                        radius: SizeConfig.blockSizeHorizontal * 10,
-                      ),
-                      SizedBox(
-                        width: SizeConfig.blockSizeHorizontal * 4,
-                      ),
-                      profileProvider.photoUrl !=
-                              StringsConstants.profile["default_pic"]
-                          ? (isRemoveBtnLoading == false
-                              ? ElevatedButton.icon(
-                                  onPressed: deleteProfilePic,
-                                  icon: Icon(
-                                    Icons.delete,
-                                    size: SizeConfig.blockSizeHorizontal * 3,
-                                  ),
-                                  label: Text("REMOVE",
-                                      style: TextStyle(
-                                          fontSize: FontsConstants.sm)),
-                                  style: ButtonStyle(
-                                    padding: MaterialStateProperty.all<
-                                          EdgeInsetsGeometry>(
-                                      EdgeInsets.symmetric(
-                                          vertical:
-                                              SizeConfig.blockSizeVertical * 2,
-                                          horizontal:
-                                              SizeConfig.blockSizeVertical *
-                                                  2)),
-                                    backgroundColor:
-                                        MaterialStateProperty.all<Color>(
-                                            ColorsConstants.error),
-                                  ))
-                              : ElevatedButton(
-                                  onPressed: null,
-                                  style: ButtonStyle(
-                                    padding: MaterialStateProperty.all<
-                                          EdgeInsetsGeometry>(
-                                      EdgeInsets.symmetric(
-                                          vertical:
-                                              SizeConfig.blockSizeVertical * 2,
-                                          horizontal:
-                                              SizeConfig.blockSizeVertical *
-                                                  2)),
-                                      backgroundColor:
-                                          MaterialStateProperty.all<Color>(
-                                              ColorsConstants.error)),
-                                  child: const SizedBox(
-                                      width: 16,
-                                      height: 16,
-                                      child: CircularProgressIndicator(
-                                        color: Colors.white,
-                                        strokeWidth: 1.5,
-                                      ))))
-                          : Container(),
-                      SizedBox(
-                        width: SizeConfig.blockSizeHorizontal * 2,
-                      ),
-                      (isUploadBtnLoading == false
-                          ? ElevatedButton.icon(
-                              onPressed: () => ImagePickerServices()
-                                  .getFromGallery(uploadProfilePic),
-                              icon: Icon(
-                                Icons.edit,
-                                size: SizeConfig.blockSizeHorizontal * 3,
-                              ),
-                              label: Text("UPLOAD",
-                                  style:
-                                      TextStyle(fontSize: FontsConstants.sm)),
-                              style: ButtonStyle(
-                                padding: MaterialStateProperty.all<
-                                          EdgeInsetsGeometry>(
-                                      EdgeInsets.symmetric(
-                                          vertical:
-                                              SizeConfig.blockSizeVertical * 2,
-                                          horizontal:
-                                              SizeConfig.blockSizeVertical *
-                                                  2)),
-                                backgroundColor:
-                                    MaterialStateProperty.all<Color>(
-                                        ColorsConstants.blue),
-                              ))
-                          : ElevatedButton(
-                              onPressed: null,
-                              style: ButtonStyle(
-                                  padding: MaterialStateProperty.all<
-                                          EdgeInsetsGeometry>(
-                                      EdgeInsets.symmetric(
-                                          vertical:
-                                              SizeConfig.blockSizeVertical * 2,
-                                          horizontal:
-                                              SizeConfig.blockSizeVertical *
-                                                  2)),
-                                  backgroundColor:
-                                      MaterialStateProperty.all<Color>(
-                                          ColorsConstants.blue)),
-                              child: SizedBox(
-                                  width: SizeConfig.blockSizeVertical * 3,
-                                  height: SizeConfig.blockSizeVertical * 3,
-                                  child: const CircularProgressIndicator(
-                                    color: Colors.white,
-                                    strokeWidth: 1.5,
-                                  ))))
-                    ],
-                  ),
+                  profilePicUpdateSection(profileProvider),
                   SizedBox(
                     height: SizeConfig.blockSizeVertical * 4,
                   ),
@@ -249,6 +123,45 @@ class _EditProfileTemplateState extends State<EditProfileTemplate> {
           ],
         ),
       ),
+    );
+  }
+
+  Row profilePicUpdateSection(ProfileProvider profileProvider) {
+    return Row(
+      children: [
+        CircleAvatar(
+          backgroundColor: ColorsConstants.blue,
+          backgroundImage: profileProvider.photoUrl != ""
+              ? NetworkImage(profileProvider.photoUrl)
+              : null,
+          radius: SizeConfig.blockSizeHorizontal * 10,
+        ),
+        SizedBox(
+          width: SizeConfig.blockSizeHorizontal * 4,
+        ),
+        profileProvider.photoUrl != StringsConstants.defaultAvatar
+            ? (isRemoveBtnLoading == false
+                ? customButton(
+                    onPressed: deleteProfilePic,
+                    icon:Icons.delete,
+                    text:"REMOVE",
+                    background: ColorsConstants.error
+                ) 
+                : ButtonLoader(background: ColorsConstants.error))
+            : Container(),
+        SizedBox(
+          width: SizeConfig.blockSizeHorizontal * 2,
+        ),
+        (isUploadBtnLoading == false
+            ? customButton(
+                    onPressed: () =>
+                    ImagePickerServices().getFromGallery(uploadProfilePic),
+                    icon:Icons.edit,
+                    text:"UPLOAD",
+                    background: ColorsConstants.blue
+                )  
+            : ButtonLoader(background: ColorsConstants.blue))
+      ],
     );
   }
 }

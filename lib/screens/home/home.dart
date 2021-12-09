@@ -37,8 +37,8 @@ class _HomeState extends State<Home> {
                 FloatingActionButtonLocation.centerDocked,
             bottomNavigationBar: const BottomBar(currentIndex: 0),
             floatingActionButton: SizedBox(
-              height: SizeConfig.safeBlockVertical * 10,
-              width: SizeConfig.safeBlockHorizontal * 10,
+              height: SizeConfig.safeBlockVertical * 14,
+              width: SizeConfig.safeBlockHorizontal * 14,
               child: const FittedBox(child: MyFloatingActionButton()),
             )),
       ),

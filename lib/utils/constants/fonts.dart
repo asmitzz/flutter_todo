@@ -1,20 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_todo/utils/size_config.dart';
 
 class FontsConstants {
 
   // font size
-  static double xs = 6.0;
-  static double sm = 10.0;
-  static double base = 14.0;
-  static double md = 16.0;
-  static double md_1 = 18.0;
-  static double md_2 = 20.0;
-  static double lg = 24.0;
-  static double lg_1 = 26.0;
-  static double xl = 30.0;
-  static double xl_1 = 35.0;
-  static double xl_2 = 40.0;
-  static double xl_3 = 60.0;
+  static double xs = SizeConfig.blockSizeHorizontal * 1.5;
+  static double sm = SizeConfig.blockSizeHorizontal * 2.5;
+  static double base = SizeConfig.blockSizeHorizontal * 3.5;
+  static double md = SizeConfig.blockSizeHorizontal * 4;
+  static double md_1 = SizeConfig.blockSizeHorizontal * 4.5;
+  static double md_2 = SizeConfig.blockSizeHorizontal * 5;
+  static double lg = SizeConfig.blockSizeHorizontal * 6;
+  static double lg_1 = SizeConfig.blockSizeHorizontal * 6.5;
+  static double xl = SizeConfig.blockSizeHorizontal * 8;
+  static double xl_1 = SizeConfig.blockSizeHorizontal * 8.5;
+  static double xl_2 = SizeConfig.blockSizeHorizontal * 10;
+  static double xxl = SizeConfig.blockSizeHorizontal * 14.5;
 
   // font weight
   static FontWeight thin = FontWeight.w100;
@@ -26,5 +27,4 @@ class FontsConstants {
   static FontWeight bold = FontWeight.w700;
   static FontWeight extrabold = FontWeight.w800;
   static FontWeight black = FontWeight.w900;
-  
 }

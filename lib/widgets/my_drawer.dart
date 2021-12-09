@@ -25,13 +25,11 @@ class _MyDrawerState extends State<MyDrawer> {
     return Drawer(
         elevation: 0,
         child: LayoutBuilder(builder: (context, viewportConstraints) {
-          return SingleChildScrollView(
-            child: ConstrainedBox(
-              constraints: BoxConstraints(
-                minHeight: viewportConstraints.maxHeight,
-              ),
-              child: drawerTemplate(),
+          return ConstrainedBox(
+            constraints: BoxConstraints(
+              minHeight: viewportConstraints.maxHeight,
             ),
+            child: drawerTemplate(),
           );
         }));
   }
@@ -40,8 +38,8 @@ class _MyDrawerState extends State<MyDrawer> {
   Container drawerTemplate() {
     return Container(
       padding: EdgeInsets.symmetric(
-          horizontal: SizeConfig.blockSizeHorizontal * 5,
-          vertical: SizeConfig.blockSizeVertical * 5),
+          horizontal: SizeConfig.blockSizeHorizontal * 4,
+          vertical: SizeConfig.blockSizeVertical * 4),
       decoration: BoxDecoration(
           color: ColorsConstants.white,
           border: Border.all(color: ColorsConstants.rosyBrown)),
@@ -52,6 +50,9 @@ class _MyDrawerState extends State<MyDrawer> {
           Column(
             children: [
               drawerHeader(),
+              SizedBox(
+                height: SizeConfig.blockSizeVertical * 4,
+              ),
               drawerBody(),
             ],
           ),
@@ -64,25 +65,31 @@ class _MyDrawerState extends State<MyDrawer> {
   // Drawer Header
   Consumer drawerHeader() {
     return Consumer<ProfileProvider>(
-      builder:(_,profileProvider,__) => DrawerHeader(
-          padding: const EdgeInsets.all(0.0),
-          child: UserAccountsDrawerHeader(
-              decoration: BoxDecoration(color: ColorsConstants.white),
-              accountName: Text(profileProvider.name,
+        builder: (_, profileProvider, __) => Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                CircleAvatar(
+                  radius: SizeConfig.blockSizeHorizontal * 8,
+                  backgroundImage: profileProvider.photoUrl != ""
+                      ? NetworkImage(profileProvider.photoUrl)
+                      : null,
+                ),
+                Text(profileProvider.name,
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: FontsConstants.md_2,
+                        color: ColorsConstants.blue)),
+                        SizedBox(height: SizeConfig.blockSizeVertical,),
+                Text(
+                  profileProvider.email,
                   style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: FontsConstants.md_2,
-                      color: ColorsConstants.blue)),
-              accountEmail: Text(
-                profileProvider.email,
-                style: TextStyle(
-                    fontWeight: FontsConstants.medium,
-                    color: ColorsConstants.blue),
-              ),
-              currentAccountPicture: CircleAvatar(
-                backgroundImage: profileProvider.photoUrl != "" ? NetworkImage(profileProvider.photoUrl) : null,
-              ))),
-    );
+                      fontWeight: FontsConstants.medium,
+                      fontSize: FontsConstants.sm,
+                      color: ColorsConstants.blue),
+                ),
+                Divider(thickness: 2.0,color: ColorsConstants.blue,)
+              ],
+            ));
   }
 }
 
@@ -118,7 +125,9 @@ Consumer<AuthProvider> logOut() {
             onTap: () => logOut(authProvider),
             title: Text(
               StringsConstants.drawerOption5,
-              style: TextStyle(color: ColorsConstants.blueGrey),
+              style: TextStyle(
+                  color: ColorsConstants.blue,
+                  fontSize: FontsConstants.base),
             ),
           ));
 }
@@ -128,7 +137,8 @@ ListTile navigateTo({required String route, required String routeName}) {
     onTap: () => navigatorKey.currentState!.pushReplacementNamed(route),
     title: Text(
       routeName,
-      style: TextStyle(color: ColorsConstants.blue),
+      style:
+          TextStyle(color: ColorsConstants.blue, fontSize: FontsConstants.base),
     ),
   );
 }
@@ -138,7 +148,8 @@ ListTile drawerFooter() {
   return ListTile(
     title: Text(
       StringsConstants.drawerFooter,
-      style: TextStyle(color: ColorsConstants.blueGrey),
+      style: TextStyle(
+          color: ColorsConstants.blueGrey, fontSize: FontsConstants.sm),
     ),
   );
 }

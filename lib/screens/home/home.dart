@@ -16,7 +16,6 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
@@ -26,7 +25,7 @@ class _HomeState extends State<Home> {
       child: SafeArea(
         child: Scaffold(
             appBar: PreferredSize(
-              preferredSize: Size.fromHeight(SizeConfig.safeBlockVertical * 10),
+              preferredSize: Size.fromHeight(SizeConfig.safeBlockVertical * 12),
               child: MyAppBar(
                 title: StringsConstants.home["title"],
                 search: true,
@@ -37,7 +36,11 @@ class _HomeState extends State<Home> {
             floatingActionButtonLocation:
                 FloatingActionButtonLocation.centerDocked,
             bottomNavigationBar: const BottomBar(currentIndex: 0),
-            floatingActionButton: const MyFloatingActionButton()),
+            floatingActionButton: SizedBox(
+              height: SizeConfig.safeBlockVertical * 10,
+              width: SizeConfig.safeBlockHorizontal * 10,
+              child: const FittedBox(child: MyFloatingActionButton()),
+            )),
       ),
     );
   }

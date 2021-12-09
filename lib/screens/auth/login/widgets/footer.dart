@@ -3,6 +3,7 @@ import 'package:flutter_todo/providers/auth.provider.dart';
 import 'package:flutter_todo/utils/constants/colors.dart';
 import 'package:flutter_todo/utils/constants/fonts.dart';
 import 'package:flutter_todo/utils/constants/strings.dart';
+import 'package:flutter_todo/utils/size_config.dart';
 import 'package:provider/provider.dart';
 
 class LoginFooter extends StatefulWidget {
@@ -23,7 +24,8 @@ class LoginFooter extends StatefulWidget {
 
 class _LoginFooterState extends State<LoginFooter> {
   Future<void> handleSignIn() async {
-    final AuthProvider authProvider = Provider.of<AuthProvider>(context,listen: false);
+    final AuthProvider authProvider =
+        Provider.of<AuthProvider>(context, listen: false);
     if (widget.formKey.currentState!.validate()) {
       setState(() {
         isLoading = true;
@@ -63,13 +65,17 @@ class _LoginFooterState extends State<LoginFooter> {
                         fontSize: FontsConstants.md)))
           ],
         ),
+        SizedBox(height: SizeConfig.blockSizeVertical*1,),
         FractionallySizedBox(
           widthFactor: 1.0,
           child: Consumer<AuthProvider>(
             builder: (_, authProvider, __) => TextButton(
               onPressed: handleSignIn,
               child: Padding(
-                padding: const EdgeInsets.fromLTRB(16.0, 8.0, 16.0, 8.0),
+                padding:  EdgeInsets.symmetric(
+                  vertical: SizeConfig.blockSizeVertical * 1,
+                  horizontal: SizeConfig.blockSizeHorizontal * 1,
+                ),
                 child: (isLoading)
                     ? const SizedBox(
                         width: 16,

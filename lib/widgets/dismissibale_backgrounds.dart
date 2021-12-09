@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_todo/utils/constants/fonts.dart';
+import 'package:flutter_todo/utils/size_config.dart';
 
 class DismissibleBackgrounds {
   Widget slideRightBackground() {
@@ -7,18 +9,23 @@ class DismissibleBackgrounds {
       child: Align(
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
-          children: const <Widget>[
+          children:  <Widget>[
             SizedBox(
-              width: 20,
+              width: SizeConfig.blockSizeHorizontal * 4,
             ),
             Icon(
               Icons.edit,
+              size: SizeConfig.blockSizeHorizontal * 4,
               color: Colors.white,
+            ),
+            SizedBox(
+              width: SizeConfig.blockSizeHorizontal * 2,
             ),
             Text(
               "Edit",
               style: TextStyle(
                 color: Colors.white,
+                fontSize: FontsConstants.base,
                 fontWeight: FontWeight.w700,
               ),
               textAlign: TextAlign.left,
@@ -36,9 +43,10 @@ class DismissibleBackgrounds {
       child: Align(
         child: Row(
           mainAxisAlignment: MainAxisAlignment.end,
-          children: const <Widget>[
+          children: <Widget>[
             Icon(
               Icons.delete,
+              size:SizeConfig.blockSizeHorizontal * 4,
               color: Colors.white,
             ),
             Text(
@@ -46,11 +54,12 @@ class DismissibleBackgrounds {
               style: TextStyle(
                 color: Colors.white,
                 fontWeight: FontWeight.w700,
+                fontSize: FontsConstants.base
               ),
               textAlign: TextAlign.right,
             ),
             SizedBox(
-              width: 20,
+              width: SizeConfig.blockSizeHorizontal * 4,
             ),
           ],
         ),

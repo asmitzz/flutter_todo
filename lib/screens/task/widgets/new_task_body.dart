@@ -3,6 +3,7 @@ import 'package:flutter_todo/providers/todos.provider.dart';
 import 'package:flutter_todo/utils/constants/colors.dart';
 import 'package:flutter_todo/utils/constants/fonts.dart';
 import 'package:flutter_todo/utils/constants/strings.dart';
+import 'package:flutter_todo/utils/size_config.dart';
 import 'package:flutter_todo/widgets/custom_switch.dart';
 import 'package:provider/provider.dart';
 
@@ -32,7 +33,7 @@ class _NewTaskBodyState extends State<NewTaskBody> {
     return Column(
       children: [
         Container(
-          padding: const EdgeInsets.fromLTRB(30.0, 30.0, 30.0, 40.0),
+          padding: EdgeInsets.all(SizeConfig.blockSizeHorizontal * 6),
           color: ColorsConstants.rosyBrown,
           child: Form(
             key: todosProvider.formKey,
@@ -48,7 +49,7 @@ class _NewTaskBodyState extends State<NewTaskBody> {
                   )),
               style: TextStyle(
                   fontWeight: FontWeight.bold,
-                  fontSize: FontsConstants.xl,
+                  fontSize: FontsConstants.md_2,
                   color: ColorsConstants.blue),
               cursorColor: ColorsConstants.blue,
               onChanged: (value) {
@@ -70,31 +71,34 @@ class _NewTaskBodyState extends State<NewTaskBody> {
             children: [
               Text(StringsConstants.newTask["select_date"],
                   style: TextStyle(
-                      color: ColorsConstants.blue,
+                      color: ColorsConstants.blueGrey,
+                      fontSize: FontsConstants.sm,
                       fontWeight: FontsConstants.medium)),
               const SizedBox(
                 height: 10.0,
               ),
-              Container(
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10.0),
-                    border: Border.all(width: 2, color: ColorsConstants.blueGrey)),
-                alignment: Alignment.topLeft,
-                width: double.infinity,
-                child: TextButton(
-                    onPressed: () => _selectDate(context, todosProvider),
-                    child: Text(
-                      "${todosProvider.completedBy.year.toString()}-${todosProvider.completedBy.month.toString()}-${todosProvider.completedBy.day.toString()}",
-                      style: TextStyle(color: ColorsConstants.blue),
-                    )),
+              InkWell(
+                onTap: () => _selectDate(context, todosProvider),
+                child: Container(
+                  padding: EdgeInsets.symmetric(horizontal:SizeConfig.blockSizeHorizontal * 2,vertical: SizeConfig.blockSizeVertical * 2),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10.0),
+                      border: Border.all(width: 2, color: ColorsConstants.blueGrey)),
+                  alignment: Alignment.topLeft,
+                  width: double.infinity,
+                  child: Text(
+                    "${todosProvider.completedBy.year.toString()}-${todosProvider.completedBy.month.toString()}-${todosProvider.completedBy.day.toString()}",
+                    style: TextStyle(color: ColorsConstants.blue, fontSize: FontsConstants.sm,),
+                  ),
+                ),
               ),
               const SizedBox(
                 height: 25.0,
               ),
               Text("More Options",
-                  style: TextStyle(color: ColorsConstants.blueGrey)),
-              const SizedBox(
-                height: 15.0,
+                  style: TextStyle(color: ColorsConstants.blueGrey, fontSize: FontsConstants.sm,)),
+             SizedBox(
+                height: SizeConfig.blockSizeVertical * 2,
               ),
               CustomSwitch(
                   value: todosProvider.saveAsAlarm,
@@ -102,8 +106,8 @@ class _NewTaskBodyState extends State<NewTaskBody> {
                     todosProvider.updateSaveAsAlarm(value);
                   },
                   text: StringsConstants.newTaskOptions["option_1"]),
-              const SizedBox(
-                height: 15,
+             SizedBox(
+                height: SizeConfig.blockSizeVertical * 3,
               ),
               CustomSwitch(
                   value: todosProvider.saveAsNotifications,

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_todo/utils/constants/colors.dart';
 import 'package:flutter_todo/utils/constants/fonts.dart';
 import 'package:flutter_todo/utils/constants/strings.dart';
+import 'package:flutter_todo/utils/size_config.dart';
 
 class RegisterHeader extends StatelessWidget {
   const RegisterHeader({Key? key}) : super(key: key);
@@ -14,10 +15,10 @@ class RegisterHeader extends StatelessWidget {
         Text(
           "🍭",
           style: TextStyle(
-              fontSize: FontsConstants.xl_2, color: ColorsConstants.blue),
+              fontSize: FontsConstants.xxl, color: ColorsConstants.blue),
         ),
-        const SizedBox(
-          height: 20.0,
+        SizedBox(
+          height: SizeConfig.blockSizeHorizontal * 4,
         ),
         Text(
           StringsConstants.registerHeading1,
@@ -26,8 +27,8 @@ class RegisterHeader extends StatelessWidget {
               fontSize: FontsConstants.xl,
               color: ColorsConstants.blue),
         ),
-        const SizedBox(
-          height: 10.0,
+        SizedBox(
+          height: SizeConfig.blockSizeHorizontal * 2,
         ),
         Text(
           StringsConstants.registerHeading2,
@@ -36,8 +37,8 @@ class RegisterHeader extends StatelessWidget {
               fontWeight: FontsConstants.medium,
               color: ColorsConstants.blue),
         ),
-        const SizedBox(
-          height: 10.0,
+        SizedBox(
+          height: SizeConfig.blockSizeHorizontal * 2,
         ),
         Text(
           StringsConstants.registerHeading3,
@@ -46,8 +47,8 @@ class RegisterHeader extends StatelessWidget {
               fontWeight: FontsConstants.medium,
               color: ColorsConstants.blue),
         ),
-        const SizedBox(
-          height: 10.0,
+        SizedBox(
+          height: SizeConfig.blockSizeHorizontal * 2,
         ),
       ],
     );

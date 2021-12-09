@@ -23,7 +23,7 @@ class _ProfileState extends State<Profile> {
       child: SafeArea(
         child: Scaffold(
           appBar: PreferredSize(
-            preferredSize: Size.fromHeight(SizeConfig.safeBlockVertical * 10),
+            preferredSize: Size.fromHeight(SizeConfig.safeBlockVertical * 12),
             child: MyAppBar(
               editProfile: true,
               title: StringsConstants.profile["title"],
@@ -34,9 +34,12 @@ class _ProfileState extends State<Profile> {
           floatingActionButtonLocation:
               FloatingActionButtonLocation.centerDocked,
           bottomNavigationBar: const BottomBar(currentIndex: 3),
-          floatingActionButton: const MyFloatingActionButton(),
+          floatingActionButton: SizedBox(
+              height: SizeConfig.safeBlockVertical * 10,
+              width: SizeConfig.safeBlockHorizontal * 10,
+              child: const FittedBox(child: MyFloatingActionButton()),
+            )),
         ),
-      ),
     );
   }
 }

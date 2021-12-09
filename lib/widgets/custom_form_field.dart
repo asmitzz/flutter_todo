@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_todo/utils/constants/colors.dart';
 import 'package:flutter_todo/utils/constants/fonts.dart';
+import 'package:flutter_todo/utils/size_config.dart';
 
 class CustomFormField extends StatefulWidget {
   const CustomFormField(
@@ -43,63 +44,83 @@ class CustomFormField extends StatefulWidget {
 class _CustomFormFieldState extends State<CustomFormField> {
   @override
   Widget build(BuildContext context) {
-    return widget.controller != null ? TextFormField(
-        onChanged: widget.onChanged,
-        controller: widget.controller,
-        autovalidateMode: AutovalidateMode.onUserInteraction,
-        style: TextStyle(
-            fontWeight: widget.fontWeight ?? FontsConstants.normal,
-            color: ColorsConstants.blue,
-            fontSize: widget.fontSize ?? FontsConstants.base),
-        obscureText: widget.obscureText,
-        decoration: InputDecoration(
-            prefixIcon: widget.prefixIcon,
-            suffixIcon: widget.suffixIcon,
-            border: OutlineInputBorder(
-                borderSide: widget.borderSide ??
-                    BorderSide(color: ColorsConstants.blue),
-                borderRadius: const BorderRadius.all(Radius.circular(15))),
-            enabledBorder: OutlineInputBorder(
-                borderSide: widget.enableBorderSide ??
-                    BorderSide(color: ColorsConstants.blue),
-                borderRadius: const BorderRadius.all(Radius.circular(15))),
-            focusedBorder: OutlineInputBorder(
-                borderSide: widget.focusedBorderSide ??
-                    BorderSide(color: ColorsConstants.blue),
-                borderRadius: const BorderRadius.all(Radius.circular(15))),
-            hintText: widget.hintText,
-            labelStyle: TextStyle(
-                fontWeight: FontsConstants.medium, color: ColorsConstants.blue),
-            labelText: widget.labelText),
-        validator: (value) => widget.validator(value)) :
-        TextFormField(
-        onChanged: widget.onChanged,
-        initialValue: widget.initialValue,
-        autovalidateMode: AutovalidateMode.onUserInteraction,
-        style: TextStyle(
-            fontWeight: widget.fontWeight ?? FontsConstants.normal,
-            color: ColorsConstants.blue,
-            fontSize: widget.fontSize ?? FontsConstants.base),
-        obscureText: widget.obscureText,
-        decoration: InputDecoration(
-            prefixIcon: widget.prefixIcon,
-            suffixIcon: widget.suffixIcon,
-            border: OutlineInputBorder(
-                borderSide: widget.borderSide ??
-                    BorderSide(color: ColorsConstants.blue),
-                borderRadius: const BorderRadius.all(Radius.circular(15))),
-            enabledBorder: OutlineInputBorder(
-                borderSide: widget.enableBorderSide ??
-                    BorderSide(color: ColorsConstants.blue),
-                borderRadius: const BorderRadius.all(Radius.circular(15))),
-            focusedBorder: OutlineInputBorder(
-                borderSide: widget.focusedBorderSide ??
-                    BorderSide(color: ColorsConstants.blue),
-                borderRadius: const BorderRadius.all(Radius.circular(15))),
-            hintText: widget.hintText,
-            labelStyle: TextStyle(
-                fontWeight: FontsConstants.medium, color: ColorsConstants.blue),
-            labelText: widget.labelText),
-        validator: (value) => widget.validator(value));
+    return widget.controller != null
+        ? TextFormField(
+            onChanged: widget.onChanged,
+            controller: widget.controller,
+            autovalidateMode: AutovalidateMode.onUserInteraction,
+            style: TextStyle(
+                fontWeight: widget.fontWeight ?? FontsConstants.normal,
+                color: ColorsConstants.blue,
+                fontSize: widget.fontSize ?? FontsConstants.base),
+            obscureText: widget.obscureText,
+            decoration: InputDecoration(
+                contentPadding: EdgeInsets.symmetric(
+                    vertical: SizeConfig.blockSizeVertical * 2,
+                    horizontal: SizeConfig.blockSizeHorizontal * 3),
+                prefixIcon: Padding(
+                  padding: EdgeInsets.symmetric(
+                    vertical: 0,
+                    horizontal: SizeConfig.blockSizeHorizontal * 3),
+                  child: widget.prefixIcon,
+                ),
+                suffixIcon: Padding(
+                  padding: EdgeInsets.symmetric(
+                    vertical: 0,
+                    horizontal: SizeConfig.blockSizeHorizontal * 3),
+                  child: widget.suffixIcon,
+                ),
+                border: OutlineInputBorder(
+                    borderSide: widget.borderSide ??
+                        BorderSide(color: ColorsConstants.blue),
+                    borderRadius: BorderRadius.all(
+                        Radius.circular(SizeConfig.blockSizeHorizontal * 3))),
+                enabledBorder: OutlineInputBorder(
+                    borderSide: widget.enableBorderSide ??
+                        BorderSide(color: ColorsConstants.blue),
+                    borderRadius: BorderRadius.all(
+                        Radius.circular(SizeConfig.blockSizeHorizontal * 3))),
+                focusedBorder: OutlineInputBorder(
+                    borderSide: widget.focusedBorderSide ??
+                        BorderSide(color: ColorsConstants.blue),
+                    borderRadius: BorderRadius.all(
+                        Radius.circular(SizeConfig.blockSizeHorizontal * 3))),
+                hintText: widget.hintText,
+                labelStyle: TextStyle(
+                    fontWeight: FontsConstants.medium,
+                    color: ColorsConstants.blue),
+                labelText: widget.labelText),
+            validator: (value) => widget.validator(value))
+        : TextFormField(
+            onChanged: widget.onChanged,
+            initialValue: widget.initialValue,
+            autovalidateMode: AutovalidateMode.onUserInteraction,
+            style: TextStyle(
+                fontWeight: widget.fontWeight ?? FontsConstants.normal,
+                color: ColorsConstants.blue,
+                fontSize: widget.fontSize ?? FontsConstants.base),
+            obscureText: widget.obscureText,
+            decoration: InputDecoration(
+                contentPadding:
+                    EdgeInsets.symmetric(vertical: SizeConfig.blockSizeVertical * 2, horizontal: SizeConfig.blockSizeHorizontal * 3),
+                prefixIcon: Padding(
+                  padding: EdgeInsets.symmetric(
+                    vertical: 0,
+                    horizontal: SizeConfig.blockSizeHorizontal * 3),
+                  child: widget.prefixIcon,
+                ),
+                suffixIcon: Padding(
+                  padding: EdgeInsets.symmetric(
+                    vertical: 0,
+                    horizontal: SizeConfig.blockSizeHorizontal * 3),
+                  child: widget.suffixIcon,
+                ),
+                border: OutlineInputBorder(borderSide: widget.borderSide ?? BorderSide(color: ColorsConstants.blue), borderRadius: BorderRadius.all(Radius.circular(SizeConfig.blockSizeHorizontal * 3))),
+                enabledBorder: OutlineInputBorder(borderSide: widget.enableBorderSide ?? BorderSide(color: ColorsConstants.blue), borderRadius: BorderRadius.all(Radius.circular(SizeConfig.blockSizeHorizontal * 3))),
+                focusedBorder: OutlineInputBorder(borderSide: widget.focusedBorderSide ?? BorderSide(color: ColorsConstants.blue), borderRadius: BorderRadius.all(Radius.circular(SizeConfig.blockSizeHorizontal * 3))),
+                hintText: widget.hintText,
+                labelStyle: TextStyle(fontWeight: FontsConstants.medium, color: ColorsConstants.blue),
+                labelText: widget.labelText),
+            validator: (value) => widget.validator(value));
   }
 }

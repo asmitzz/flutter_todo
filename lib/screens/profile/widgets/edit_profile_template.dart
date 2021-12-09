@@ -87,7 +87,10 @@ class _EditProfileTemplateState extends State<EditProfileTemplate> {
         child: Column(
           children: [
             Container(
-                padding: const EdgeInsets.fromLTRB(30.0, 30.0, 30.0, 40.0),
+                height: SizeConfig.safeBlockVertical * 25,
+                padding: EdgeInsets.symmetric(
+                    horizontal: SizeConfig.blockSizeHorizontal * 6,
+                    vertical: SizeConfig.blockSizeVertical * 6),
                 color: ColorsConstants.lightRosyBrown,
                 child: CustomFormField(
                   fontSize: FontsConstants.xl,
@@ -120,7 +123,7 @@ class _EditProfileTemplateState extends State<EditProfileTemplate> {
                         backgroundImage: profileProvider.photoUrl != ""
                             ? NetworkImage(profileProvider.photoUrl)
                             : null,
-                        radius: 35.0,
+                        radius: SizeConfig.blockSizeHorizontal * 10,
                       ),
                       SizedBox(
                         width: SizeConfig.blockSizeHorizontal * 4,
@@ -130,14 +133,22 @@ class _EditProfileTemplateState extends State<EditProfileTemplate> {
                           ? (isRemoveBtnLoading == false
                               ? ElevatedButton.icon(
                                   onPressed: deleteProfilePic,
-                                  icon: const Icon(
+                                  icon: Icon(
                                     Icons.delete,
-                                    size: 16.0,
+                                    size: SizeConfig.blockSizeHorizontal * 3,
                                   ),
                                   label: Text("REMOVE",
                                       style: TextStyle(
                                           fontSize: FontsConstants.sm)),
                                   style: ButtonStyle(
+                                    padding: MaterialStateProperty.all<
+                                          EdgeInsetsGeometry>(
+                                      EdgeInsets.symmetric(
+                                          vertical:
+                                              SizeConfig.blockSizeVertical * 2,
+                                          horizontal:
+                                              SizeConfig.blockSizeVertical *
+                                                  2)),
                                     backgroundColor:
                                         MaterialStateProperty.all<Color>(
                                             ColorsConstants.error),
@@ -145,6 +156,14 @@ class _EditProfileTemplateState extends State<EditProfileTemplate> {
                               : ElevatedButton(
                                   onPressed: null,
                                   style: ButtonStyle(
+                                    padding: MaterialStateProperty.all<
+                                          EdgeInsetsGeometry>(
+                                      EdgeInsets.symmetric(
+                                          vertical:
+                                              SizeConfig.blockSizeVertical * 2,
+                                          horizontal:
+                                              SizeConfig.blockSizeVertical *
+                                                  2)),
                                       backgroundColor:
                                           MaterialStateProperty.all<Color>(
                                               ColorsConstants.error)),
@@ -163,14 +182,22 @@ class _EditProfileTemplateState extends State<EditProfileTemplate> {
                           ? ElevatedButton.icon(
                               onPressed: () => ImagePickerServices()
                                   .getFromGallery(uploadProfilePic),
-                              icon: const Icon(
+                              icon: Icon(
                                 Icons.edit,
-                                size: 16.0,
+                                size: SizeConfig.blockSizeHorizontal * 3,
                               ),
                               label: Text("UPLOAD",
                                   style:
                                       TextStyle(fontSize: FontsConstants.sm)),
                               style: ButtonStyle(
+                                padding: MaterialStateProperty.all<
+                                          EdgeInsetsGeometry>(
+                                      EdgeInsets.symmetric(
+                                          vertical:
+                                              SizeConfig.blockSizeVertical * 2,
+                                          horizontal:
+                                              SizeConfig.blockSizeVertical *
+                                                  2)),
                                 backgroundColor:
                                     MaterialStateProperty.all<Color>(
                                         ColorsConstants.blue),
@@ -178,13 +205,21 @@ class _EditProfileTemplateState extends State<EditProfileTemplate> {
                           : ElevatedButton(
                               onPressed: null,
                               style: ButtonStyle(
+                                  padding: MaterialStateProperty.all<
+                                          EdgeInsetsGeometry>(
+                                      EdgeInsets.symmetric(
+                                          vertical:
+                                              SizeConfig.blockSizeVertical * 2,
+                                          horizontal:
+                                              SizeConfig.blockSizeVertical *
+                                                  2)),
                                   backgroundColor:
                                       MaterialStateProperty.all<Color>(
                                           ColorsConstants.blue)),
-                              child: const SizedBox(
-                                  width: 16,
-                                  height: 16,
-                                  child: CircularProgressIndicator(
+                              child: SizedBox(
+                                  width: SizeConfig.blockSizeVertical * 3,
+                                  height: SizeConfig.blockSizeVertical * 3,
+                                  child: const CircularProgressIndicator(
                                     color: Colors.white,
                                     strokeWidth: 1.5,
                                   ))))

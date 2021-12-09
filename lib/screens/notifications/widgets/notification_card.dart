@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_todo/utils/constants/colors.dart';
 import 'package:flutter_todo/utils/constants/fonts.dart';
+import 'package:flutter_todo/utils/size_config.dart';
 
 class NotificationCard extends StatelessWidget {
   const NotificationCard({Key? key}) : super(key: key);
@@ -10,19 +11,19 @@ class NotificationCard extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const SizedBox(
-          height: 20,
+        SizedBox(
+          height: SizeConfig.safeBlockVertical * 4,
         ),
         Text(
           "Sat, Nov 30, 2021",
           style: TextStyle(
-            color: ColorsConstants.blueGrey,
-          ),
+              color: ColorsConstants.blueGrey, fontSize: FontsConstants.base),
         ),
-        const SizedBox(
-          height: 20,
+        SizedBox(
+          height: SizeConfig.blockSizeVertical * 4,
         ),
-        Row(
+        
+         Row(
           children: [
             Container(
                 child: Center(
@@ -30,56 +31,26 @@ class NotificationCard extends StatelessWidget {
                   "i",
                   style: TextStyle(
                       fontWeight: FontsConstants.bold,
-                      fontSize: FontsConstants.md_1,
+                      fontSize: FontsConstants.md,
                       color: ColorsConstants.blue),
                 )),
-                height: 30.0,
-                width: 30.0,
+                height: SizeConfig.blockSizeVertical * 5,
+                width: SizeConfig.blockSizeHorizontal * 8,
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(8.0),
                     color: ColorsConstants.green)),
-            const SizedBox(
-              width: 10.0,
+            SizedBox(
+              width: SizeConfig.blockSizeHorizontal * 2,
             ),
             Text(
               "Complete responsive design",
               style: TextStyle(
                   color: ColorsConstants.blue,
+                  fontSize: FontsConstants.base,
                   fontWeight: FontsConstants.medium),
             )
           ],
         ),
-        const SizedBox(height: 20.0),
-        Row(
-          children: [
-            Container(
-                child: Center(
-                    child: Text(
-                  "i",
-                  style: TextStyle(
-                      fontWeight: FontsConstants.bold,
-                      fontSize: FontsConstants.md_1,
-                      color: ColorsConstants.blue),
-                )),
-                height: 30.0,
-                width: 30.0,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8.0),
-                    color: ColorsConstants.green)),
-            const SizedBox(
-              width: 10.0,
-            ),
-            Text(
-              "Complete responsive design",
-              style: TextStyle(
-                  color: ColorsConstants.blue,
-                  fontWeight: FontsConstants.medium),
-            )
-          ],
-        ),
-        const SizedBox(
-          height: 20.0,
-        )
       ],
     );
   }

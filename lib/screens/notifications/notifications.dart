@@ -23,7 +23,7 @@ class _NotificationsState extends State<Notifications> {
       child: SafeArea(
         child: Scaffold(
           appBar: PreferredSize(
-            preferredSize: Size.fromHeight(SizeConfig.safeBlockVertical * 10),
+            preferredSize: Size.fromHeight(SizeConfig.safeBlockVertical * 12),
             child: MyAppBar(
               search: true,
               title: StringsConstants.notifications["title"],
@@ -34,9 +34,12 @@ class _NotificationsState extends State<Notifications> {
           floatingActionButtonLocation:
               FloatingActionButtonLocation.centerDocked,
           bottomNavigationBar: const BottomBar(currentIndex: 2),
-          floatingActionButton: const MyFloatingActionButton(),
+          floatingActionButton: SizedBox(
+              height: SizeConfig.safeBlockVertical * 10,
+              width: SizeConfig.safeBlockHorizontal * 10,
+              child: const FittedBox(child: MyFloatingActionButton()),
+            )),
         ),
-      ),
     );
   }
 }

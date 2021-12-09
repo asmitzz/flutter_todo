@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_todo/utils/constants/colors.dart';
 import 'package:flutter_todo/utils/constants/strings.dart';
+import 'package:flutter_todo/utils/size_config.dart';
 import 'package:flutter_todo/widgets/custom_form_field.dart';
 
 class LoginForm extends StatefulWidget {
@@ -29,11 +30,13 @@ class _LoginFormState extends State<LoginForm> {
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           CustomFormField(
+              fontSize: SizeConfig.blockSizeHorizontal * 4,
               controller: widget.emailController,
               labelText: StringsConstants.loginFormField1Label,
               hintText: StringsConstants.loginFormField1Hint,
               prefixIcon: Icon(
                 Icons.email,
+                size: SizeConfig.blockSizeHorizontal * 4,
                 color: ColorsConstants.blue,
               ),
               validator: (value) {
@@ -41,20 +44,23 @@ class _LoginFormState extends State<LoginForm> {
                     ? StringsConstants.loginFormField1Error
                     : null;
               }),
-          const SizedBox(
-            height: 20.0,
+          SizedBox(
+            height: SizeConfig.blockSizeHorizontal * 4,
           ),
           CustomFormField(
+              fontSize: SizeConfig.blockSizeHorizontal * 4,
               controller: widget.passwordController,
               labelText: StringsConstants.loginFormField2Label,
               hintText: StringsConstants.loginFormField2Hint,
               prefixIcon: Icon(
                 Icons.lock,
+                size: SizeConfig.blockSizeHorizontal * 4,
                 color: ColorsConstants.blue,
               ),
               suffixIcon: IconButton(
                   icon: Icon(
                       showPassword ? Icons.visibility_off : Icons.visibility,
+                      size: SizeConfig.blockSizeHorizontal * 4,
                       color: ColorsConstants.blue),
                   onPressed: () {
                     setState(() {

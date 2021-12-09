@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_todo/utils/constants/colors.dart';
+import 'package:flutter_todo/utils/size_config.dart';
 
 class MyFloatingActionButton extends StatelessWidget {
   const MyFloatingActionButton({ Key? key }) : super(key: key);
@@ -11,7 +12,8 @@ class MyFloatingActionButton extends StatelessWidget {
       Navigator.pushNamed( context,"/new-task");
     },
     backgroundColor: ColorsConstants.blue,
-    child: const Icon(Icons.add),
+    child:  Icon(Icons.add,
+    size: SizeConfig.blockSizeVertical * 6,),
   );
   }
 }

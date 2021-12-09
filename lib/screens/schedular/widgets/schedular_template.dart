@@ -45,17 +45,17 @@ class _SchedularTemplateState extends State<SchedularTemplate> {
       return Container(
         height: SizeConfig.safeBlockVertical * 55,
         padding: EdgeInsets.symmetric(
-            horizontal: SizeConfig.blockSizeHorizontal * 4,
+            horizontal: SizeConfig.blockSizeHorizontal * 6,
             vertical: SizeConfig.blockSizeVertical * 4),
         child: SingleChildScrollView(
           child: StreamBuilder<QuerySnapshot>(
               stream: todoProvider.fetchSchedulars(),
-              builder:
-                  (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+              builder: (BuildContext context,
+                  AsyncSnapshot<QuerySnapshot> snapshot) {
                 if (snapshot.hasError) {
                   return const Text("Something went wrong");
                 }
-        
+
                 if (snapshot.connectionState == ConnectionState.active) {
                   List<dynamic> data = snapshot.data!.docs;
                   if (data.isEmpty) {
@@ -66,13 +66,14 @@ class _SchedularTemplateState extends State<SchedularTemplate> {
                           fontWeight: FontsConstants.bold),
                     );
                   }
-        
+
                   final int tomorrow = DateTime.now().day + 1;
                   Map<dynamic, dynamic> formattedData = {};
-        
+
                   data.forEach((value) {
                     String day =
-                        value["completedBy"].toDate().day.compareTo(tomorrow) == 0
+                        value["completedBy"].toDate().day.compareTo(tomorrow) ==
+                                0
                             ? "Tomorrow"
                             : value["completedBy"]
                                 .toDate()
@@ -84,7 +85,7 @@ class _SchedularTemplateState extends State<SchedularTemplate> {
                       formattedData[day] = [value];
                     }
                   });
-        
+
                   return ListView.builder(
                     controller: scrollController,
                     scrollDirection: Axis.vertical,
@@ -108,17 +109,15 @@ class _SchedularTemplateState extends State<SchedularTemplate> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const SizedBox(
-          height: 20,
-        ),
         Text(
           key,
           style: TextStyle(
+            fontSize: FontsConstants.base,
             color: ColorsConstants.blueGrey,
           ),
         ),
-        const SizedBox(
-          height: 20,
+        SizedBox(
+          height: SizeConfig.blockSizeVertical * 2,
         ),
         ListView.builder(
           scrollDirection: Axis.vertical,
@@ -126,42 +125,52 @@ class _SchedularTemplateState extends State<SchedularTemplate> {
           itemCount: data[key].length,
           itemBuilder: (BuildContext context, int index) {
             return Dismissible(
+              direction: DismissDirection.horizontal,
               key: UniqueKey(),
               background: DismissibleBackgrounds().slideRightBackground(),
               secondaryBackground:
                   DismissibleBackgrounds().slideLeftBackground(),
-              confirmDismiss: (direction) =>
-                  dismissableTodohandler(context,direction, data[key][index], todoProvider),
-              child: Row(
+              confirmDismiss: (direction) => dismissableTodohandler(
+                  context, direction, data[key][index], todoProvider),
+              child: Column(
                 children: [
-                  Transform.scale(
-                    scale: 1.5,
-                    child: Checkbox(
-                        side: BorderSide(
-                            color: ColorsConstants.green, width: 1.5),
-                        value: data[key][index]["isComplete"],
-                        onChanged: (bool? value) {
-                          todoProvider.completeTodo(
-                              docId: data[key][index].id, value: value);
-                        },
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(6.0))),
+                  Row(
+                    children: [
+                      Transform.scale(
+                        scale: SizeConfig.blockSizeHorizontal * 0.25,
+                        child: Checkbox(
+                            side: BorderSide(
+                                color: ColorsConstants.green, width: 1.5),
+                            value: data[key][index]["isComplete"],
+                            onChanged: (bool? value) {
+                              todoProvider.completeTodo(
+                                  docId: data[key][index].id, value: value);
+                            },
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(6.0))),
+                      ),
+                      SizedBox(
+                        width: SizeConfig.blockSizeHorizontal * 3,
+                      ),
+                      Text(
+                        data[key][index]["title"],
+                        style: TextStyle(
+                          fontSize: FontsConstants.base,
+                          fontWeight: FontsConstants.medium,
+                          color: ColorsConstants.blue,
+                        ),
+                      ),
+                    ],
                   ),
-                  const SizedBox(
-                    width: 10.0,
-                  ),
-                  Text(
-                    data[key][index]["title"],
-                    style: TextStyle(
-                      fontWeight: FontsConstants.medium,
-                      color: ColorsConstants.blue,
-                    ),
-                  )
+                  
                 ],
               ),
             );
           },
-        )
+        ),
+        SizedBox(
+          height: SizeConfig.blockSizeVertical * 4,
+        ),
       ],
     );
   }
@@ -172,8 +181,8 @@ Container schedularHeader() {
     height: SizeConfig.safeBlockVertical * 25,
     constraints: const BoxConstraints(minWidth: double.infinity),
     padding: EdgeInsets.symmetric(
-            horizontal: SizeConfig.blockSizeHorizontal * 6,
-            vertical: SizeConfig.blockSizeVertical * 6),
+        horizontal: SizeConfig.blockSizeHorizontal * 6,
+        vertical: SizeConfig.blockSizeVertical * 6),
     decoration: BoxDecoration(
       color: ColorsConstants.lightRosyBrown,
     ),

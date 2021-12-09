@@ -3,6 +3,7 @@ import 'package:flutter_todo/providers/auth.provider.dart';
 import 'package:flutter_todo/utils/constants/colors.dart';
 import 'package:flutter_todo/utils/constants/fonts.dart';
 import 'package:flutter_todo/utils/constants/strings.dart';
+import 'package:flutter_todo/utils/size_config.dart';
 import 'package:provider/provider.dart';
 
 class RegisterFooter extends StatefulWidget {
@@ -66,13 +67,18 @@ class _RegisterFooterState extends State<RegisterFooter> {
                         fontSize: FontsConstants.md)))
           ],
         ),
+        SizedBox(height: SizeConfig.blockSizeVertical*1,),
+
         FractionallySizedBox(
           widthFactor: 1.0,
           child: Consumer<AuthProvider>(
             builder: (_, authProvider, __) => TextButton(
               onPressed: () => handleSignUp(context, authProvider),
               child: Padding(
-                padding: const EdgeInsets.fromLTRB(16.0, 8.0, 16.0, 8.0),
+                padding:  EdgeInsets.symmetric(
+                  vertical: SizeConfig.blockSizeVertical * 1,
+                  horizontal: SizeConfig.blockSizeHorizontal * 1,
+                ),
                 child: (isLoading)
                     ? const SizedBox(
                         width: 16,

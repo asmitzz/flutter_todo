@@ -45,9 +45,9 @@ class _HomeTemplateState extends State<HomeTemplate> {
   Consumer todos() {
     return Consumer<TodoProvider>(builder: (_, todoProvider, __) {
       return Container(
-        height: SizeConfig.safeBlockVertical * 55,
+        height: SizeConfig.safeBlockVertical * 52,
         padding: EdgeInsets.symmetric(
-            horizontal: SizeConfig.blockSizeHorizontal * 4,
+            horizontal: SizeConfig.blockSizeHorizontal * 6,
             vertical: SizeConfig.blockSizeVertical * 4),
         child: SingleChildScrollView(
           child: StreamBuilder<QuerySnapshot>(
@@ -64,6 +64,7 @@ class _HomeTemplateState extends State<HomeTemplate> {
                     return Text(
                       "No todos found!!",
                       style: TextStyle(
+                        fontSize:FontsConstants.sm,
                           color: ColorsConstants.blue,
                           fontWeight: FontsConstants.bold),
                     );
@@ -89,6 +90,7 @@ class _HomeTemplateState extends State<HomeTemplate> {
   Dismissible todoCard(
       List<dynamic> data, int index, TodoProvider todoProvider) {
     return Dismissible(
+      direction: DismissDirection.horizontal,
       key: UniqueKey(),
       background: DismissibleBackgrounds().slideRightBackground(),
       secondaryBackground: DismissibleBackgrounds().slideLeftBackground(),
@@ -97,7 +99,7 @@ class _HomeTemplateState extends State<HomeTemplate> {
       child: Row(
         children: [
           Transform.scale(
-            scale: 1.5,
+            scale: SizeConfig.blockSizeHorizontal * 0.25,
             child: Checkbox(
                 side: BorderSide(color: ColorsConstants.green, width: 1.5),
                 value: data[index]["isComplete"],
@@ -108,14 +110,19 @@ class _HomeTemplateState extends State<HomeTemplate> {
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(6.0))),
           ),
-          const SizedBox(
-            width: 10.0,
+          SizedBox(
+            width: SizeConfig.blockSizeHorizontal * 3,
           ),
           Text(
             data[index]["title"],
             style: TextStyle(
-                color: ColorsConstants.blue, fontWeight: FontsConstants.medium),
-          )
+                color: ColorsConstants.blue, 
+                fontSize: FontsConstants.base,
+                fontWeight: FontsConstants.medium),
+          ),
+           SizedBox(
+            height: SizeConfig.blockSizeVertical * 4,
+          ),
         ],
       ),
     );

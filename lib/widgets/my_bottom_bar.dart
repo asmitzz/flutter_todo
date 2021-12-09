@@ -21,7 +21,7 @@ class _BottomBarState extends State<BottomBar> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: SizeConfig.safeBlockVertical * 10,
       child: BottomNavigationBar(
         
@@ -32,7 +32,7 @@ class _BottomBarState extends State<BottomBar> {
                  Icon(
                   Icons.list,
                   color: ColorsConstants.blue,
-                  size: 28.0,
+                  size: SizeConfig.blockSizeHorizontal * 5,
                 ),
                 Container(
                     margin: const EdgeInsets.only(top: 5.0),
@@ -51,7 +51,7 @@ class _BottomBarState extends State<BottomBar> {
                  Icon(
                   Icons.schedule,
                   color: ColorsConstants.blue,
-                  size: 28.0,
+                  size: SizeConfig.blockSizeHorizontal * 5,
                 ),
                 Container(
                     margin: const EdgeInsets.only(top: 5.0),
@@ -70,7 +70,7 @@ class _BottomBarState extends State<BottomBar> {
                  Icon(
                   Icons.notifications_outlined,
                   color: ColorsConstants.blue,
-                  size: 28.0,
+                  size: SizeConfig.blockSizeHorizontal * 5,
                 ),
                 Container(
                     margin: const EdgeInsets.only(top: 5.0),
@@ -89,7 +89,7 @@ class _BottomBarState extends State<BottomBar> {
                  Icon(
                   Icons.person_outline,
                   color: ColorsConstants.blue,
-                  size: 28.0,
+                  size: SizeConfig.blockSizeHorizontal * 5,
                 ),
                 Container(
                     margin: const EdgeInsets.only(top: 5.0),

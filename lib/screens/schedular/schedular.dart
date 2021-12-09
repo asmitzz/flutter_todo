@@ -24,7 +24,7 @@ class _SchedularState extends State<Schedular> {
       child:  SafeArea(
         child: Scaffold(
           appBar: PreferredSize(
-            preferredSize: Size.fromHeight(SizeConfig.safeBlockVertical * 10),
+            preferredSize: Size.fromHeight(SizeConfig.safeBlockVertical * 12),
             child: MyAppBar(
               search: true,
               title: StringsConstants.schedular["title"],
@@ -35,9 +35,12 @@ class _SchedularState extends State<Schedular> {
           floatingActionButtonLocation:
               FloatingActionButtonLocation.centerDocked,
           bottomNavigationBar: const BottomBar(currentIndex: 1),
-          floatingActionButton: const MyFloatingActionButton(),
+          floatingActionButton: SizedBox(
+              height: SizeConfig.safeBlockVertical * 10,
+              width: SizeConfig.safeBlockHorizontal * 10,
+              child: const FittedBox(child: MyFloatingActionButton()),
+            )),
         ),
-      ),
     );
   }
 }

@@ -76,7 +76,7 @@ class _LandingState extends State<Landing> with SingleTickerProviderStateMixin {
                       child: Text(
                         StringsConstants.logo,
                         style: TextStyle(
-                            fontSize: FontsConstants.xl_3,
+                            fontSize: FontsConstants.xxl,
                             color: ColorsConstants.blue),
                       ),
                     ),
@@ -93,6 +93,7 @@ class _LandingState extends State<Landing> with SingleTickerProviderStateMixin {
                     Text(
                       StringsConstants.landingPageTitle,
                       style: TextStyle(
+                          fontSize:FontsConstants.md_1,
                           fontWeight: FontsConstants.medium,
                           color: ColorsConstants.blue),
                     )

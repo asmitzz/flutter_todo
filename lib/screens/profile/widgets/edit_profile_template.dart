@@ -9,7 +9,6 @@ import 'package:flutter_todo/widgets/button_loader.dart';
 import 'package:flutter_todo/widgets/buttons.dart';
 import 'package:flutter_todo/widgets/custom_form_field.dart';
 import 'package:flutter_todo/utils/constants/colors.dart';
-import 'package:flutter_todo/utils/constants/fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:image_picker/image_picker.dart';
 

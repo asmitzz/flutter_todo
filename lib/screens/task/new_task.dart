@@ -72,8 +72,8 @@ class _NewTaskState extends State<NewTask> {
                   iconTheme: IconThemeData(color: ColorsConstants.blue),
                   title: Text(
                     todosProvider.editId == ""
-                        ? StringsConstants.newTask["title1"]
-                        : StringsConstants.newTask["title2"],
+                        ? StringsConstants.newTaskTitle1
+                        : StringsConstants.newTaskTitle2,
                     style: TextStyle(
                         color: ColorsConstants.blue,
                         fontSize: FontsConstants.base,
@@ -94,13 +94,10 @@ class _NewTaskState extends State<NewTask> {
             backgroundColor: ColorsConstants.blue,
             onPressed: _onPressed,
             child: (isLoading)
-                ? SizedBox(
-                    height: SizeConfig.safeBlockVertical * 3,
-                    width: SizeConfig.safeBlockHorizontal * 3,
-                    child: CircularProgressIndicator(
-                      color: ColorsConstants.white,
-                      strokeWidth: 1.5,
-                    ))
+                ? CircularProgressIndicator(
+                  color: ColorsConstants.white,
+                  strokeWidth: 1.5,
+                )
                 : Icon(
                     Icons.check,
                     color: ColorsConstants.white,

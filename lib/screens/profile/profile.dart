@@ -26,7 +26,7 @@ class _ProfileState extends State<Profile> {
             preferredSize: Size.fromHeight(SizeConfig.safeBlockVertical * 12),
             child: MyAppBar(
               editProfile: true,
-              title: StringsConstants.profile["title"],
+              title: StringsConstants.profileTitle,
             ),
           ),
           drawer: const MyDrawer(),

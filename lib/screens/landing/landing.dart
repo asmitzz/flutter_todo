@@ -20,31 +20,12 @@ class _LandingState extends State<Landing> with SingleTickerProviderStateMixin {
   late final Animation<double> _animation =
       CurvedAnimation(parent: _controller, curve: Curves.ease);
 
-  void startApp() async {
-    User? user = FirebaseAuth.instance.currentUser;
-    if (user == null) {
-      navigatorKey.currentState!.pushReplacementNamed("/login");
-    } else {
-      if (FirebaseAuth.instance.currentUser != null) {
-        ProfileProvider profileProvider =
-            Provider.of<ProfileProvider>(context, listen: false);
-        await profileProvider.getPhotoUrl();
-      }
-
-      navigatorKey.currentState!.pushReplacementNamed("/home");
-    }
-  }
 
   @override
   void initState() {
     _controller =
         AnimationController(vsync: this, duration: const Duration(seconds: 1))
           ..repeat();
-    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
-      if (mounted) {
-        startApp();
-      }
-    });
     super.initState();
   }
 
@@ -93,7 +74,7 @@ class _LandingState extends State<Landing> with SingleTickerProviderStateMixin {
                     Text(
                       StringsConstants.landingPageTitle,
                       style: TextStyle(
-                          fontSize:FontsConstants.md_1,
+                          fontSize: FontsConstants.md_1,
                           fontWeight: FontsConstants.medium,
                           color: ColorsConstants.blue),
                     )

@@ -27,7 +27,7 @@ class _HomeState extends State<Home> {
             appBar: PreferredSize(
               preferredSize: Size.fromHeight(SizeConfig.safeBlockVertical * 12),
               child: MyAppBar(
-                title: StringsConstants.home["title"],
+                title: StringsConstants.homeTitle,
                 search: true,
               ),
             ),

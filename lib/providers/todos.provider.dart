@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_todo/main.dart';
+import 'package:flutter_todo/modals/todos.modal.dart';
 import 'package:flutter_todo/services/todo_services.dart';
 import 'package:flutter_todo/widgets/toast.dart';
 
@@ -67,22 +68,25 @@ class TodoProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  Stream<QuerySnapshot<Map<String, dynamic>>> fetchTodos() {
+  Stream<QuerySnapshot<Object?>> fetchTodos() {
     return TodoServices().fetchTodos();
   }
 
-  Stream<QuerySnapshot<Map<String, dynamic>>> fetchSchedulars() {
+  Stream<QuerySnapshot<Object?>> fetchSchedulars() {
     return TodoServices().fetchSchedulars();
   }
 
   Future<void> addTodo() async {
+    Map<String, dynamic> todo = TodosModal(
+            title: title,
+            completedBy: completedBy,
+            isComplete: isComplete,
+            saveAsAlarm: saveAsAlarm,
+            saveAsNotifications: saveAsNotifications)
+        .toJson();
+
     try {
-      await TodoServices().addTodo(
-          title: title,
-          completedBy: completedBy,
-          isComplete: isComplete,
-          saveAsAlarm: saveAsAlarm,
-          saveAsNotifications: saveAsNotifications);
+      await TodoServices().addTodo(todo);
       resetFields();
       navigatorKey.currentState!.pop();
       MyToast().successToast("Todo added");
@@ -101,14 +105,15 @@ class TodoProvider with ChangeNotifier {
   }
 
   Future<void> updateTodo() async {
+    Map<String, dynamic> todo = TodosModal(
+            title: title,
+            completedBy: completedBy,
+            isComplete: isComplete,
+            saveAsAlarm: saveAsAlarm,
+            saveAsNotifications: saveAsNotifications)
+        .toJson();
     try {
-      await TodoServices().updateTodo(
-          title: title,
-          completedBy: completedBy,
-          isComplete: isComplete,
-          saveAsAlarm: saveAsAlarm,
-          saveAsNotifications: saveAsNotifications,
-          editId: editId);
+      await TodoServices().updateTodo(todo,editId);
       resetFields();
       updateEditId(docId: "");
       navigatorKey.currentState!.pop();

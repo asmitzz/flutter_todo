@@ -1,17 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter_todo/services/firebase_services.dart';
+import 'package:flutter_todo/firebase_method/auth_services/firebase_auth.dart';
 import 'package:flutter_todo/widgets/toast.dart';
 
 class AuthProvider with ChangeNotifier {
-  User? getUser() {
-    return FirebaseAuth.instance.currentUser;
-  }
+  
 
   Future<bool?> signInWithEmailAndPassword(
       {required String email, required String password}) async {
     try {
-      await FirebaseServices()
+      await AuthService()
           .signInWithEmailAndPassword(email: email, password: password);
     } catch (e) {
       MyToast().errorToast(e.toString());
@@ -21,7 +18,7 @@ class AuthProvider with ChangeNotifier {
   Future<bool?> signUpWithEmailAndPassword(
       {String email = "", String password = ""}) async {
     try {
-      await FirebaseServices()
+      await AuthService()
           .signUpWithEmailAndPassword(email: email, password: password);
     } catch (e) {
       MyToast().errorToast(e.toString());
@@ -30,7 +27,7 @@ class AuthProvider with ChangeNotifier {
 
   Future<void> signOut() async {
     try {
-      await FirebaseServices().signOut();
+      await AuthService().signOut();
     } catch (e) {
       MyToast().errorToast(e.toString());
     }

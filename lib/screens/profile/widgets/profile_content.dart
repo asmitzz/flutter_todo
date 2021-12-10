@@ -39,7 +39,7 @@ class _ProfileContentState extends State<ProfileContent> {
                 emailNotification = value;
               });
             },
-            text: StringsConstants.profileOptions["option_1"]),
+            text: StringsConstants.profileOption1),
         SizedBox(
           height: SizeConfig.blockSizeVertical * 2,
         ),
@@ -50,7 +50,7 @@ class _ProfileContentState extends State<ProfileContent> {
                 vibrateOnAlert = value;
               });
             },
-            text: StringsConstants.profileOptions["option_2"]),
+            text: StringsConstants.profileOption2),
         SizedBox(
           height: SizeConfig.blockSizeVertical * 2,
         ),
@@ -68,7 +68,7 @@ class _ProfileContentState extends State<ProfileContent> {
                 shareProfile = value;
               });
             },
-            text: StringsConstants.profileOptions["option_3"]),
+            text: StringsConstants.profileOption3),
         SizedBox(
           height: SizeConfig.blockSizeVertical * 2,
         ),
@@ -79,7 +79,7 @@ class _ProfileContentState extends State<ProfileContent> {
                 showTask = value;
               });
             },
-            text: StringsConstants.profileOptions["option_4"]),
+            text: StringsConstants.profileOption4),
       ]),
     );
   }

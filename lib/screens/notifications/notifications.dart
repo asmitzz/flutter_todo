@@ -26,7 +26,7 @@ class _NotificationsState extends State<Notifications> {
             preferredSize: Size.fromHeight(SizeConfig.safeBlockVertical * 12),
             child: MyAppBar(
               search: true,
-              title: StringsConstants.notifications["title"],
+              title: StringsConstants.notificationsTitle,
             ),
           ),
           drawer: const MyDrawer(),

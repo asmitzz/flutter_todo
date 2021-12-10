@@ -69,7 +69,7 @@ class _NewTaskBodyState extends State<NewTaskBody> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(StringsConstants.newTask["select_date"],
+              Text(StringsConstants.newTaskCompletedBy,
                   style: TextStyle(
                       color: ColorsConstants.blueGrey,
                       fontSize: FontsConstants.sm,
@@ -95,7 +95,7 @@ class _NewTaskBodyState extends State<NewTaskBody> {
               const SizedBox(
                 height: 25.0,
               ),
-              Text("More Options",
+              Text(StringsConstants.newTaskMoreOptions,
                   style: TextStyle(color: ColorsConstants.blueGrey, fontSize: FontsConstants.sm,)),
              SizedBox(
                 height: SizeConfig.blockSizeVertical * 2,
@@ -105,7 +105,7 @@ class _NewTaskBodyState extends State<NewTaskBody> {
                   onChange: (value) {
                     todosProvider.updateSaveAsAlarm(value);
                   },
-                  text: StringsConstants.newTaskOptions["option_1"]),
+                  text: StringsConstants.newTaskOption1),
              SizedBox(
                 height: SizeConfig.blockSizeVertical * 3,
               ),
@@ -114,7 +114,7 @@ class _NewTaskBodyState extends State<NewTaskBody> {
                   onChange: (value) {
                     todosProvider.updateSaveAsNotifications(value);
                   },
-                  text: StringsConstants.newTaskOptions["option_2"])
+                  text: StringsConstants.newTaskOption2)
             ],
           ),
         )

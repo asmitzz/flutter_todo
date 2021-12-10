@@ -86,7 +86,7 @@ class _MyDrawerState extends State<MyDrawer> {
                   profileProvider.email,
                   style: TextStyle(
                       fontWeight: FontsConstants.medium,
-                      fontSize: FontsConstants.sm,
+                      fontSize: FontsConstants.base,
                       color: ColorsConstants.blue),
                 ),
                 Divider(thickness: 2.0,color: ColorsConstants.blue,)

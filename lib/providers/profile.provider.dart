@@ -38,9 +38,9 @@ class ProfileProvider with ChangeNotifier {
     try {
       String url = await ProfileServices().uploadProfilePic(pickedFile);
       updatePhotoUrl(url);
-      return MyToast().successToast("Profile pic updated!!");
+      MyToast().successToast("Profile pic updated!!");
     } catch (e) {
-      return MyToast().errorToast(e.toString());
+      MyToast().errorToast(e.toString());
     }
   }
 
@@ -48,7 +48,7 @@ class ProfileProvider with ChangeNotifier {
     try {
       await ProfileServices().saveProfile(name: name, email: email);
     } catch (e) {
-      return MyToast().errorToast(e.toString());
+      MyToast().errorToast(e.toString());
     }
   }
 
@@ -56,8 +56,9 @@ class ProfileProvider with ChangeNotifier {
     try {
       await ProfileServices().deleteProfilePic();
       updatePhotoUrl(StringsConstants.defaultAvatar);
+      MyToast().successToast("Removed profile pic");
     } catch (e) {
-      return MyToast().errorToast(e.toString());
+      MyToast().errorToast(e.toString());
     }
   }
 }

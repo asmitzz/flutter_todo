@@ -27,7 +27,7 @@ class _SchedularState extends State<Schedular> {
             preferredSize: Size.fromHeight(SizeConfig.safeBlockVertical * 12),
             child: MyAppBar(
               search: true,
-              title: StringsConstants.schedular["title"],
+              title: StringsConstants.schedularTitle,
             ),
           ),
           drawer: const MyDrawer(),

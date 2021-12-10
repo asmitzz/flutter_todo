@@ -60,7 +60,7 @@ class _EditProfileState extends State<EditProfile> {
                   shadowColor: ColorsConstants.lightRosyBrown,
                   backgroundColor: ColorsConstants.rosyBrown,
                   iconTheme: IconThemeData(color: ColorsConstants.blue),
-                  title: Text(StringsConstants.editProfile["title"],
+                  title: Text(StringsConstants.editProfileTitle,
                     style: TextStyle(
                         color: ColorsConstants.blue,
                         fontSize: FontsConstants.base,

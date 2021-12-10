@@ -1,7 +1,9 @@
 class StringsConstants {
-  // default avatar
+  // default fields
   static String defaultAvatar =
       "https://images.unsplash.com/photo-1634926878768-2a5b3c42f139?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTh8fGF2YXRhcnxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60";
+  static String defaultName = "Jhonson";
+  static String defaultEmail = "example@gmail.com";
 
   // landing
   static String logo = "🍭";
@@ -37,59 +39,38 @@ class StringsConstants {
   static String registerFormField2Error = "Password should be atleast 8 char long";
 
   // home screen
-  static Map home = {
-    "title": "TO-DO",
-    "title_1": "Today's",
-    "title_2": "list "
-  };
+  static String homeTitle = "TO-DO";
+  static String homeTitle1 = "Today's";
+  static String homeTitle2 = "list ";
 
   // schedular screen
-  static Map schedular = {
-    "title": "SCHEDULAR",
-    "title_1": "Upcoming",
-    "title_2": "tasks "
-  };
+  static String schedularTitle = "SCHEDULAR";
+  static String schedularTitle1 = "Upcoming";
+  static String schedularTitle2 = "tasks ";
 
-  // schedular screen
-  static Map notifications = {
-    "title": "NOTIFICATIONS",
-    "title_1": "Alerts &",
-    "title_2": "updates "
-  };
+  // notifications screen
+  static String notificationsTitle = "NOTIFICATIONS";
+  static String notificationsTitle1 = "Alerts &";
+  static String notificationsTitle2 = "updates ";
 
   // profile screen
-  static Map profile = {
-    "title": "PROFILE",
-    "default_pic":
-        "https://images.unsplash.com/photo-1634926878768-2a5b3c42f139?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTh8fGF2YXRhcnxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60",
-    "default_name": "Jhonson",
-    "default_email": "example@gmail.com"
-  };
-
-  static Map profileOptions = {
-    "option_1": "Get email notifications",
-    "option_2": "Vibrate on alert",
-    "option_3": "Share profile with other floss users",
-    "option_4": "Show your task completion status",
-  };
+  static String profileTitle = "Profile";
+  static String profileOption1 = "Get email notifications";
+  static String profileOption2 = "Vibrate on alert";
+  static String profileOption3 = "Share profile with other floss users";
+  static String profileOption4 = "Show your task completion status";
 
   // editprofile screen
-  static Map editProfile = {
-    "title": "EDIT PROFILE",
-  };
+  static String editProfileTitle = "EDIT PROFILE";
 
   // new-task screen
-  static Map newTask = {
-    "title1": "NEW TASK",
-    "title2": "EDIT TASK",
-    "select_date": "Complete by"
-  };
-
-  static Map newTaskOptions = {
-    "option_1": "Save as alarms",
-    "option_2": "Save as notifications"
-  };
-
+  static String newTaskCompletedBy = "Complete by";
+  static String newTaskMoreOptions = "More Options";
+  static String newTaskTitle1 = "NEW TASK";
+  static String newTaskTitle2 = "EDIT TASK";
+  static String newTaskOption1 = "Save as alarms";
+  static String newTaskOption2 = "Save as notifications";
+ 
   // drawer
   static String drawerOption1 = "Todo";
   static String drawerOption2 = "Schedular";

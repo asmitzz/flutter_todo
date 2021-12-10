@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -26,28 +27,66 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  
+  @override
+  Widget build(BuildContext context) {
+    return MultiProvider(providers: [
+      ChangeNotifierProvider<AuthProvider>(
+        create: (_) => AuthProvider(),
+      ),
+      ChangeNotifierProvider<ProfileProvider>(
+        create: (_) => ProfileProvider(),
+      ),
+      ChangeNotifierProvider<TodoProvider>(
+        create: (_) => TodoProvider(),
+      ),
+    ], child: const SplashScreen());
+  }
+}
+
+class SplashScreen extends StatefulWidget {
+  const SplashScreen({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  State<SplashScreen> createState() => _SplashScreenState();
+}
+
+class _SplashScreenState extends State<SplashScreen> {
+  void startApp() {
+    FirebaseAuth.instance.authStateChanges().listen((User? user) async {
+      navigatorKey.currentState!.pushReplacementNamed("/");
+      if (user == null) {
+        navigatorKey.currentState!.pushReplacementNamed("/login");
+      } else {
+        if (FirebaseAuth.instance.currentUser != null) {
+          ProfileProvider profileProvider =
+              Provider.of<ProfileProvider>(context, listen: false);
+          await profileProvider.getPhotoUrl();
+          navigatorKey.currentState!.pushReplacementNamed("/home");
+        }
+      }
+    });
+  }
+
+  @override
+  void initState() {
+    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
+      if (mounted) {
+        startApp();
+      }
+    });
+
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-        providers: [
-          ChangeNotifierProvider<AuthProvider>(
-            create: (_) => AuthProvider(),
-          ),
-          ChangeNotifierProvider<ProfileProvider>(
-            create: (_) => ProfileProvider(),
-          ),
-          ChangeNotifierProvider<TodoProvider>(
-            create: (_) => TodoProvider(),
-          ),
-        ],
-        child: MaterialApp(
-          navigatorKey: navigatorKey,
-          useInheritedMediaQuery: true,
-          locale: DevicePreview.locale(context),
-          home: const Landing(),
-          onGenerateRoute: MyRouter.generateRoutes,
-        ));
+    return MaterialApp(
+      navigatorKey: navigatorKey,
+      useInheritedMediaQuery: true,
+      locale: DevicePreview.locale(context),
+      onGenerateRoute: MyRouter.generateRoutes,
+    );
   }
 }

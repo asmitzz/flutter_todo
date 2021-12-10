@@ -1,29 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_todo/main.dart';
+import 'package:flutter_todo/modals/todos.modal.dart';
 import 'package:flutter_todo/providers/todos.provider.dart';
-import 'package:flutter_todo/utils/constants/colors.dart';
 import 'package:flutter_todo/utils/constants/fonts.dart';
 import 'package:flutter_todo/utils/size_config.dart';
+import 'package:provider/provider.dart';
 
-Future<bool?> dismissableTodohandler(BuildContext context,
-    DismissDirection direction, item, TodoProvider todoProvider) async {
+Future<bool?> dismissableTodohandler(
+    BuildContext context, DismissDirection direction, TodosModal todo) async {
+  final TodoProvider todoProvider =
+      Provider.of<TodoProvider>(context, listen: false);
   if (direction == DismissDirection.endToStart) {
     final bool res = await showDialog(
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            buttonPadding:EdgeInsets.symmetric(
-              horizontal:SizeConfig.blockSizeHorizontal * 4,
-              vertical: SizeConfig.blockSizeVertical * 4
-              ) ,
+            buttonPadding: EdgeInsets.symmetric(
+                horizontal: SizeConfig.blockSizeHorizontal * 4,
+                vertical: SizeConfig.blockSizeVertical * 4),
             contentPadding: EdgeInsets.symmetric(
-              horizontal:SizeConfig.blockSizeHorizontal * 6,
-              vertical: SizeConfig.blockSizeVertical * 6
-              ),
+                horizontal: SizeConfig.blockSizeHorizontal * 6,
+                vertical: SizeConfig.blockSizeVertical * 6),
             content: Text(
               "Are you sure you want to delete this todo?",
-              style: TextStyle(fontSize: FontsConstants.base,
-              fontWeight: FontsConstants.medium,
+              style: TextStyle(
+                fontSize: FontsConstants.base,
+                fontWeight: FontsConstants.medium,
               ),
             ),
             actions: <Widget>[
@@ -44,7 +46,7 @@ Future<bool?> dismissableTodohandler(BuildContext context,
                       fontSize: FontsConstants.base, color: Colors.red),
                 ),
                 onPressed: () {
-                  todoProvider.deleteTodo(docId: item.id);
+                  todoProvider.deleteTodo(docId: todo.id);
                   Navigator.of(context, rootNavigator: true).pop(true);
                 },
               ),
@@ -53,13 +55,13 @@ Future<bool?> dismissableTodohandler(BuildContext context,
         });
     return res;
   } else {
-    todoProvider.updateEditId(docId: item.id);
+    todoProvider.updateEditId(docId: todo.id);
     todoProvider.setFields(
-      setTitle: item["title"],
-      setIsComplete: item["isComplete"],
-      setCompletedBy: item["completedBy"].toDate(),
-      setSaveAsAlarm: item["saveAsAlarm"],
-      setSaveAsNotifications: item["saveAsNotifications"],
+      setTitle: todo.title,
+      setIsComplete: todo.isComplete,
+      setCompletedBy: todo.completedBy,
+      setSaveAsAlarm: todo.saveAsAlarm,
+      setSaveAsNotifications: todo.saveAsNotifications,
     );
     navigatorKey.currentState!.pushNamed("/new-task");
   }

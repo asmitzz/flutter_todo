@@ -37,7 +37,7 @@ class _MyAppBarState extends State<MyAppBar> {
           leading: IconButton(
             icon: Icon(
               Icons.menu,
-              size: SizeConfig.blockSizeHorizontal * 5,
+              size: SizeConfig.safeBlockHorizontal * 5,
             ),
             onPressed: () => Scaffold.of(context).openDrawer(),
           ),
@@ -59,7 +59,7 @@ class _MyAppBarState extends State<MyAppBar> {
               child: TextButton.icon(
                   onPressed: () {},
                   icon: Icon(Icons.search,
-                      size: SizeConfig.blockSizeHorizontal * 5,
+                      size: SizeConfig.safeBlockHorizontal * 5,
                       color: ColorsConstants.blue),
                   label: const Text("")),
             ),
@@ -68,7 +68,7 @@ class _MyAppBarState extends State<MyAppBar> {
               child: TextButton.icon(
                   onPressed: editProfile,
                   icon: Icon(Icons.edit,
-                      size: SizeConfig.blockSizeHorizontal * 5,
+                      size: SizeConfig.safeBlockHorizontal * 5,
                       color: ColorsConstants.blue),
                   label: const Text("")),
             )

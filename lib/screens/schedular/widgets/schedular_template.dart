@@ -50,8 +50,8 @@ class _SchedularTemplateState extends State<SchedularTemplate> {
       return Container(
         height: SizeConfig.safeBlockVertical * 52,
         padding: EdgeInsets.symmetric(
-            horizontal: SizeConfig.blockSizeHorizontal * 6,
-            vertical: SizeConfig.blockSizeVertical * 4),
+            horizontal: SizeConfig.safeBlockHorizontal* 6,
+            vertical: SizeConfig.safeBlockVertical* 4),
         child: SingleChildScrollView(
           child: StreamBuilder<QuerySnapshot>(
               stream: todoProvider.fetchSchedulars(),
@@ -109,7 +109,7 @@ class _SchedularTemplateState extends State<SchedularTemplate> {
           ),
         ),
         SizedBox(
-          height: SizeConfig.blockSizeVertical * 2,
+          height: SizeConfig.safeBlockVertical* 2,
         ),
         ListView.builder(
           scrollDirection: Axis.vertical,
@@ -120,7 +120,7 @@ class _SchedularTemplateState extends State<SchedularTemplate> {
           },
         ),
         SizedBox(
-          height: SizeConfig.blockSizeVertical * 4,
+          height: SizeConfig.safeBlockVertical* 4,
         ),
       ],
     );

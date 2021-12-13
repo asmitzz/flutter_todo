@@ -89,7 +89,7 @@ class _NewTaskState extends State<NewTask> {
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         floatingActionButton: SizedBox(
           height: SizeConfig.safeBlockVertical * 14,
-              width: SizeConfig.safeBlockHorizontal * 14,
+          width: SizeConfig.safeBlockHorizontal * 14,
           child: FloatingActionButton(
             backgroundColor: ColorsConstants.blue,
             onPressed: _onPressed,

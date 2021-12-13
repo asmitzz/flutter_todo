@@ -32,7 +32,7 @@ class _BottomBarState extends State<BottomBar> {
                  Icon(
                   Icons.list,
                   color: ColorsConstants.blue,
-                  size: SizeConfig.blockSizeHorizontal * 5,
+                  size: SizeConfig.safeBlockHorizontal * 5,
                 ),
                 Container(
                     margin: const EdgeInsets.only(top: 5.0),
@@ -51,7 +51,7 @@ class _BottomBarState extends State<BottomBar> {
                  Icon(
                   Icons.schedule,
                   color: ColorsConstants.blue,
-                  size: SizeConfig.blockSizeHorizontal * 5,
+                  size: SizeConfig.safeBlockHorizontal * 5,
                 ),
                 Container(
                     margin: const EdgeInsets.only(top: 5.0),
@@ -70,7 +70,7 @@ class _BottomBarState extends State<BottomBar> {
                  Icon(
                   Icons.notifications_outlined,
                   color: ColorsConstants.blue,
-                  size: SizeConfig.blockSizeHorizontal * 5,
+                  size: SizeConfig.safeBlockHorizontal * 5,
                 ),
                 Container(
                     margin: const EdgeInsets.only(top: 5.0),
@@ -89,7 +89,7 @@ class _BottomBarState extends State<BottomBar> {
                  Icon(
                   Icons.person_outline,
                   color: ColorsConstants.blue,
-                  size: SizeConfig.blockSizeHorizontal * 5,
+                  size: SizeConfig.safeBlockHorizontal * 5,
                 ),
                 Container(
                     margin: const EdgeInsets.only(top: 5.0),

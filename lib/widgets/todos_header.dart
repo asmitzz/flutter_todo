@@ -11,8 +11,8 @@ Container todosHeader(String title1,String title2) {
       color: ColorsConstants.lightRosyBrown,
     ),
     padding: EdgeInsets.symmetric(
-        horizontal: SizeConfig.blockSizeHorizontal * 6,
-        vertical: SizeConfig.blockSizeVertical * 6),
+        horizontal: SizeConfig.safeBlockHorizontal * 6,
+        vertical: SizeConfig.safeBlockVertical* 6),
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [

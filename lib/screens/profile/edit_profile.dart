@@ -85,8 +85,6 @@ class _EditProfileState extends State<EditProfile> {
             onPressed: _onPressed,
             child: (isLoading)
                 ? SizedBox(
-                    height: SizeConfig.safeBlockVertical * 3,
-                    width: SizeConfig.safeBlockHorizontal * 3,
                     child: CircularProgressIndicator(
                       color: ColorsConstants.white,
                       strokeWidth: 1.5,

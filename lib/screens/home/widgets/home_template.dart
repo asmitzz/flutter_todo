@@ -48,8 +48,8 @@ class _HomeTemplateState extends State<HomeTemplate> {
       return Container(
         height: SizeConfig.safeBlockVertical * 52,
         padding: EdgeInsets.symmetric(
-            horizontal: SizeConfig.blockSizeHorizontal * 6,
-            vertical: SizeConfig.blockSizeVertical * 4),
+            horizontal: SizeConfig.safeBlockHorizontal * 6,
+            vertical: SizeConfig.safeBlockVertical * 4),
         child: SingleChildScrollView(
           child: StreamBuilder<QuerySnapshot>(
               stream: todoProvider.fetchTodos(),

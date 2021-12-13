@@ -34,11 +34,11 @@ class _RegisterFooterState extends State<RegisterFooter> {
         email: widget.emailController.text,
         password: widget.passwordController.text,
       );
-    
-      setState(() {
-        isLoading = false;
-      });
-      
+      if (mounted) {
+        setState(() {
+          isLoading = false;
+        });
+      }
     }
   }
 
@@ -67,15 +67,16 @@ class _RegisterFooterState extends State<RegisterFooter> {
                         fontSize: FontsConstants.md)))
           ],
         ),
-        SizedBox(height: SizeConfig.blockSizeVertical*1,),
-
+        SizedBox(
+          height: SizeConfig.blockSizeVertical * 1,
+        ),
         FractionallySizedBox(
           widthFactor: 1.0,
           child: Consumer<AuthProvider>(
             builder: (_, authProvider, __) => TextButton(
               onPressed: () => handleSignUp(context, authProvider),
               child: Padding(
-                padding:  EdgeInsets.symmetric(
+                padding: EdgeInsets.symmetric(
                   vertical: SizeConfig.blockSizeVertical * 1,
                   horizontal: SizeConfig.blockSizeHorizontal * 1,
                 ),
